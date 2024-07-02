@@ -9,10 +9,13 @@ class WalkingCard extends StatelessWidget {
   final double height;
   final double? width;
   final int steps;
+  final double percent;
+
   const WalkingCard({
     Key? key,
     required this.height,
     required this.steps,
+    this.percent = 0.0,
     this.width,
   }) : super(key: key);
 
@@ -47,7 +50,7 @@ class WalkingCard extends StatelessWidget {
           ),
           _buildItem(
             stepCount: "$steps",
-            percent: 0.3,
+            percent: percent,
             percentColor: AppColors.mansourLightGreenColor,
           ),
         ],

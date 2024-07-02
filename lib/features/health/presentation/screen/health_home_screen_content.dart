@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/app_colors.dart';
+import 'package:starter_application/core/common/extensions/extensions.dart';
 import 'package:starter_application/core/common/style/dimens.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
@@ -39,15 +40,18 @@ class _HealthHomeScreenContentState extends State<HealthHomeScreenContent> {
     sn.context = context;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.only(
-        left: AppConstants.hPadding,
-        right: AppConstants.hPadding,
-        top: Dimens.dp24.h,
-        bottom: AppConstants.bottomNavigationBarHeight + 50.h,
-      ),
+      // padding: EdgeInsets.only(
+      //   left: AppConstants.hPadding,
+      //   right: AppConstants.hPadding,
+      //   top: Dimens.dp24.h,
+      //   bottom: AppConstants.bottomNavigationBarHeight + 50.h,
+      // ),
       child: BlocConsumer<HealthCubit, HealthState>(
           bloc: sn.healthCubit,
           listener: (context, state) {
+            if(state is HealthResultsLoaded){
+              sn.onHealthResultsLoaded(state.healthResultResponseEntity);
+            }
             if (state is HealthDashboardLoaded) {
               // Future.delayed(Duration(
               //     milliseconds: 3000
@@ -56,6 +60,7 @@ class _HealthHomeScreenContentState extends State<HealthHomeScreenContent> {
               // });
               sn.onHealthDashboardLoaded(state.healthDashboardEntity);
             }
+
             if (state is GoalUpdated) {
               sn.onGoalUpdated();
             }
@@ -108,148 +113,158 @@ class _HealthHomeScreenContentState extends State<HealthHomeScreenContent> {
   }
 
   buildScreen() {
-    return Column(
-      children: [
-        SizedBox(
-          height: space,
-        ),
-        _buildItem(
-          title: Translation.current.day_calories_desc,
-          subtitle:
-              "${sn.healthDashboardEntity.intakeKcal}/${(sn.healthDashboardEntity.totalValueOfCalories).toStringAsFixed(0)} ${Translation.current.calories}",
-          percent: sn.healthDashboardEntity.intakeKcal /
-              sn.healthDashboardEntity.totalValueOfCalories,
-          percentGradient: AppColors.healthPurpleGradiant,
-        ),
+    // "${ sn.healthDashboardEntity.intakeKcal /
+    //     (sn.healthResultResponseEntity.arm -
+    //         sn.healthResultResponseEntity.totalValueOfCalories)}".logD;
+    //
+    // "${sn.healthDashboardEntity.intakeKcal /
+    //     sn.healthResultResponseEntity.arm}".logD;
+    return Padding(
+      padding: AppConstants.screenPadding,
+      child: Column(
+        children: [
+          SizedBox(
+            height: space,
+          ),
+          _buildItem(
+            title: Translation.current.day_calories_desc,
+            subtitle:
+                "${sn.healthDashboardEntity.intakeKcal}/${(sn.healthDashboardEntity.totalValueOfCalories).toStringAsFixed(0)} ${Translation.current.calories}",
+            percent: sn.healthDashboardEntity.intakeKcal /
+                sn.healthDashboardEntity.totalValueOfCalories,
+            percentGradient: AppColors.healthPurpleGradiant,
+          ),
+          SizedBox(
+            height: space,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: HeathPercentIndicatorCard(
+                  height: itemHeightlarge,
+                  title: Translation.current.intake,
+                  value: "${sn.healthDashboardEntity.intakeKcal}",
+                  valueTitle: Translation.current.kcal_eaten,
+                  gradiant: AppColors.healthGreenGradiant,
 
-
-
-        SizedBox(
-          height: space,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: HeathPercentIndicatorCard(
-                height: itemHeightlarge,
-                title: Translation.current.intake,
-                value: "${sn.healthDashboardEntity.intakeKcal}",
-                valueTitle: Translation.current.kcal_eaten,
-                gradiant: AppColors.healthGreenGradiant,
-                percent: 0.6,
+                  percent: sn.healthDashboardEntity.intakeKcal /
+                      sn.healthResultResponseEntity.arm,
+                ),
               ),
-            ),
-            SizedBox(
-              width: space,
-            ),
-            Expanded(
-              child: HeathPercentIndicatorCard(
-                height: itemHeightlarge,
-                title: Translation.current.training,
-                value: "${sn.healthDashboardEntity.trainingKcal}",
-                valueTitle: Translation.current.kcal_burned,
-                gradiant: AppColors.healthRedGradiant,
-                percent: 0.4,
+              SizedBox(
+                width: space,
               ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: space,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
+              Expanded(
+                child: HeathPercentIndicatorCard(
+                  height: itemHeightlarge,
+                  title: Translation.current.training,
+                  value: "${sn.healthDashboardEntity.trainingKcal}",
+                  valueTitle: Translation.current.kcal_burned,
+                  gradiant: AppColors.healthRedGradiant,
+                  percent: sn.healthDashboardEntity.trainingKcal /
+                      (sn.healthResultResponseEntity.arm -
+                          sn.healthResultResponseEntity.totalValueOfCalories),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: space,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    WaterCard(
+                      hieght: itemHeightSmall,
+                      completedCupNum: sn.completedCupNum,
+                      totalCupNum: sn.totalCupNum,
+                      onAddTap: sn.onAddWaterTap,
+                      onRemoveTap: sn.onRemoveWaterTap,
+                    ),
+                    SizedBox(
+                      height: space,
+                    ),
+                    HealthGoalWidget(
+                      height: itemHeightlarge,
+                      title: Translation.current.goals,
+                      value: "${sn.goalValue} kg",
+                      valueTitle:
+                          "${Translation.current.ooff} ${HealthProfileStaticModel.WEIGHT} kg",
+                      gradiant: AppColors.healthOrangeGradiant,
+                      percent: 0.5,
+                      trailing: GestureDetector(
+                        onTap: () {
+                          sn.onIncreaseGoal();
+                        },
+                        child: Container(
+                          height: 80.h,
+                          width: 80.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColorLight.withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(
+                              20.r,
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 50.h,
+                          ),
+                        ),
+                      ),
+                      trailing1: GestureDetector(
+                        onTap: () {
+                          sn.onDecreaseGoal();
+                        },
+                        child: Container(
+                          height: 80.h,
+                          width: 80.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColorLight.withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(
+                              20.r,
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.remove,
+                            color: Colors.white,
+                            size: 50.h,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: space,
+              ),
+              Expanded(
+                  child: Column(
                 children: [
-                  WaterCard(
-                    hieght: itemHeightSmall,
-                    completedCupNum: sn.completedCupNum,
-                    totalCupNum: sn.totalCupNum,
-                    onAddTap: sn.onAddWaterTap,
-                    onRemoveTap: sn.onRemoveWaterTap,
+                  NutritionsCard(
+                    height: itemHeightlarge,
+                    fat: sn.healthDashboardEntity.fat,
+                    carb: sn.healthDashboardEntity.carbs,
+                    protein: sn.healthDashboardEntity.protein,
+                    calories: 3000,
                   ),
                   SizedBox(
                     height: space,
                   ),
-                  HealthGoalWidget(
-                    height: itemHeightlarge,
-                    title: Translation.current.goals,
-                    value: "${sn.goalValue} kg",
-                    valueTitle:
-                        "${Translation.current.ooff} ${HealthProfileStaticModel.WEIGHT} kg",
-                    gradiant: AppColors.healthOrangeGradiant,
-                    percent: 0.5,
-                    trailing: GestureDetector(
-                      onTap: () {
-                        sn.onIncreaseGoal();
-                      },
-                      child: Container(
-                        height: 80.h,
-                        width: 80.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColorLight.withOpacity(0.8),
-                          borderRadius: BorderRadius.circular(
-                            20.r,
-                          ),
-                        ),
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 50.h,
-                        ),
-                      ),
-                    ),
-                    trailing1: GestureDetector(
-                      onTap: () {
-                        sn.onDecreaseGoal();
-                      },
-                      child: Container(
-                        height: 80.h,
-                        width: 80.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColorLight.withOpacity(0.8),
-                          borderRadius: BorderRadius.circular(
-                            20.r,
-                          ),
-                        ),
-                        child: Icon(
-                          Icons.remove,
-                          color: Colors.white,
-                          size: 50.h,
-                        ),
-                      ),
-                    ),
-                  )
+                  WalkingCard(
+                    height: itemHeightSmall,
+                    steps: sn.walkingSteps,
+                  ),
                 ],
-              ),
-            ),
-            SizedBox(
-              width: space,
-            ),
-            Expanded(
-                child: Column(
-              children: [
-                NutritionsCard(
-                  height: itemHeightlarge,
-                  fat: sn.healthDashboardEntity.fat,
-                  carb: sn.healthDashboardEntity.carbs,
-                  protein: sn.healthDashboardEntity.protein,
-                  calories: 3000,
-                ),
-                SizedBox(
-                  height: space,
-                ),
-                WalkingCard(
-                  height: itemHeightSmall,
-                  steps: sn.walkingSteps,
-                ),
-              ],
-            )),
-          ],
-        ),
-      ],
+              )),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

@@ -29,7 +29,7 @@ class _HealthHomeScreenState extends State<HealthHomeScreen> {
   @override
   void initState() {
     super.initState();
-    sn.getHealthDashboard();
+    sn.getHealthResults();
   }
 
   @override

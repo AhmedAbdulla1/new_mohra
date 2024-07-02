@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:starter_application/core/common/extensions/extensions.dart';
+import 'package:starter_application/core/common/extensions/logger_extension.dart';
 import 'package:starter_application/core/params/no_params.dart';
+import 'package:starter_application/core/results/result.dart';
 import 'package:starter_application/di/service_locator.dart';
 import 'package:starter_application/features/health/data/model/request/all_sessions_params.dart';
 import 'package:starter_application/features/health/data/model/request/answer_params.dart';
@@ -75,11 +78,10 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.foodCategoriesLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getFoodCategories(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.getFoodCategories(params)),
+      ),
     );
   }
 
@@ -89,10 +91,9 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.createDailyDish(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(error, () => this.uploadImage(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.uploadImage(params)),
+      ),
     );
   }
 
@@ -101,11 +102,9 @@ class HealthCubit extends Cubit<HealthState> {
     final result = await getIt<CreateDailyDishUsecase>()(params);
     result.pick(
       onData: (data) => emit(HealthState.dailyDishCreated(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.createDailyDish(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.createDailyDish(params)),
+      ),
     );
   }
 
@@ -113,11 +112,9 @@ class HealthCubit extends Cubit<HealthState> {
     final result = await getIt<CreateDailyDishUsecase>()(params);
     result.pick(
       onData: (data) => emit(HealthState.dailyDishCreated(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.createDailyDish(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.createDailyDish(params)),
+      ),
     );
   }
 
@@ -127,11 +124,10 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.dailyDishListLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getDailyDishList(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.getDailyDishList(params)),
+      ),
     );
   }
 
@@ -141,11 +137,10 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.dishListLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getDishedByCategory(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.getDishedByCategory(params)),
+      ),
     );
   }
 
@@ -155,11 +150,10 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.recipeListLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getDishedByCategory(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.getDishedByCategory(params)),
+      ),
     );
   }
 
@@ -169,10 +163,9 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.dishLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(error, () => this.getDishById(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.getDishById(params)),
+      ),
     );
   }
 
@@ -182,10 +175,9 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.sessionListLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(error, () => this.getSessions(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.getSessions(params)),
+      ),
     );
   }
 
@@ -196,11 +188,9 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.questionLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getAllQuesions(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.getAllQuesions(params)),
+      ),
     );
   }
 
@@ -209,11 +199,9 @@ class HealthCubit extends Cubit<HealthState> {
     final result = await getIt<CreateHealthProfileUsecase>()(params);
     result.pick(
       onData: (data) => emit(HealthState.profileCreated(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.createProfile(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.createProfile(params)),
+      ),
     );
   }
 
@@ -222,25 +210,20 @@ class HealthCubit extends Cubit<HealthState> {
     final result = await getIt<AnswerQuestionUsecase>()(params);
     result.pick(
       onData: (data) => emit(const HealthState.questionAnswered()),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.answerQuestion(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.answerQuestion(params)),
+      ),
     );
   }
-
 
   void updateProfile(HealthProfileParams params) async {
     emit(const HealthState.updateProfile());
     final result = await getIt<UpdateHealthProfileUsecase>()(params);
     result.pick(
       onData: (data) => emit(HealthState.profileUpdated(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.createProfile(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.createProfile(params)),
+      ),
     );
   }
 
@@ -250,11 +233,10 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.favoriteDishesLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getFavoriteDishes(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.getFavoriteDishes(params)),
+      ),
     );
   }
 
@@ -263,11 +245,10 @@ class HealthCubit extends Cubit<HealthState> {
     final result = await getIt<GetFavoriteRecipesUseCase>()(params);
     result.pick(
       onData: (data) => emit(HealthState.favoriteRecipesLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getFavoriteRecipes(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.getFavoriteRecipes(params)),
+      ),
     );
   }
 
@@ -277,13 +258,13 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.recommendedFoodLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getRecommendedFood(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.getRecommendedFood(params)),
+      ),
     );
   }
+
   void getDailySessions(DateParams params) async {
     emit(const HealthState.healthLoadingState());
     final result = await getIt<GetDailySessionUsecase>()(params);
@@ -296,28 +277,27 @@ class HealthCubit extends Cubit<HealthState> {
     );
   }
 
-  void getFavorateSession(NoParams params) async{
+  void getFavorateSession(NoParams params) async {
     emit(const HealthState.healthLoadingState());
     final result = await getIt<GetFavoriteSessionListUsecase>()(params);
     result.pick(
       onData: (data) => emit(HealthState.favoriteSessionsLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getFavoriteRecipes(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.getFavoriteRecipes(params)),
+      ),
     );
   }
+
   void createDailySession(CreateDailySessionParams params) async {
     emit(const HealthState.healthLoadingState());
     final result = await getIt<CreateDailySessionUseCase>()(params);
     result.pick(
       onData: (data) => emit(const HealthState.dailySessionCreated()),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.createDailySession(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.createDailySession(params)),
+      ),
     );
   }
 
@@ -327,37 +307,35 @@ class HealthCubit extends Cubit<HealthState> {
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.recommendedSessionLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getRecommendedSessions(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.getRecommendedSessions(params)),
+      ),
     );
   }
+
   void updateGoal(UpdateGoalParams params) async {
     emit(const HealthState.updateGoal());
     final result = await getIt<UpdateGoalUsecase>()(params);
     print('aassd');
     result.pick(
       onData: (data) => emit(HealthState.goalUpdated(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.updateGoal(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.updateGoal(params)),
+      ),
     );
   }
+
   void updateDailyWater(UpdateDailyWaterParams params) async {
     emit(const HealthState.updateDailyWater());
     final result = await getIt<UpdateDailyWaterUsecase>()(params);
     print('aassd');
     result.pick(
       onData: (data) => emit(const HealthState.dailyWaterUpdated()),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.updateDailyWater(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.updateDailyWater(params)),
+      ),
     );
   }
 
@@ -365,32 +343,58 @@ class HealthCubit extends Cubit<HealthState> {
     emit(const HealthState.healthLoadingState());
     final result = await getIt<GetHealthDashboardUsecase>()(params);
     print('health dashboard');
-    print(result.data);
+    result.data?.props.toString().logD;
+    //
+    // if (result.data != null) {
+    //   emit(HealthState.healthDashboardLoaded(result.data!));
+    //   return result.data!;
+    // } else {
+    //   emit(HealthState.healthErrorState(
+    //       result.error!, () => this.getHealthDashboard(params)));
+    //   return HealthDashboardEntity(
+    //       totalValueOfCalories: 0,
+    //       carbs: 0,
+    //       fat: 0,
+    //       intakeKcal: 0,
+    //       protein: 0,
+    //       totalCupsOfWater: 8,
+    //       trainingKcal: 0);
+    // }
+
+    // return result.data ??
+    //     HealthDashboardEntity(
+    //         totalValueOfCalories: 0,
+    //         carbs: 0,
+    //         fat: 0,
+    //         intakeKcal: 0,
+    //         protein: 0,
+    //         totalCupsOfWater: 8,
+    //         trainingKcal: 0);
     result.pick(
       onData: (data) => emit(HealthState.healthDashboardLoaded(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.getHealthDashboard(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.getHealthDashboard(params)),
+      ),
     );
   }
+
   void checkHealthProfile(NoParams params) async {
     emit(const HealthState.healthLoadingState());
     final result = await getIt<CheckHealthProfileUsecase>()(params);
     result.pick(
       onData: (data) => emit(HealthState.checkHealthProfileDone(data)),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.checkHealthProfile(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(
+            error, () => this.checkHealthProfile(params)),
+      ),
     );
   }
 
   void getHealthResults(NoParams params) async {
     emit(const HealthState.healthLoadingState());
     final result = await getIt<GetUserResultsUsecase>()(params);
+    result.data?.props.toString().logD;
     result.pick(
       onData: (data) => emit(HealthState.healthResultsLoaded(data)),
       onError: (error) =>
@@ -399,17 +403,36 @@ class HealthCubit extends Cubit<HealthState> {
                 error, () => this.getHealthResults(params)),
           ),
     );
+    // if (result.data != null) {
+    //   emit(HealthState.healthResultsLoaded(result.data!));
+    //   return result.data!;
+    // } else {
+    //   emit(
+    //     HealthState.healthErrorState(
+    //         result.error ?? const AppErrors.customError(message: 'error'),
+    //         () => this.getHealthResults(params)),
+    //   );
+    //   return HealthResultResponseEntity(
+    //     activityLevel: 0,
+    //     arm: 1,
+    //     bmi: 1,
+    //     brm: 1,
+    //     caloriesToBurn: 1,
+    //     caloriesToEat: 1,
+    //     difficulty: 1,
+    //     stepsToWalk: 1,
+    //     totalValueOfCalories: 1,
+    //   );
+    // }
   }
 
   void updateDailyStep(UpdateDailyStepsParams params) async {
     final result = await getIt<UpdateDailyStepsUsecase>()(params);
     result.pick(
       onData: (data) => emit(const HealthState.stepsUpdated()),
-      onError: (error) =>
-          emit(
-            HealthState.healthErrorState(
-                error, () => this.updateDailyStep(params)),
-          ),
+      onError: (error) => emit(
+        HealthState.healthErrorState(error, () => this.updateDailyStep(params)),
+      ),
     );
   }
 }

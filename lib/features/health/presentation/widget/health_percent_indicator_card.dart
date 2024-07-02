@@ -70,7 +70,7 @@ class HeathPercentIndicatorCard extends StatelessWidget {
                   CircularPercentIndicator(
                     radius: 150.w,
                     lineWidth: 40.w,
-                    percent: percent,
+                    percent: percent < 1 ? percent : 1,
                     animationDuration: duration,
                     backgroundColor: AppColors.mansourLightGreyColor_7,
                     linearGradient: LinearGradient(

@@ -20,7 +20,6 @@ class HealthDashboardEntity extends BaseEntity{
   double fat;
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
     intakeKcal,
     trainingKcal,

@@ -13,12 +13,16 @@ import 'package:starter_application/core/common/permissions_utils.dart';
 import 'package:starter_application/core/common/style/dimens.dart';
 import 'package:starter_application/core/models/health_profile_model.dart';
 import 'package:starter_application/core/navigation/nav.dart';
+import 'package:starter_application/core/params/no_params.dart';
+// import 'package:starter_application/core/params/no_params.dart';
 import 'package:starter_application/core/ui/dialogs/show_dialog.dart';
+// import 'package:starter_application/features/health/data/model/request/all_sessions_params.dart';
 import 'package:starter_application/features/health/data/model/request/date_params.dart';
 import 'package:starter_application/features/health/data/model/request/update_daily_steps_request_model.dart';
 import 'package:starter_application/features/health/data/model/request/update_daily_water.dart';
 import 'package:starter_application/features/health/data/model/request/update_goal.dart';
 import 'package:starter_application/features/health/domain/entity/health_dashboard_entity.dart';
+import 'package:starter_application/features/health/domain/entity/health_result_response_entity.dart';
 import 'package:starter_application/features/health/presentation/state_m/cubit/health_cubit.dart';
 import 'package:starter_application/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,6 +38,8 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
   final healthCubit = HealthCubit();
   late HealthDashboardEntity healthDashboardEntity;
   int totalCupNum = 8;
+
+  late HealthResultResponseEntity healthResultResponseEntity;
 
   /// Getters and Setters
   int get completedCupNum => this._completedCupNum;
@@ -311,17 +317,30 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
     goalValue = tempGoalValue;
     notifyListeners();
   }
-
-  void getHealthDashboard() {
+  void getHealthResults() async {
+    healthCubit.getHealthResults(NoParams());
+  }
+  void getHealthDashboard() async {
     DateParams dateParams =
         DateParams(date: DateFormat("yyyy-MM-dd", 'en').format(DateTime.now()));
+    // healthDashboardEntity =
     healthCubit.getHealthDashboard(dateParams);
+    // healthResultResponseEntity =  await healthCubit.getHealthResults(NoParams());
+
+
   }
 
   onHealthDashboardLoaded(HealthDashboardEntity healthDashboardEntity) {
     this.healthDashboardEntity = healthDashboardEntity;
     _completedCupNum = healthDashboardEntity.totalCupsOfWater;
     goalValue = HealthProfileStaticModel.WEIGHT_GOAL;
+    notifyListeners();
+  }
+  onHealthResultsLoaded(HealthResultResponseEntity healthResultResponseEntity) {
+    this.healthResultResponseEntity = healthResultResponseEntity;
+    getHealthDashboard();
+    // _completedCupNum = healthDashboardEntity.totalCupsOfWater;
+    // goalValue = HealthProfileStaticModel.WEIGHT_GOAL;
     notifyListeners();
   }
 }

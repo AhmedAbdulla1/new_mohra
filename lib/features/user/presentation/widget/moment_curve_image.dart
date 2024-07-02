@@ -37,7 +37,7 @@ class MomentCurveImage extends StatelessWidget {
               height: 0.25.sw,
               width: 0.25.sw,
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: AppColors.accentColorDark,
                 borderRadius: BorderRadius.circular(radius ?? 0),
               ),
               child: ClipRRect(
@@ -45,8 +45,9 @@ class MomentCurveImage extends StatelessWidget {
                 child: CachedNetworkImage(
                   width: 0.25.sw,
                   height: 0.25.sw,
-                  imageUrl: '$imgPath',
-                  fit: BoxFit.fill,
+                  imageUrl: 'https://consumer-tkbdownload.huawei.com/ctkbfm/applet/simulator/en-us15787623/img/945.png',
+                  // todo fix image error
+                  fit: BoxFit.contain,
                   errorWidget: (context, url, error) => Container(
                     width: 0.25.sw,
                     height: 0.25.sw,

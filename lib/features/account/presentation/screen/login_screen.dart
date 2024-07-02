@@ -453,8 +453,8 @@ class _LoginScreenState extends State<LoginScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.only(
-              left: AppConstants.screenPadding.left /2 ,
+            padding: EdgeInsetsDirectional.only(
+              start: AppConstants.screenPadding.left /2 ,
             ),
             child: Row(
               children: [
@@ -466,7 +466,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left :8.0),
+                  padding: const EdgeInsetsDirectional.only(start :8.0),
                   child: Text('+966', style: TextStyle(fontSize: 40.sp)),
                 ),
               ],

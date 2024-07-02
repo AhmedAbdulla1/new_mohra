@@ -48,6 +48,15 @@ class HealthResultResponseEntity extends BaseEntity {
   };
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [];
+  List<Object?> get props => [
+    totalValueOfCalories,
+    difficulty,
+    activityLevel,
+    caloriesToEat,
+    caloriesToBurn,
+    stepsToWalk,
+    bmi,
+    brm,
+    arm,
+  ];
 }
