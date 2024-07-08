@@ -23,6 +23,7 @@ import 'package:starter_application/features/account/data/model/request/verify_o
 import 'package:starter_application/features/account/domain/entity/login_entity.dart';
 import 'package:starter_application/features/account/presentation/screen/start_personality_test.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
+import 'package:starter_application/features/home/presentation/screen/home_screen/home_screen.dart';
 import 'package:starter_application/main.dart';
 
 import '../../../../../core/common/utils.dart';
@@ -174,7 +175,7 @@ class SetUserNameNotifier extends ScreenNotifier {
         loginEntity.result.avatarMonth);
     await loginHandyMan(userEntity: loginEntity);
 
-    Nav.toAndRemoveAll(StartPersonalityTest.routeName);
+    Nav.toAndRemoveAll(HomeScreen.routeName);
   }
 
   Future<bool> loginHandyMan({LoginEntity? userEntity}) async {
