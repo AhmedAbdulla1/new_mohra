@@ -17,7 +17,6 @@ import 'package:starter_application/core/ui/error_ui/error_viewer/toast/show_err
 import 'package:starter_application/core/ui/snackbars/show_snackbar.dart';
 import 'package:starter_application/features/account/data/model/request/check_exist_phone_params.dart';
 import 'package:starter_application/features/account/data/model/request/check_exist_userName_params.dart';
-import 'package:starter_application/features/account/data/model/request/confirm_phone_number_params.dart';
 import 'package:starter_application/features/account/data/model/request/login_request.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';

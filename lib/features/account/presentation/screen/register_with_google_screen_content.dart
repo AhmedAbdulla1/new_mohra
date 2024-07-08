@@ -11,6 +11,8 @@ import 'package:starter_application/core/common/validators.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
 import 'package:starter_application/core/navigation/animations/animated_route.dart';
 import 'package:starter_application/core/ui/appbar/appbar.dart';
+import 'package:starter_application/core/ui/error_ui/error_viewer/error_viewer.dart';
+import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/errv_snack_bar_options.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_snackbar_based_error_type.dart';
 import 'package:starter_application/core/ui/error_ui/errors_screens/error_widget.dart';
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
@@ -137,8 +139,8 @@ class RegisterWithGoogleScreenContent extends StatelessWidget {
                         return state.maybeMap(
                             orElse: () => const SizedBox.shrink(),
                             hasAvatarChecked: (s) =>
-                                const ScreenNotImplementedError(),
-                            getAvatar: (s) => const ScreenNotImplementedError(),
+                                ScreenNotImplementedError(),
+                            getAvatar: (s) => ScreenNotImplementedError(),
                             forgetpasswordLoaded: (s) =>
                             const SizedBox.square(),
                             passwordCodeVerified: (s) => Container(),

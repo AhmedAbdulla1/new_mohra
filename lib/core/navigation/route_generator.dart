@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:starter_application/core/navigation/navigation_service.dart';
 import 'package:starter_application/core/params/screen_params/buy_ticket_screen_params.dart';
@@ -30,6 +31,7 @@ import 'package:starter_application/features/account/presentation/screen/set_use
 import 'package:starter_application/features/account/presentation/screen/start_personality_test.dart';
 import 'package:starter_application/features/account/presentation/screen/verify_code_screen.dart';
 import 'package:starter_application/features/challenge/presentation/screen/challenge_screen.dart';
+import 'package:starter_application/features/challenge/presentation/screen/view.dart';
 import 'package:starter_application/features/event/presentation/screen/buy_ticket_screen.dart';
 import 'package:starter_application/features/event/presentation/screen/event_details_screen.dart';
 import 'package:starter_application/features/event/presentation/screen/event_gallery_screen.dart';
@@ -326,14 +328,14 @@ class NavigationRoute {
       //         ),
       //         settings: settings);
       //   return errorRoute();
-      // case PlaySongScreen.routeName:
-      //   if (args != null && args is PlaySongScreenParam)
-      //     return CupertinoRoute(
-      //         page: PlaySongScreen(
-      //           param: args,
-      //         ),
-      //         settings: settings);
-      //   return errorRoute();
+      case MapLocationScreen.routeName:
+        if (args != null && args is LatLng)
+          return CupertinoRoute(
+              page: MapLocationScreen(
+                initialPosition: args,
+              ),
+              settings: settings);
+        return errorRoute();
       case RegisterScreen1.routeName:
         return CupertinoRoute(page: RegisterScreen1(), settings: settings);
       case RegisterScreen2.routeName:
@@ -354,6 +356,7 @@ class NavigationRoute {
               page: VerifyCodeScreen(
                 registerRequest: args[0],
                 signUpProcess: args[1],
+                phoneAuthCredential: args[2],
               ),
               settings: settings);
         return errorRoute();

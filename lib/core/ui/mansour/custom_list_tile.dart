@@ -21,6 +21,7 @@ class CustomListTile extends StatelessWidget {
     this.splashColor,
     this.trailingFlex,
     this.leadingFlex,
+    this.crossAxisAlignment =CrossAxisAlignment.start,
   })  : assert((leadingFlex == null && trailingFlex == null) ||
             (leadingFlex != null &&
                 trailingFlex != null &&
@@ -48,7 +49,7 @@ class CustomListTile extends StatelessWidget {
   final Color? splashColor;
   final int? trailingFlex;
   final int? leadingFlex;
-
+  final CrossAxisAlignment crossAxisAlignment;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -75,12 +76,12 @@ class CustomListTile extends StatelessWidget {
             padding: padding ?? EdgeInsets.zero,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment:crossAxisAlignment,
               children: [
                 if (leading != null)
                   Expanded(
                     flex: leadingFlex ?? 2,
                     child: Align(
-                      alignment: AlignmentDirectional.centerStart,
                       child: leading,
                     ),
                   ),
@@ -103,8 +104,8 @@ class CustomListTile extends StatelessWidget {
                                   ? 10 - leadingFlex! - trailingFlex!
                                   : 8 - leadingFlex!,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: crossAxisAlignment,
                     children: [
                       title ?? const SizedBox(),
                       subtitle ?? const SizedBox(),

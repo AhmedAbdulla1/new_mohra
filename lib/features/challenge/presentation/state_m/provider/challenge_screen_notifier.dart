@@ -104,13 +104,14 @@ class ChallengeScreenNotifier extends ScreenNotifier {
   }
 
   getLocationDetails() async {
+    print('get location details ');
     GeoData data = await Geocoder2.getDataFromCoordinates(
         latitude: itemEntity.firstLocationLatitude!,
         longitude: itemEntity.firstLocationLongitude!,
         googleMapApiKey: AppConstants.API_KEY_GOOGLE_MAPS);
     //Formated Address
     targetLocationAddress = data.address;
-
+    notifyListeners();
 
   }
 

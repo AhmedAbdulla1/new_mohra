@@ -47,8 +47,13 @@ class AppConstants {
   static const HAS_PERSONALITY_AVATAR = 'has_avatar';
 
   ///dynamic links
-  static const KEY_DYNAMIC_LINKS_PREFIX = 'https://mohra.page.link';
-  static const KEY_DYNAMIC_LINKS_BASE_URL = 'https://www.m0hra.com/';
+  // todo change this link
+  static const KEY_DYNAMIC_LINKS_PREFIX = 'https://mohraappprofile.page.link';
+  // static const KEY_DYNAMIC_LINKS_PREFIX = 'https://mohra.page.link';
+
+   static const KEY_DYNAMIC_LINKS_BASE_URL = 'https://mohraappprofile.page.link/';
+
+  // static const KEY_DYNAMIC_LINKS_BASE_URL = 'https://www.m0hra.com/';
   static const KEY_PACKAGE_NAME = 'app.mohraapp.com.android';
   static const KEY_IOS_BUNDLE_ID = 'app.mohraapp.com.ios';
   static const KEY_DYNAMIC_LINKS_TYPE = 'type';

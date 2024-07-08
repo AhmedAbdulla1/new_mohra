@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +17,6 @@ import 'package:starter_application/core/ui/appbar/appbar.dart';
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
 import 'package:starter_application/core/ui/widgets/custom_text_field.dart';
 import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
-import 'package:starter_application/features/account/presentation/screen/register_screen1.dart';
 import 'package:starter_application/features/account/presentation/screen/register_screen2.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/login_screen_notifier.dart';
@@ -203,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             isArabic
                                 ? "هل نسيت كلمة المرور ؟"
                                 : "Forget Password?",
-                            style: const TextStyle(color: Colors.grey),
+                            style: TextStyle(color: Colors.grey),
                           ),
                         ),
                       ),
@@ -430,7 +430,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       validator: (value) {
         sn.validatePassword(value);
-        return null;
       },
       onFieldSubmitted: (term) {
         sn.myFocusNodePassord.unfocus();
@@ -440,123 +439,65 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
   }
+
   _buildPhoneField() {
     return Container(
-      width: 0.92.sw,
+      height: 150.h,
+      width: double.infinity,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
           border: Border.all(
               color: AppColors.mansourLightGreyColor_5,
               style: BorderStyle.solid)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsetsDirectional.only(
-              start: AppConstants.screenPadding.left /2 ,
-            ),
-            child: Row(
-              children: [
-                SizedBox(
-                  height: 60.h,
-                  width: 60.h,
-                  child: Image.asset(
-                    AppConstants.IMAGE_FLAG,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(start :8.0),
-                  child: Text('+966', style: TextStyle(fontSize: 40.sp)),
-                ),
-              ],
-            ),
+      child: Transform.translate(
+        offset: Offset(0, 10),
+        child: IntlPhoneField(
+          key: const Key('telephoneNumberNational'),
+          focusNode: sn.myFocusNodePhone,
+          disableLengthCheck: false,
+          textInputAction: TextInputAction.next,
+          flagsButtonMargin: EdgeInsets.zero,
+          dropdownTextStyle: TextStyle(),
+          onCountryChanged: (value) {
+            sn.countryCode = "+${value.dialCode}";
+            sn.country = value;
+            sn.notifyListeners();
+          },
+          // countries: ["SY"],
+          controller: sn.phoneController,
+          initialValue: '0',
+          autovalidateMode: AutovalidateMode.disabled,
+          inputFormatters: [
+            new FilteringTextInputFormatter.allow((RegExp("[0-9]"))),
+          ],
+          searchText: isArabic ? "البحث عن بلد" : "Search country",
+          textAlign: isArabic ? TextAlign.right : TextAlign.left,
+          decoration: InputDecoration(
+            hintStyle: TextStyle(fontSize: 14),
+            hintMaxLines: 1,
+            hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+            enabled: true,
+            alignLabelWithHint: true,
+            hintText: (isArabic ? "مثال" : "Example") + ' : ' + '5xxxxxxxx',
+            border: InputBorder.none,
           ),
-          // Gaps.hGap10,
-          Expanded(
-              child: CustomTextField(
-                primaryFieldColor: AppColors.regularFontColor,
-                textKey: sn.phoneKey,
-                controller: sn.phoneController,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.phone,
-                focusNode: sn.myFocusNodePhone,
-                hintText: (isArabic ? "مثال" : "Example") + ' : ' + '5xxxxxxxx',
-                horizontalMargin: 80.w,
-                errorMaxLines: 4,
-                prefixIconConstraints: BoxConstraints(
-                  minWidth: 0,
-                  minHeight: 0,
-                  maxHeight: 80.h,
-                  maxWidth: 100.h,
-                ),
-                validator: (value) {
-                  sn.validatePhoneNumber(value,9);
-                  return null;
-                },
-                onFieldSubmitted: (term) {
-                  fieldFocusChange(context, sn.myFocusNodePhone,
-                      sn.myFocusNodePassord);
-                },
-                onChanged: (value) {
-                  sn.phoneKey.currentState!.validate();
-                },
-              )),
-        ],
+          initialCountryCode: 'SA',
+          validator: (phone) {
+            sn.validatePhoneNumber(phone?.number, sn.country.maxLength);
+          },
+          onSubmitted: (term) {
+            fieldFocusChange(
+              context,
+              sn.myFocusNodePhone,
+              sn.myFocusNodePassord,
+            );
+          },
+          onChanged: (value) {
+            // sn.phoneKey.currentState!.validate();
+          },
+        ),
       ),
     );
-
-    // Container(
-    //   height: 150.h,
-    //   width: double.infinity,
-    //   alignment: Alignment.center,
-    //   decoration: BoxDecoration(
-    //       borderRadius: BorderRadius.circular(4),
-    //       border: Border.all(
-    //           color: AppColors.mansourLightGreyColor_5,
-    //           style: BorderStyle.solid)),
-    //   child: Transform.translate(
-    //     offset: const Offset(0, 10),
-    //     child: IntlPhoneField(
-    //       disableLengthCheck: false,
-    //       flagsButtonMargin: EdgeInsets.zero,
-    //       dropdownTextStyle: const TextStyle(),
-    //       onCountryChanged: (value) {
-    //         sn.countryCode = "+${value.dialCode}";
-    //         sn.country = value;
-    //         sn.notifyListeners();
-    //       },
-    //       // countries: ["SY"],
-    //       controller: sn.phoneController,
-    //       initialValue: '0',
-    //       autovalidateMode: AutovalidateMode.disabled,
-    //       inputFormatters: [
-    //         new FilteringTextInputFormatter.allow((RegExp("[0-9]"))),
-    //       ],
-    //
-    //       searchText: isArabic ? "البحث عن بلد" : "Search country",
-    //       textAlign: isArabic ? TextAlign.right : TextAlign.left,
-    //       decoration: InputDecoration(
-    //         hintStyle: const TextStyle(fontSize: 14),
-    //         hintMaxLines: 1,
-    //         hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
-    //         enabled: true,
-    //         alignLabelWithHint: true,
-    //         hintText: (isArabic ? "مثال" : "Example") + ' : ' + '5xxxxxxxx',
-    //         border: InputBorder.none,
-    //       ),
-    //       initialCountryCode: 'SA',
-    //       validator: (phone) {
-    //         sn.validatePhoneNumber(phone?.number, sn.country.maxLength);
-    //         return null;
-    //       },
-    //       onSubmitted: (term) {
-    //       },
-    //       onChanged: (value) {
-    //         // sn.phoneKey.currentState!.validate();
-    //       },
-    //     ),
-    //   ),
-    // );
   }
 }

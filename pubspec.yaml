@@ -293,6 +293,7 @@ dependencies:
   devicelocale: ^0.7.0
   nb_utils: ^5.0.8
   otp_timer_button: ^1.1.1
+  multiple_stream_builder: ^3.0.2
 
 dev_dependencies:
   flutter_test:

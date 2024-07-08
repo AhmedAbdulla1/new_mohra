@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:starter_application/core/datasources/shared_preference.dart';
 import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/models/empty_response.dart';
 import 'package:starter_application/core/params/no_params.dart';
@@ -48,6 +49,7 @@ import 'package:starter_application/features/account/domain/usecase/update_fireb
 import 'package:starter_application/features/account/domain/usecase/update_location_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/verify_otp_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/verify_usecase.dart';
+
 // import 'package:starter_application/features/moment/data/model/response/points_model.dart';
 import 'package:starter_application/features/personality/domain/entity/has_avatar_entity.dart';
 import 'package:starter_application/features/personality/domain/usecase/check_has_avatar_usecase.dart';
@@ -56,9 +58,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../../../../main.dart';
 
 part 'account_cubit.freezed.dart';
+
 part 'account_state.dart';
 
 class AccountCubit extends Cubit<AccountState> {
+  String authData = "AuthData";
+
   AccountCubit() : super(const AccountState.accountInit());
 
   void login(LoginRequest body) async {
@@ -87,6 +92,8 @@ class AccountCubit extends Cubit<AccountState> {
     result.pick(
       onData: (data) async {
         emit(AccountState.logoutLoaded(data));
+        final sp = await SpUtil.instance;
+        sp.remove(authData);
       },
       onError: (error) {
         emit(AccountState.accountError(error, () => this.logout(body)));
@@ -122,6 +129,8 @@ class AccountCubit extends Cubit<AccountState> {
               "af_complete_registration", {"af_registration_method": "email"});
         } catch (e) {}
         emit(AccountState.registerLoaded(result.data!));
+        final sp = await SpUtil.instance;
+        sp.putString(authData, body.toJson());
       },
       onError: (error) {
         emit(AccountState.accountError(error, () => this.register(body)));
@@ -259,6 +268,7 @@ class AccountCubit extends Cubit<AccountState> {
       ),
     );
   }
+
   void sendOtp(CheckIfPhoneExistParams params) async {
     emit(const AccountState.accountLoading());
     final result = await getIt<SendOtpUsecase>()(params);
@@ -271,19 +281,17 @@ class AccountCubit extends Cubit<AccountState> {
     );
   }
 
-
-  Future<Result<AppErrors, EmptyResponse>> verifyOtp(VerifyOtpParams params) async {
-
+  verifyOtp(
+      VerifyOtpParams params) async {
     emit(const AccountState.accountLoading());
     final result = await getIt<VerifyOTpUseCase>()(params);
-    print('aassd');
-    return result;
-    // result.pick(
-    //   onData: (data) => emit(AccountState.phoneNumberConfirmed(data)),
-    //   onError: (error) => emit(
-    //     AccountState.accountError(error, () => this.verifyOtp(params)),
-    //   ),
-    // );
+    print('verify otp ');
+    result.pick(
+      onData: (data) => emit(AccountState.phoneNumberConfirmed(data)),
+      onError: (error) => emit(
+        AccountState.accountError(error, () => this.verifyOtp(params)),
+      ),
+    );
   }
 
   void checkExistPhoneNumber(CheckIfPhoneExistParams params) async {
@@ -336,20 +344,18 @@ class AccountCubit extends Cubit<AccountState> {
           onError: (error) {
             error.maybeMap(
                 unauthorizedError: (e) {},
-                unknownError: (e){},
-                forbiddenError: (e){},
-                timeoutError: (e){
+                unknownError: (e) {},
+                forbiddenError: (e) {},
+                timeoutError: (e) {
                   checkDeviceId(params);
                 },
-                cancelError: (e){
+                cancelError: (e) {
                   checkDeviceId(params);
                 },
-                netError: (e){
+                netError: (e) {
                   checkDeviceId(params);
                 },
-                orElse: () {
-
-                });
+                orElse: () {});
             emit(
               AccountState.accountError(
                   error, () => this.checkDeviceId(params)),

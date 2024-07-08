@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:starter_application/core/bloc/global/glogal_cubit.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/app_config.dart';
+import 'package:starter_application/core/common/extensions/extensions.dart';
 import 'package:starter_application/core/common/provider/cart.dart';
 import 'package:starter_application/core/common/provider/session_data.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
@@ -21,7 +23,10 @@ import 'package:starter_application/core/net/api_url.dart';
 import 'package:starter_application/core/params/no_params.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_error_snackbar.dart';
 import 'package:starter_application/core/ui/mansour/onboarding_screen.dart';
+import 'package:starter_application/di/service_locator.dart';
 import 'package:starter_application/features/account/data/model/request/check_device_id_params.dart';
+import 'package:starter_application/features/account/data/model/request/login_request.dart';
+import 'package:starter_application/features/account/domain/usecase/login_usecase.dart';
 import 'package:starter_application/features/account/presentation/screen/login_screen.dart';
 import 'package:starter_application/features/account/presentation/screen/start_personality_test.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
@@ -120,7 +125,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     s.splashEntity.favoritesProductsEntity == null
                         ? []
                         : s.splashEntity.favoritesProductsEntity!.items ?? [];
-
+                print('can go in splash $canGo');
                 if (canGo) {
                   navigate();
                 }
@@ -149,10 +154,16 @@ class _SplashScreenState extends State<SplashScreen> {
             listener: (context, state) {
               if (state is CheckDeviceIdDone) {
                 print('asdasdasdsa');
+                print('can go in account $canGo');
+                state.emptyResponse.succeed.toString().logD;
                 if (state.emptyResponse.succeed == false) if (canGo)
                   navigate();
                 else
                   onDeviceIdCheckedTrue();
+              }
+              if (state is AccLoginLoaded) {
+                print('login in splash');
+                navigate();
               }
               if (state is AccountError) {
                 state.error.maybeMap(
@@ -187,7 +198,19 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   init() async {
+    String authData = "AuthData";
     splashCubit.splashInit();
+
+    final  sp = await SpUtil.instance;
+    String? result= sp.getString(authData,);
+    if(result!=null&&result.isNotEmpty){
+      final jsonData =   json.decode(result);
+      LoginRequest loginRequest = LoginRequest.fromJson(jsonData);
+
+      accountCubit.login(loginRequest);
+    }
+
+
     print('asdddd');
     await session.getSessionDataFromSP();
     await UserSessionDataModel.getFromSP();

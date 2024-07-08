@@ -33,6 +33,7 @@ import 'package:starter_application/core/ui/mansour/custom_list_tile.dart';
 import 'package:starter_application/core/ui/widgets/system/double_tap_back_exit_app.dart';
 import 'package:starter_application/di/service_locator.dart';
 import 'package:starter_application/features/account/domain/entity/city_entity.dart';
+import 'package:starter_application/features/account/presentation/screen/start_personality_test.dart';
 import 'package:starter_application/features/health/presentation/widget/profile/circled_profile_pic.dart';
 import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
 import 'package:starter_application/features/help/presentation/screen/help_screen.dart';
@@ -444,7 +445,7 @@ class _AppMainScreenState extends State<AppMainScreen>
     return Container(
       height: 0.27.sh,
       padding: EdgeInsets.symmetric(
-        horizontal: 50.w,
+        horizontal: 35.w,
       ),
       color: AppColors.primaryColorLight,
       child: Column(
@@ -475,7 +476,9 @@ class _AppMainScreenState extends State<AppMainScreen>
             height: 80.h,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // for nave to profile screen with user image
               InkWell(
                 onTap: () {
                   Nav.to(ViewProfileScreen.routeName)
@@ -484,12 +487,12 @@ class _AppMainScreenState extends State<AppMainScreen>
                 child: Row(
                   children: [
                     ProfilePic(
-                      width: 150.h,
-                      height: 150.h,
+                      width: 140.h,
+                      height: 140.h,
                       imageUrl: UserSessionDataModel.imageUrl,
                     ),
                     Container(
-                      width: 0.3.sw,
+                      width: 0.28.sw,
                       child: Padding(
                         padding: EdgeInsetsDirectional.only(start: 30.w),
                         child: Text(
@@ -507,14 +510,23 @@ class _AppMainScreenState extends State<AppMainScreen>
                   ],
                 ),
               ),
+              // for nave to personality screen
+
+
+              // todo avatar here
               BlocBuilder<PersonalityCubit, PersonalityState>(
                 bloc: sn.personalityCubit,
                 builder: (context, state) => state.maybeMap(
                   personalityInitState: (s) => WaitingWidget(),
                   personalityErrorState: (s) => WaitingWidget(),
                   personalityLoadingState: (s) => WaitingWidget(),
+                  hasAvatarChecked: (s) => WaitingWidget(),
                   avatarLoaded: (value) => GestureDetector(
                     onTap: () {
+                      // value.avatarListEntity.myAvatar?.avatarUrl =null;
+                      if(value.avatarListEntity.myAvatar?.avatarUrl == null || value.avatarListEntity.myAvatar!.avatarUrl!.isEmpty){
+                        Nav.toAndRemoveAll(StartPersonalityTest.routeName);
+                      }
                       Nav.to(PersonalityDetailsScreen.routeName,
                           arguments: PersonalityResultScreenParams(
                             birthDay: UserSessionDataModel.birthday != ''
@@ -602,6 +614,7 @@ class _AppMainScreenState extends State<AppMainScreen>
               color: AppColors.primaryColorLight,
               size: 25,
             ),
+            // todo change lang problem fix
             title: Row(
               children: [
                 FlutterSwitch(

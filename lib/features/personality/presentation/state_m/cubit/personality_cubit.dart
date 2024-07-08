@@ -125,7 +125,6 @@ class PersonalityCubit extends Cubit<PersonalityState> {
         userId: UserSessionDataModel.userId,
         lat: params.lat,
         long: params.long));
-
     result.pick(
       onData: (data) {},
       onError: (error) {},

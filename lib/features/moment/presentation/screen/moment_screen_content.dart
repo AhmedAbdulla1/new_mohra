@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -29,10 +30,11 @@ import 'package:starter_application/features/moment/presentation/widget/post_car
 import 'package:starter_application/features/user/presentation/screen/view_friend_moments_screen.dart';
 import 'package:starter_application/features/user/presentation/state_m/cubit/user_cubit.dart';
 import 'package:starter_application/generated/l10n.dart';
+import 'package:starter_application/main.dart';
 
 import '../../../../core/ui/toast.dart';
 import 'package:starter_application/features/friend/domain/entity/client_entity.dart'
-    as c;
+as c;
 
 class MomentScreenContent extends StatefulWidget {
   const MomentScreenContent({Key? key}) : super(key: key);
@@ -61,11 +63,11 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
     return sn.isLoading
         ? WaitingWidget()
         : Stack(
-            // fit: StackFit.loose,
-            children: [
-              _buildContent(),
-            ],
-          );
+      // fit: StackFit.loose,
+      children: [
+        _buildContent(),
+      ],
+    );
   }
 
   /// Content
@@ -75,27 +77,28 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
       left: 0,
       right: 0,
       child: RefreshConfiguration(
-        headerBuilder: () => ClassicHeader(
-          refreshingIcon: Padding(
-            padding: EdgeInsets.only(top: _headerHeight),
-            child: SizedBox(
-              height: 70.h,
-              width: 70.h,
-              child: const CircularProgressIndicator.adaptive(),
+        headerBuilder: () =>
+            ClassicHeader(
+              refreshingIcon: Padding(
+                padding: EdgeInsets.only(top: _headerHeight),
+                child: SizedBox(
+                  height: 70.h,
+                  width: 70.h,
+                  child: const CircularProgressIndicator.adaptive(),
+                ),
+              ),
+              releaseIcon: Padding(
+                padding: EdgeInsets.only(top: _headerHeight),
+                child: SizedBox(
+                  height: 70.h,
+                  width: 70.h,
+                  child: const CircularProgressIndicator.adaptive(),
+                ),
+              ),
+              textStyle: const TextStyle(
+                fontSize: 0,
+              ),
             ),
-          ),
-          releaseIcon: Padding(
-            padding: EdgeInsets.only(top: _headerHeight),
-            child: SizedBox(
-              height: 70.h,
-              width: 70.h,
-              child: const CircularProgressIndicator.adaptive(),
-            ),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 0,
-          ),
-        ),
         child: PaginationWidget<MomentItemEntity>(
           items: sn.moments,
           getItems: sn.getMomentsItems,
@@ -103,8 +106,12 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
           refreshController: sn.momentsRefreshController,
           footer: ClassicFooter(
             loadingText: "",
-            noDataText: Translation.of(context).noDataRefresher,
-            failedText: Translation.of(context).failedRefresher,
+            noDataText: Translation
+                .of(context)
+                .noDataRefresher,
+            failedText: Translation
+                .of(context)
+                .failedRefresher,
             idleText: "",
             canLoadingText: "",
             /*  loadingIcon: Padding(
@@ -137,7 +144,8 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                               orElse: () => const ScreenNotImplementedError(),
                               challengeInitState: (_) => WaitingWidget(),
                               challengeLoadingState: (_) => WaitingWidget(),
-                              challengeErrorState: (s) => ErrorScreenWidget(
+                              challengeErrorState: (s) =>
+                                  ErrorScreenWidget(
                                     error: s.error,
                                     callback: s.callback,
                                   ),
@@ -146,7 +154,7 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                                   return ListView.separated(
                                       shrinkWrap: true,
                                       physics:
-                                          const NeverScrollableScrollPhysics(),
+                                      const NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) {
                                         return _buildOngoingChallenge(
                                             sn.challenges.elementAt(index));
@@ -159,7 +167,8 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                               });
                         },
                       ),
-                      Container(
+                      sn.moments.isNotEmpty
+                          ? Container(
                         child: ListView.separated(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -172,6 +181,39 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                               return Gaps.vGap15;
                             },
                             itemCount: sn.moments.length),
+                      )
+                          : SizedBox(
+                        height: 0.6.sh,
+                        child: Center(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                  start: AppConstants.screenPadding.right+20,end: 20),
+                              child: CustomMansourButton(
+                                borderRadius: Radius.circular(20.r),
+                                  onPressed: () {
+                                    sn.shareMyProfile();
+                                  },
+                                  title: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.share,
+                                        color: AppColors.white_text,
+                                      ),
+                                      Gaps.hGap16,
+                                      Text(
+                                        isArabic
+                                            ? "مشاركة ملفك الشخصي "
+                                            : "Share your profile ",
+                                        style:
+                                        const TextStyle(
+                                            color: AppColors.white_text
+
+                                        ),
+
+                                      ),
+                                    ],
+                                  )),
+                            )),
                       ),
                       // Gaps.vGap64,
                       // _buildPostCard_2(),
@@ -191,6 +233,8 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                     image: UserSessionDataModel.coverPhoto,
                   ),
                 ),
+
+                // for user name and points in header
                 Center(
                   child: Column(
                     children: [
@@ -210,7 +254,8 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                                     builder: (BuildContext context) {
                                       return Container(
                                         padding: EdgeInsets.only(
-                                          bottom: MediaQuery.of(context)
+                                          bottom: MediaQuery
+                                              .of(context)
                                               .viewInsets
                                               .bottom,
                                           left: 20,
@@ -222,41 +267,44 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                                           children: [
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              MainAxisAlignment
+                                                  .spaceBetween,
                                               children: [
                                                 Text(
                                                   "",
                                                   style: TextStyle(
                                                       fontSize: 50.sp,
                                                       fontWeight:
-                                                          FontWeight.bold),
+                                                      FontWeight.bold),
                                                 ),
                                                 IconButton(
                                                     onPressed: () {
                                                       Nav.pop();
                                                     },
-                                                    icon: const Icon(Icons.clear))
+                                                    icon:
+                                                    const Icon(Icons.clear))
                                               ],
                                             ),
                                             Gaps.vGap16,
                                             buildEditImageCard(
-                                              text: Translation.of(context)
+                                              text: Translation
+                                                  .of(context)
                                                   .view_all_my_moments,
                                               onTap: () {
                                                 Nav.pop();
-                                                Nav.to(ViewFriendMomentsScreen.routeName,
+                                                Nav.to(ViewFriendMomentsScreen
+                                                    .routeName,
                                                     arguments: c.ClientEntity(
                                                         addresses: [],
                                                         hasAvatar: true,
                                                         surname:
-                                                            UserSessionDataModel
-                                                                .surname,
+                                                        UserSessionDataModel
+                                                            .surname,
                                                         qrCode: UserSessionDataModel
-                                                                .qrCode ??
+                                                            .qrCode ??
                                                             "",
                                                         code: UserSessionDataModel
-                                                                .code ??
+                                                            .code ??
                                                             "",
                                                         fullName: UserSessionDataModel
                                                             .fullName,
@@ -265,32 +313,33 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                                                         imageUrl: UserSessionDataModel
                                                             .imageUrl,
                                                         emailAddress:
-                                                            UserSessionDataModel
-                                                                .emailAddress,
+                                                        UserSessionDataModel
+                                                            .emailAddress,
                                                         name:
-                                                            UserSessionDataModel
-                                                                .name,
+                                                        UserSessionDataModel
+                                                            .name,
                                                         phoneNumber:
-                                                            UserSessionDataModel
-                                                                .phoneNumber,
+                                                        UserSessionDataModel
+                                                            .phoneNumber,
                                                         countryCode:
-                                                            UserSessionDataModel
-                                                                    .countryCode ??
-                                                                ""));
+                                                        UserSessionDataModel
+                                                            .countryCode ??
+                                                            ""));
                                               },
                                               icon:
-                                                  AppConstants.SVG_MOMENT_FILL,
+                                              AppConstants.SVG_MOMENT_FILL,
                                             ),
                                             Gaps.vGap8,
                                             buildEditImageCard(
-                                              text: Translation.of(context)
+                                              text: Translation
+                                                  .of(context)
                                                   .Change_Profile_Photo,
                                               onTap: () {
                                                 Nav.pop();
                                                 changeProfileImageTapper();
                                               },
                                               icon:
-                                                  'assets/images/svg/icon/gallary_icon.svg',
+                                              'assets/images/svg/icon/gallary_icon.svg',
                                             ),
                                             Gaps.vGap32,
                                           ],
@@ -342,6 +391,7 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                           ),
                         ),
                         content: CustomListTile(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           title: Text(
                             "${UserSessionDataModel.fullName}",
                             style: TextStyle(
@@ -386,35 +436,75 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                             padding: EdgeInsetsDirectional.only(
                               end: 40.h,
                             ),
-                            child: CustomMansourButton(
-                              height: 80.h,
-                              borderRadius: Radius.circular(20.r),
-                              onPressed: () {
-                                print(LocalizationProvider().appLocal);
-                              },
-                              backgroundColor: Colors.white,
-                              title: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 70.h,
-                                    width: 70.h,
-                                    child: Image.asset(
-                                      AppConstants.IMG_COIN,
-                                      height: 70.h,
-                                    ),
+                            child: Column(
+                              children: [
+                                CustomMansourButton(
+                                  height: 80.h,
+                                  borderRadius: Radius.circular(20.r),
+                                  onPressed: () {
+                                    print(LocalizationProvider().appLocal);
+                                  },
+                                  backgroundColor: Colors.white,
+                                  title: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 70.h,
+                                        width: 70.h,
+                                        child: Image.asset(
+                                          AppConstants.IMG_COIN,
+                                          height: 70.h,
+                                        ),
+                                      ),
+                                      Gaps.hGap12,
+                                      Text(
+                                        "${sn.points} ${Translation.current
+                                            .points}",
+                                        style: TextStyle(
+                                          color: AppColors.primaryColorLight,
+                                          fontSize: 45.sp,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Gaps.hGap16,
-                                  Text(
-                                    "${sn.points} ${Translation.current.points}",
-                                    style: TextStyle(
-                                      color: AppColors.primaryColorLight,
-                                      fontSize: 45.sp,
-                                    ),
+                                ),
+                                Gaps.vGap12,
+                                CustomMansourButton(
+                                  height: 80.h,
+                                  // width: 50,
+                                  borderRadius: Radius.circular(20.r),
+                                  onPressed: () {
+                                    sn.shareMyProfile();
+                                  },
+                                  backgroundColor: Colors.white,
+                                  title:  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 70.h,
+                                        width: 70.h,
+                                        child: const Icon(
+                                          Icons.share,
+                                          color: Colors.black,
+                                          size: 30,
+                                        ),
+                                      ),
+                                      Gaps.hGap16,
+                                      Gaps.hGap5,
+                                      Text(
+                                       isArabic ? "مشاركة" : "Share",
+                                        style: TextStyle(
+                                          color: AppColors.primaryColorLight,
+                                          fontSize: 45.sp,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                // ),
+                              ],
                             ),
                           ),
                         ),
@@ -423,6 +513,7 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                     ],
                   ),
                 ),
+
                 // if (sn.moments.isNotEmpty)
                 //   _buildVLine(height: 80.h, color: Colors.grey[300]),
               ],
@@ -441,7 +532,10 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
           builder: (BuildContext context) {
             return Container(
               padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
+                bottom: MediaQuery
+                    .of(context)
+                    .viewInsets
+                    .bottom,
                 left: 20,
                 right: 20,
                 top: 10,
@@ -453,7 +547,9 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        Translation.of(context).Change_Profile_Photo,
+                        Translation
+                            .of(context)
+                            .Change_Profile_Photo,
                         style: TextStyle(
                             fontSize: 50.sp, fontWeight: FontWeight.bold),
                       ),
@@ -466,7 +562,9 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                   ),
                   Gaps.vGap16,
                   buildEditImageCard(
-                    text: Translation.of(context).Open_Camera,
+                    text: Translation
+                        .of(context)
+                        .Open_Camera,
                     onTap: () {
                       sn.changeProfileImage(0);
                     },
@@ -474,7 +572,9 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                   ),
                   Gaps.vGap8,
                   buildEditImageCard(
-                    text: Translation.of(context).Open_Gallery,
+                    text: Translation
+                        .of(context)
+                        .Open_Gallery,
                     onTap: () {
                       sn.changeProfileImage(1);
                     },
@@ -490,7 +590,9 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                   // ),
                   // Gaps.vGap8,
                   buildEditImageCard(
-                    text: Translation.of(context).Delete_Profile_Image,
+                    text: Translation
+                        .of(context)
+                        .Delete_Profile_Image,
                     onTap: () {
                       sn.changeProfileImage(3);
                     },
@@ -540,7 +642,10 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
           builder: (BuildContext context) {
             return Container(
               padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
+                bottom: MediaQuery
+                    .of(context)
+                    .viewInsets
+                    .bottom,
                 left: 20,
                 right: 20,
                 top: 10,
@@ -552,7 +657,9 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        Translation.of(context).Change_Cover_Photo,
+                        Translation
+                            .of(context)
+                            .Change_Cover_Photo,
                         style: TextStyle(
                             fontSize: 50.sp, fontWeight: FontWeight.bold),
                       ),
@@ -565,7 +672,9 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                   ),
                   Gaps.vGap16,
                   buildEditImageCard(
-                    text: Translation.of(context).Open_Camera,
+                    text: Translation
+                        .of(context)
+                        .Open_Camera,
                     onTap: () {
                       sn.changeCoverImage(0);
                     },
@@ -573,7 +682,9 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                   ),
                   Gaps.vGap8,
                   buildEditImageCard(
-                    text: Translation.of(context).Open_Gallery,
+                    text: Translation
+                        .of(context)
+                        .Open_Gallery,
                     onTap: () {
                       sn.changeCoverImage(1);
                     },
@@ -581,7 +692,9 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                   ),
                   Gaps.vGap8,
                   buildEditImageCard(
-                    text: Translation.of(context).delete_image_title,
+                    text: Translation
+                        .of(context)
+                        .delete_image_title,
                     onTap: () {
                       sn.changeCoverImage(2);
                     },
@@ -728,7 +841,10 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
           builder: (BuildContext context) {
             return Container(
               padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
+                bottom: MediaQuery
+                    .of(context)
+                    .viewInsets
+                    .bottom,
                 left: 20,
                 right: 20,
                 top: 10,
@@ -739,12 +855,14 @@ class _MomentScreenContentState extends State<MomentScreenContent> {
                   Text(
                     Translation.current.report,
                     style:
-                        TextStyle(fontSize: 50.sp, fontWeight: FontWeight.bold),
+                    TextStyle(fontSize: 50.sp, fontWeight: FontWeight.bold),
                   ),
                   TextFormField(
                     key: sn.writeReviewKey,
                     validator: (v) {
-                      if (v != null && v.trim().isNotEmpty) return null;
+                      if (v != null && v
+                          .trim()
+                          .isNotEmpty) return null;
                       return Translation.current.errorEmptyField;
                     },
                     decoration: InputDecoration(

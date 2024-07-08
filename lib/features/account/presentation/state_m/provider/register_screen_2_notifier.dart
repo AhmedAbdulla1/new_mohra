@@ -1,7 +1,9 @@
 import 'package:country_list_pick/country_list_pick.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:starter_application/core/common/costum_modules/screen_notifier.dart';
+import 'package:starter_application/core/common/extensions/extensions.dart';
 import 'package:starter_application/core/common/validators.dart';
 import 'package:starter_application/core/navigation/nav.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_error_snackbar.dart';
@@ -18,6 +20,7 @@ import 'package:intl_phone_field/countries.dart';
 class RegisterScreen2Notifier extends ScreenNotifier {
   late BuildContext context;
   late RegisterRequest registerRequest;
+  late PhoneAuthCredential phoneAuthCredentials;
   bool obscureTextpssword = false;
   bool obscureTextconfirmPssword = false;
   String? firstname;
@@ -25,7 +28,7 @@ class RegisterScreen2Notifier extends ScreenNotifier {
   String? date;
   Country country =  const Country(name: 'Saudi Arabia',flag: '🇸🇦',code: 'SA',dialCode: '966',maxLength: 9,minLength: 9, nameTranslations: {});
   String countryCode = '+966';
-  final String _initialCountryCode = "+20";
+  final String _initialCountryCode = "+966";
   final accountCubit = AccountCubit();
   var formkey = GlobalKey<FormState>();
   int paddingbottom = 5;
@@ -77,7 +80,7 @@ class RegisterScreen2Notifier extends ScreenNotifier {
     if (checkIfCanPressButton()) {
       registerRequest.phoneNumber = phone;
       registerRequest.emailAddress = emailController.text;
-      registerRequest.countryCode = _initialCountryCode;
+      registerRequest.countryCode = countryCode;
       registerRequest.password = PasswordController.text;
      checkValidPhoneNumber();
     }
@@ -110,37 +113,41 @@ class RegisterScreen2Notifier extends ScreenNotifier {
   verifyPhone() async {
 
     changeSendingCodeStatus();
-    accountCubit.sendOtp(
-      CheckIfPhoneExistParams(phoneNumber: registerRequest.phoneNumber!, countryCode: registerRequest.countryCode!),
-    );
-    Nav.to(VerifyCodeScreen.routeName, arguments: [registerRequest, true]);
 
-    // String phone = phoneController.text.startsWith('0') ? '${phoneController.text.replaceFirst('0', '')}' :'${phoneController.text}';
-    //
-    //
-    // fireBaseOTP = FireBaseOTP(phoneNumber: phone, countryCode: countryCode);
-    // fireBaseOTP.sendCode(
-    //   verificationCompleted: (phoneAuthCredentials){
-    //     changeSendingCodeStatusToFalse();
-    //     accountCubit.emit(const AccountState.accountInit());
-    //   },
-    //   verificationFailed: (e){
-    //     changeSendingCodeStatusToFalse();
-    //     accountCubit.emit(const AccountState.accountInit());
-    //     if(e.code == 'invalid-phone-number')
-    //         showErrorSnackBar(message: isArabic ?"رقم الهاتف غير صالح" : "Phone Number is invalid", context: context,callback: verifyPhone);
-    //     else{
-    //       showErrorSnackBar(message: e.code , context: context,callback: verifyPhone);
-    //     }
-    //   },
-    //   onCodeSent: (verificationId , resendToken){
-    //     changeSendingCodeStatusToFalse();
-    //     registerRequest.verificationId = verificationId;
-    //     accountCubit.emit(const AccountState.accountInit());
-    //     registerRequest.register_or_confirm = true;
-    //     Nav.to(VerifyCodeScreen.routeName, arguments: [registerRequest, true]);
-    //   },
+    /// todo send otp to phone
+    // accountCubit.sendOtp(
+    //   CheckIfPhoneExistParams(phoneNumber: registerRequest.phoneNumber!, countryCode: registerRequest.countryCode!),
     // );
+    // registerRequest.toMap().toString().logD;
+    // Nav.to(VerifyCodeScreen.routeName, arguments: [registerRequest, true]);
+
+    String phone = phoneController.text.startsWith('0') ? '${phoneController.text.replaceFirst('0', '')}' :'${phoneController.text}';
+
+
+    fireBaseOTP = FireBaseOTP(phoneNumber: phone, countryCode: countryCode);
+    fireBaseOTP.sendCode(
+      verificationCompleted: (phoneAuthCredentials){
+        changeSendingCodeStatusToFalse();
+        accountCubit.emit(const AccountState.accountInit());
+        fireBaseOTP.phoneAuthCredential = phoneAuthCredentials;
+      },
+      verificationFailed: (e){
+        changeSendingCodeStatusToFalse();
+        accountCubit.emit(const AccountState.accountInit());
+        if(e.code == 'invalid-phone-number')
+            showErrorSnackBar(message: isArabic ?"رقم الهاتف غير صالح" : "Phone Number is invalid", context: context,callback: verifyPhone);
+        else{
+          showErrorSnackBar(message: e.code , context: context,callback: verifyPhone);
+        }
+      },
+      onCodeSent: (verificationId , resendToken){
+        changeSendingCodeStatusToFalse();
+        registerRequest.verificationId = verificationId;
+        accountCubit.emit(const AccountState.accountInit());
+        registerRequest.register_or_confirm = true;
+        Nav.to(VerifyCodeScreen.routeName, arguments: [registerRequest, true,fireBaseOTP]);
+      },
+    );
   }
 
   changeSendingCodeStatus() {

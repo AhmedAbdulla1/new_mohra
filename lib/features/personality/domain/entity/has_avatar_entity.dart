@@ -8,7 +8,6 @@ class HasAvatarEntity extends BaseEntity {
   bool hasAvatar;
 
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 
 

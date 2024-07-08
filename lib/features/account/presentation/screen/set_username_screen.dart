@@ -18,6 +18,7 @@ import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/set_username_notifier.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'dart:ui'as ui;
 
 import '../../../../main.dart';
@@ -97,8 +98,8 @@ class _SetUserNameScreenState extends State<SetUserNameScreen> {
                               sn.onNextTapped();
                             },
                           ),
-                          hasAvatarChecked: (s) => const ScreenNotImplementedError(),
-                          getAvatar: (s) => const ScreenNotImplementedError(),
+                          hasAvatarChecked: (s) => ScreenNotImplementedError(),
+                          getAvatar: (s) => ScreenNotImplementedError(),
                           accountError: (s) => CustomMansourButton(
                             titleText: isArabic?"التالي":"Next",
                             textColor: AppColors.lightFontColor,

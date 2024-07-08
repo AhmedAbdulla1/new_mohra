@@ -133,6 +133,7 @@ class VerifyCodeNotifier extends ScreenNotifier {
 
   onVerifyDone() {
     if (signUpCode) {
+      // todo to save phone and password in shared preference
       print('dooooooooooone');
     } else {
       Nav.toAndRemoveAll(ConfirmPasswordScreen.routeName,
@@ -145,50 +146,54 @@ class VerifyCodeNotifier extends ScreenNotifier {
 
   verifyPhoneCode() async {
     changeVerifyStatus();
-    VerifyOtpParams params = VerifyOtpParams(
-        phoneNumberWithCountryCode:
-            registerRequest.countryCode! + registerRequest.phoneNumber!,
-        otpCode: code!);
-    print(params);
-    Result<AppErrors, EmptyResponse> result =
-        await accountCubit.verifyOtp(params);
+    // VerifyOtpParams params = VerifyOtpParams(
+    //     phoneNumberWithCountryCode:
+    //         registerRequest.countryCode! + registerRequest.phoneNumber!,
+    //     otpCode: code!);
+    // print(params);
 
-    changeVerifyStatusToFalse();
-    print('in verify phone code ${result}');
-    if (result.data != null) {
-      print("data" + result.data!.succeed.toString());
-      result.pick(
-        onData: (data) =>
-            accountCubit.emit(AccountState.phoneNumberConfirmed(data)),
-        onError: (error) => accountCubit.emit(
-          AccountState.accountError(
-              error, () => accountCubit.verifyOtp(params)),
-        ),
-      );
-      // if (registerRequest.register_or_confirm ?? false) {
-      //   Nav.to(SetUserNameScreen.routeName, arguments: registerRequest);
-      // } else {
-      int deviceType = 0;
-      String deviceId = '';
-      if (Platform.isAndroid) {
-        deviceType = 1;
-        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-        deviceId = androidInfo.id;
-      } else if (Platform.isIOS) {
-        deviceType = 2;
-        IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
-        deviceId = iosDeviceInfo.identifierForVendor;
-        // }
-        await getLocation();
-        accountCubit.login(LoginRequest(
-            userNameOrEmailAddressOrPhoneNumber: registerRequest.phoneNumber,
-            password: registerRequest.password,
-            countryCode: '00${registerRequest.countryCode}',
-            devicedType: deviceType,
-            devicedId: deviceId,
-            long: lon,
-            lat: lat));
-      }
+    fireBaseOTP = FireBaseOTP(phoneNumber: registerRequest.phoneNumber! , countryCode: registerRequest.countryCode!);
+
+    fireBaseOTP.verifyCode( phoneAuthCredential: fireBaseOTP.phoneAuthCredential!);
+    // Result<AppErrors, EmptyResponse> result =
+    //     await accountCubit.verifyOtp(params);
+
+    // changeVerifyStatusToFalse();
+
+    // print('in verify phone code ${result}');
+    // if (result.data != null) {
+    // print("data" + result.data!.succeed.toString());
+    // result.pick(
+    //   onData: (data) =>
+    //       accountCubit.emit(AccountState.phoneNumberConfirmed(data)),
+    //   onError: (error) => accountCubit.emit(
+    //     AccountState.accountError(
+    //         error, () => accountCubit.verifyOtp(params)),
+    //   ),
+    // );
+    // if (registerRequest.register_or_confirm ?? false) {
+    //   Nav.to(SetUserNameScreen.routeName, arguments: registerRequest);
+    // } else {
+    int deviceType = 0;
+    String deviceId = '';
+    if (Platform.isAndroid) {
+      deviceType = 1;
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      deviceId = androidInfo.id;
+    } else if (Platform.isIOS) {
+      deviceType = 2;
+      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
+      deviceId = iosDeviceInfo.identifierForVendor;
+      // }
+      await getLocation();
+      accountCubit.login(LoginRequest(
+          userNameOrEmailAddressOrPhoneNumber: registerRequest.phoneNumber,
+          password: registerRequest.password,
+          countryCode: '00${registerRequest.countryCode}',
+          devicedType: deviceType,
+          devicedId: deviceId,
+          long: lon,
+          lat: lat));
     } else {
       changeVerifyStatusToFalse();
     }
@@ -241,7 +246,6 @@ class VerifyCodeNotifier extends ScreenNotifier {
 
   reSendCode() async {
     if (signUpCode) {
-
       reSendOTPCodeFromFirebase();
     } else {
       if (registerRequest.phoneNumber != null) {
@@ -255,36 +259,36 @@ class VerifyCodeNotifier extends ScreenNotifier {
 
   void reSendOTPCodeFromFirebase() async {
     changeSendingCodeStatus();
-    accountCubit.sendOtp(
-      CheckIfPhoneExistParams(phoneNumber: registerRequest.phoneNumber!, countryCode: registerRequest.countryCode!),
-    );
-    // String codeForFirebase = registerRequest.countryCode!.substring(2);
-    // fireBaseOTP = FireBaseOTP(
-    //     phoneNumber: registerRequest.phoneNumber!,
-    //     countryCode: registerRequest.countryCode!);
-
-    // fireBaseOTP.sendCode(
-    //   verificationCompleted: (PhoneAuthCredential credential) {
-    //     print('complete');
-    //     changeSendingCodeStatusToFalse();
-    //   },
-    //   verificationFailed: (e) {
-    //     changeSendingCodeStatusToFalse();
-    //     accountCubit.emit(const AccountState.accountInit());
-    //     showErrorSnackBar(
-    //         message: e.message,
-    //         context: context,
-    //         callback: reSendOTPCodeFromFirebase);
-    //   },
-    //   onCodeSent: (verificationId, resendToken) {
-    //     changeSendingCodeStatusToFalse();
-    //     registerRequest.verificationId = verificationId;
-    //     accountCubit.emit(const AccountState.accountInit());
-    //     showSnackbar(isArabic
-    //         ? "لقد ارسلنا رسالة نصية تحوي كود التفعيل إلى الرقم "
-    //         : "We’ve sent a text message with your verification code to");
-    //   },
+    // accountCubit.sendOtp(
+    //   CheckIfPhoneExistParams(phoneNumber: registerRequest.phoneNumber!, countryCode: registerRequest.countryCode!),
     // );
+    String codeForFirebase = registerRequest.countryCode!.substring(2);
+    fireBaseOTP = FireBaseOTP(
+        phoneNumber: registerRequest.phoneNumber!,
+        countryCode: registerRequest.countryCode!);
+
+    fireBaseOTP.sendCode(
+      verificationCompleted: (PhoneAuthCredential credential) {
+        print('complete');
+        changeSendingCodeStatusToFalse();
+      },
+      verificationFailed: (e) {
+        changeSendingCodeStatusToFalse();
+        accountCubit.emit(const AccountState.accountInit());
+        showErrorSnackBar(
+            message: e.message,
+            context: context,
+            callback: reSendOTPCodeFromFirebase);
+      },
+      onCodeSent: (verificationId, resendToken) {
+        changeSendingCodeStatusToFalse();
+        registerRequest.verificationId = verificationId;
+        accountCubit.emit(const AccountState.accountInit());
+        showSnackbar(isArabic
+            ? "لقد ارسلنا رسالة نصية تحوي كود التفعيل إلى الرقم "
+            : "We’ve sent a text message with your verification code to");
+      },
+    );
   }
 
   changeSendingCodeStatusToFalse() {

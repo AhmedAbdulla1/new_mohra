@@ -58,6 +58,7 @@ https://mohra.onelink.me/QNcd/bbqz0hvq''';
                   children: [
                     InkWell(
                       onTap: () async {
+                        // sn.share();
                         await Share.share(arMessage);
                       },
                       child: Row(
@@ -91,7 +92,8 @@ https://mohra.onelink.me/QNcd/bbqz0hvq''';
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 2,
                             blurRadius: 7,
-                            offset: const Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                       ),

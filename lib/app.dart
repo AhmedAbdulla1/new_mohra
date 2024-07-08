@@ -1,20 +1,28 @@
-
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
+import 'package:starter_application/core/bloc/global/glogal_cubit.dart';
 import 'package:starter_application/core/common/app_config.dart';
+import 'package:starter_application/core/models/user_session_data_model.dart';
+import 'package:starter_application/core/navigation/nav.dart';
+import 'package:starter_application/core/params/screen_params/visit_user_profile_screen_params.dart';
 import 'package:starter_application/features/splash/presentation/screen/splash_screen.dart';
+import 'package:starter_application/features/user/presentation/screen/view_friend_moments_screen.dart';
+import 'package:starter_application/features/user/presentation/screen/visit_user_profile_screen.dart';
 import 'core/common/provider/provider_list.dart';
 import 'core/constants/app/app_constants.dart';
 import 'core/localization/flutter_localization.dart';
 import 'core/navigation/navigation_service.dart';
 import 'core/navigation/route_generator.dart';
 import 'di/service_locator.dart';
-
+import 'package:starter_application/features/friend/domain/entity/client_entity.dart'
+    as c;
 import 'generated/l10n.dart';
 
 class App extends StatefulWidget {
@@ -32,10 +40,69 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   @override
   void initState() {
     FlutterAppBadger.removeBadge();
-    super.initState();
     WidgetsBinding.instance.addObserver(this);
+    initDynamicLinks();
+    super.initState();
   }
 
+  void initDynamicLinks() async {
+    print("initdynamiclnk");
+    FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+    dynamicLinks.onLink.listen((dynamicLinkData) {
+      print('onclik');
+      print(dynamicLinkData.link);
+      print(dynamicLinkData.link.queryParameters);
+      if (dynamicLinkData.link.queryParameters['type'] ==
+          VisitUserProfileScreen.routeName) {
+        int id = int.tryParse(
+              dynamicLinkData.link.queryParameters['userId']!,
+            ) ??
+            0;
+        print("dynamic link user id "  +id.toString());
+        bool isAuth = BlocProvider.of<GlogalCubit>(AppConfig().appContext, listen: false)
+            .isAuth;
+        if(isAuth) {
+
+
+        if (id != UserSessionDataModel.userId) {
+          Nav.to(
+            // AppConfig().appContext,
+            VisitUserProfileScreen.routeName,
+            arguments: VisitUserProfileScreenParams(
+              id: id,
+            ),
+          );
+        } else {
+          Nav.to(
+            ViewFriendMomentsScreen.routeName,
+            arguments: c.ClientEntity(
+              addresses: [],
+              hasAvatar: true,
+              surname: UserSessionDataModel.surname,
+              qrCode: UserSessionDataModel.qrCode ?? "",
+              code: UserSessionDataModel.code ?? "",
+              fullName: UserSessionDataModel.fullName,
+              id: UserSessionDataModel.userId,
+              imageUrl: UserSessionDataModel.imageUrl,
+              emailAddress: UserSessionDataModel.emailAddress,
+              name: UserSessionDataModel.name,
+              phoneNumber: UserSessionDataModel.phoneNumber,
+              countryCode: UserSessionDataModel.countryCode ?? "",
+            ),
+          );
+        }
+      }}
+    }).onError((error) {
+      print('onLink error');
+      print(error.message);
+    });
+
+    // final PendingDynamicLinkData? initialLink = await FirebaseDynamicLinks.instance.getInitialLink();
+    // final Uri? deepLink = initialLink?.link;
+    // if (deepLink != null) {
+    //   Navigator.pushNamed(context, deepLink.path);
+    // }
+  }
 
   // restart() {
   //   RestartWidget.restartApp(getIt<NavigationService>().appContext!);
