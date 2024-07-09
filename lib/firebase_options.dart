@@ -50,19 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDOgqJr463cOmeOlWMqS3trtWD-fGVo35k',
-    appId: '1:209012108642:android:9a79162216d8ae6975903b',
-    messagingSenderId: '209012108642',
-    projectId: 'e-commerce-9bfbf',
-    storageBucket: 'e-commerce-9bfbf.appspot.com',
+    apiKey: 'AIzaSyCE9ELTJBlu6YektTNx8uEOM4RedB_RvN8',
+    appId: '1:230280905856:android:af11e7ed1e5b01243c9265',
+    messagingSenderId: '230280905856',
+    projectId: 'hypnotic-trees-282211',
+    storageBucket: 'hypnotic-trees-282211.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC6mli4WaIeGhKCszt5Hk2K5dgjVPgvfVg',
-    appId: '1:209012108642:ios:90a824920f1ba77775903b',
-    messagingSenderId: '209012108642',
-    projectId: 'e-commerce-9bfbf',
-    storageBucket: 'e-commerce-9bfbf.appspot.com',
+    apiKey: 'AIzaSyArnTitQWCBfZiUP-LigRgji5NUoiivphc',
+    appId: '1:230280905856:ios:de1932fe37b121873c9265',
+    messagingSenderId: '230280905856',
+    projectId: 'hypnotic-trees-282211',
+    storageBucket: 'hypnotic-trees-282211.appspot.com',
+    androidClientId: '230280905856-60mbdu2luua1ki859b78eln0f2n0do0c.apps.googleusercontent.com',
+    iosClientId: '230280905856-t50o4pkf8858j4q9oiai6mnctnhaa39p.apps.googleusercontent.com',
     iosBundleId: 'app.mohraapp.com.ios',
   );
 }

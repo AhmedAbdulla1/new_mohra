@@ -56,7 +56,7 @@ class DynamicLinkService {
     FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
     final ShortDynamicLink shortLink =
-        await dynamicLinks.buildShortLink(parameters);
+        await dynamicLinks.buildShortLink(parameters,);
     return shortLink.shortUrl;
   }
 

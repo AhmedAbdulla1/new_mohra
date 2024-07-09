@@ -46,6 +46,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   }
 
   void initState() {
+    print(widget.phoneAuthCredential.countryCode);
     sn.fireBaseOTP = widget.phoneAuthCredential;
     sn.signUpCode = widget.signUpProcess;
     sn.registerRequest = widget.registerRequest;

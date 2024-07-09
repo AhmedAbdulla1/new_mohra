@@ -123,7 +123,6 @@ class RegisterScreen2Notifier extends ScreenNotifier {
 
     String phone = phoneController.text.startsWith('0') ? '${phoneController.text.replaceFirst('0', '')}' :'${phoneController.text}';
 
-
     fireBaseOTP = FireBaseOTP(phoneNumber: phone, countryCode: countryCode);
     fireBaseOTP.sendCode(
       verificationCompleted: (phoneAuthCredentials){
