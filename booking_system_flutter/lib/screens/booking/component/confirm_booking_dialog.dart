@@ -183,7 +183,6 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
         return Translation.of(context).paymentFailed;
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Observer(
