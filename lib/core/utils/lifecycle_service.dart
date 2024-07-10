@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import '../datasources/shared_preference.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 
 @singleton
 class LifecycleService with ChangeNotifier, WidgetsBindingObserver {

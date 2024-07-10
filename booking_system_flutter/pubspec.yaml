@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   starter_application:
-    path: ../../mohra-mobile-application-latest-repository
+    path: ../../mohra
 
   flutter:
     sdk: flutter

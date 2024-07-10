@@ -5,7 +5,6 @@ import 'package:starter_application/core/datasources/shared_preference.dart';
 import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/models/empty_response.dart';
 import 'package:starter_application/core/params/no_params.dart';
-import 'package:starter_application/core/results/result.dart';
 import 'package:starter_application/di/service_locator.dart';
 import 'package:starter_application/features/account/data/model/request/check_device_id_params.dart';
 import 'package:starter_application/features/account/data/model/request/check_exist_email_params.dart';

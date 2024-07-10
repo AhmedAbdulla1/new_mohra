@@ -17,7 +17,6 @@ import 'package:starter_application/core/ui/mansour/button/custom_mansour_button
 import 'package:starter_application/core/ui/mansour/custom_list_tile.dart';
 import 'package:starter_application/core/ui/widgets/custom_text_field.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/register_screen_1_notifier.dart';
-import 'package:starter_application/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui' as ui;
 import '../../../../main.dart';
@@ -241,9 +240,9 @@ class _RegisterScreen1State extends State<RegisterScreen1> {
                   ),
                 ),
               ),
-              Text(
+              const Text(
                 " | ",
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColors.accentColorLight,
                 ),
               ),

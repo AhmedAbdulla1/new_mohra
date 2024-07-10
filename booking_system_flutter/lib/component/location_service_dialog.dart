@@ -25,7 +25,7 @@ class _LocationServiceDialogState extends State<LocationServiceDialog> {
           AppButton(
             text: language.lblOk,
             width: context.width(),
-            margin: const EdgeInsets.all(16),
+            // margin: const EdgeInsets.all(16),
             color: primaryColor,
             textColor: Colors.white,
             onTap: () async {

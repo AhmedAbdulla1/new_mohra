@@ -9,7 +9,6 @@ import 'package:starter_application/features/home/data/model/request/get_weather
 import 'package:starter_application/features/home/domain/entity/banners_entity.dart';
 import 'package:starter_application/features/home/domain/entity/weather_entity.dart';
 import 'package:starter_application/features/home/domain/repository/ihome_repository.dart';
-import 'package:starter_application/features/home/domain/usecase/get_weather_usecase.dart';
 
 @Injectable(as: IHomeRepository)
 class HomeRepository extends IHomeRepository {

@@ -21,7 +21,6 @@ import 'package:starter_application/features/account/data/model/request/login_re
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';
 import 'package:starter_application/features/account/domain/entity/login_entity.dart';
-import 'package:starter_application/features/account/presentation/screen/start_personality_test.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/features/home/presentation/screen/home_screen/home_screen.dart';
 import 'package:starter_application/main.dart';

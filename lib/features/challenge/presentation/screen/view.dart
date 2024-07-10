@@ -145,7 +145,7 @@ class _MapLocationScreenState extends State<MapLocationScreen> {
             child: ElevatedButton(
               child: Text(
                 isArabic ? 'تم' : 'Done',
-                style: TextStyle(color: Colors.black, fontSize: 30),
+                style: const TextStyle(color: Colors.black, fontSize: 30),
               ),
               onPressed: () {
                 Navigator.pop(context, [

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -203,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             isArabic
                                 ? "هل نسيت كلمة المرور ؟"
                                 : "Forget Password?",
-                            style: TextStyle(color: Colors.grey),
+                            style: const TextStyle(color: Colors.grey),
                           ),
                         ),
                       ),
@@ -430,6 +429,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       validator: (value) {
         sn.validatePassword(value);
+        return null;
       },
       onFieldSubmitted: (term) {
         sn.myFocusNodePassord.unfocus();
@@ -451,14 +451,14 @@ class _LoginScreenState extends State<LoginScreen> {
               color: AppColors.mansourLightGreyColor_5,
               style: BorderStyle.solid)),
       child: Transform.translate(
-        offset: Offset(0, 10),
+        offset: const Offset(0, 10),
         child: IntlPhoneField(
           key: const Key('telephoneNumberNational'),
           focusNode: sn.myFocusNodePhone,
           disableLengthCheck: false,
           textInputAction: TextInputAction.next,
           flagsButtonMargin: EdgeInsets.zero,
-          dropdownTextStyle: TextStyle(),
+          dropdownTextStyle: const TextStyle(),
           onCountryChanged: (value) {
             sn.countryCode = "+${value.dialCode}";
             sn.country = value;
@@ -474,7 +474,7 @@ class _LoginScreenState extends State<LoginScreen> {
           searchText: isArabic ? "البحث عن بلد" : "Search country",
           textAlign: isArabic ? TextAlign.right : TextAlign.left,
           decoration: InputDecoration(
-            hintStyle: TextStyle(fontSize: 14),
+            hintStyle: const TextStyle(fontSize: 14),
             hintMaxLines: 1,
             hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
             enabled: true,
@@ -485,6 +485,7 @@ class _LoginScreenState extends State<LoginScreen> {
           initialCountryCode: 'SA',
           validator: (phone) {
             sn.validatePhoneNumber(phone?.number, sn.country.maxLength);
+            return null;
           },
           onSubmitted: (term) {
             fieldFocusChange(

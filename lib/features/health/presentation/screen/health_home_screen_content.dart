@@ -4,8 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/app_colors.dart';
-import 'package:starter_application/core/common/extensions/extensions.dart';
-import 'package:starter_application/core/common/style/dimens.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
 import 'package:starter_application/core/models/health_profile_model.dart';

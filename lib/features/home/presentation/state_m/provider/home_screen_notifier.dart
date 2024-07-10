@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:booking_system_flutter/model/dashboard_model.dart';
 import 'package:booking_system_flutter/network/network_utils.dart';
-import 'package:booking_system_flutter/screens/map/map_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,6 @@ import 'package:starter_application/core/ui/widgets/custom_network_image_widget.
 import 'package:starter_application/features/challenge/data/model/request/get_all_challenge_request.dart';
 import 'package:starter_application/features/challenge/domain/entity/challange_entity.dart';
 import 'package:starter_application/features/challenge/presentation/screen/challenge_screen.dart';
-import 'package:starter_application/features/challenge/presentation/screen/view.dart';
 import 'package:starter_application/features/challenge/presentation/state_m/cubit/challenge_cubit.dart';
 import 'package:starter_application/features/event/presentation/screen/event_home_screen.dart';
 import 'package:starter_application/features/health/presentation/screen/eating_habits_screen.dart';
@@ -562,3 +560,13 @@ class HomeScreenNotifier extends ScreenNotifier {
     return completer.future;
   }
 }
+
+// enum HttpMethodType {
+//   GET,
+//   POST,
+//   PUT,
+//   DELETE,
+//   PATCH,
+//   HEAD,
+//   OPTIONS,
+// }

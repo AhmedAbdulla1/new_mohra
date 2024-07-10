@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_share/flutter_share.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -45,7 +44,6 @@ import 'package:starter_application/features/moment/presentation/widget/create_p
 import 'package:starter_application/features/moment/presentation/widget/post_option_widget.dart';
 import 'package:starter_application/features/user/data/model/request/get_address_params.dart';
 import 'package:starter_application/features/user/domain/entity/addresses_entity.dart';
-import 'package:starter_application/features/user/presentation/screen/edit_profile_screen.dart';
 import 'package:starter_application/features/user/presentation/screen/visit_user_profile_screen.dart';
 import 'package:starter_application/features/user/presentation/state_m/cubit/user_cubit.dart';
 import 'package:starter_application/generated/l10n.dart';

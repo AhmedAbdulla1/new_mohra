@@ -58,7 +58,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
           backgroundColor: scaffoldSecondaryDark,
         ),
-        dividerColor: dividerDarkColor,
+        // dividerColor: dividerDarkColor,
         floatingActionButtonTheme: FloatingActionButtonThemeData(backgroundColor: color ?? primaryColor),
         cardColor: scaffoldSecondaryDark,
         dialogTheme: DialogTheme(shape: dialogShape()),

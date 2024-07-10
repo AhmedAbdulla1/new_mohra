@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +18,6 @@ import 'package:starter_application/features/account/data/model/request/register
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/firebase_otp.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/verify_code_notifier.dart';
-import 'package:starter_application/generated/l10n.dart';
 import 'package:starter_application/main.dart';
 import 'dart:ui' as ui;
 
@@ -104,7 +102,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                               return state.maybeMap(
                                 orElse: () => const SizedBox.shrink(),
                                 hasAvatarChecked: (s) =>
-                                    ScreenNotImplementedError(),
+                                    const ScreenNotImplementedError(),
                                 getAvatar: (s) => _buildVerifyButton(),
                                 forgetpasswordLoaded: (s) => _buildVerifyButton(),
                                 accountError: (s) => _buildVerifyButton(),

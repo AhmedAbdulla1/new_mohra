@@ -944,3 +944,14 @@ Future<List<MultipartFile>> getMultipartImages({required List<File> files, requi
 Future<BaseResponseModel> deleteImage(Map request) async {
   return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse('remove-file', request: request, method: HttpMethodType.POST)));
 }
+
+//
+// enum HttpMethodType {
+//   GET,
+//   POST,
+//   PUT,
+//   DELETE,
+//   PATCH,
+//   HEAD,
+//   OPTIONS,
+// }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
 import 'package:starter_application/core/common/validators.dart';
@@ -11,7 +10,6 @@ import 'package:starter_application/core/navigation/animations/animated_route.da
 import 'package:starter_application/core/ui/appbar/appbar.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/error_viewer.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/errv_snack_bar_options.dart';
-import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_snackbar_based_error_type.dart';
 import 'package:starter_application/core/ui/error_ui/errors_screens/error_widget.dart';
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
 import 'package:starter_application/core/ui/snackbars/show_snackbar.dart';
@@ -189,8 +187,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                                     ),
                                     accountLoading: (s) => WaitingWidget(),
                                     hasAvatarChecked: (s) =>
-                                        ScreenNotImplementedError(),
-                                    getAvatar: (s) => ScreenNotImplementedError(),
+                                        const ScreenNotImplementedError(),
+                                    getAvatar: (s) => const ScreenNotImplementedError(),
                                     loginLoaded: (s) => SlidingAnimated(
                                       initialOffset: 5,
                                       intervalStart: 0.4,
@@ -382,7 +380,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 maxHeight: 80.h,
                 maxWidth: 100.h,
               ),
-              validator: (phone) {},
+              validator: (phone) {
+                return null;
+              },
               onFieldSubmitted: (term) {
                 sn.myFocusNodeemail.unfocus();
               },

@@ -107,8 +107,8 @@ class _ConfirmPasswordScreenState extends State<ConfirmPasswordScreen> {
                               builder: (context, state) {
                                 return state.maybeMap(
                                   hasAvatarChecked: (s) =>
-                                      ScreenNotImplementedError(),
-                                  getAvatar: (s) => ScreenNotImplementedError(),
+                                      const ScreenNotImplementedError(),
+                                  getAvatar: (s) => const ScreenNotImplementedError(),
                                   forgetpasswordLoaded: (s) => Column(
                                     children: [
                                       Gaps.vGap256,

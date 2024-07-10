@@ -1065,30 +1065,30 @@ class _PostCardState extends State<PostCard> {
       title: ReactionButton<int>(
         boxColor: Colors.white,
         boxPadding: const EdgeInsets.all(10),
-        initialReaction: _selectedReaction == null
-            ? Reaction(
-                previewIcon: _buildReactionIcon(
-                  AppConstants.IMAGE_LIKE_REACTION,
-                  60.r,
-                  space: 10,
-                  color: AppColors.mansourLightBlueColor_3,
-                ),
-                icon: _buildReactionIcon(
-                  AppConstants.IMAGE_LIKE_REACTION,
-                  60.r,
-                  color: AppColors.mansourLightGreyColor_3,
-                  textColor: AppColors.mansourLightGreyColor_3,
-                  title: Translation.current.like,
-                ),
-                value: null,
-              )
-            : _reactions[_selectedReaction!],
+        // initialReaction: _selectedReaction == null
+        //     ? Reaction(
+        //         previewIcon: _buildReactionIcon(
+        //           AppConstants.IMAGE_LIKE_REACTION,
+        //           60.r,
+        //           space: 10,
+        //           color: AppColors.mansourLightBlueColor_3,
+        //         ),
+        //         icon: _buildReactionIcon(
+        //           AppConstants.IMAGE_LIKE_REACTION,
+        //           60.r,
+        //           color: AppColors.mansourLightGreyColor_3,
+        //           textColor: AppColors.mansourLightGreyColor_3,
+        //           title: Translation.current.like,
+        //         ),
+        //         value: null,
+        //       )
+        //     : _reactions[_selectedReaction!],
         boxElevation: 0.5,
         onReactionChanged: (i) async {
           if (_selectedReaction != null) {
             // delete it
             print('delete reaction');
-            if (_selectedReaction == i) {
+            if (_selectedReaction == i?.value) {
               // await interactCubit.deleteInteract(DeleteInteractParams(id: interactionsEntity!.id!));
               setState(() {
                 DeleteFromInteractionList(interactionsEntity!.id!);
@@ -1099,20 +1099,20 @@ class _PostCardState extends State<PostCard> {
                 DeleteFromInteractionList(interactionsEntity!.id!);
               });
               interactCubit.Interact(InteractRequest(
-                  interactionType: i!,
+                  interactionType: i!.value!,
                   refId: widget.item.id.toString(),
                   refType: 2));
-              _selectedReaction = i;
+              _selectedReaction = i.value!;
             }
           } else {
             interactCubit.Interact(InteractRequest(
-                interactionType: i!,
+                interactionType: i!.value!,
                 refId: widget.item.id.toString(),
                 refType: 2));
           }
         },
-        shouldChangeReaction: false,
-        reactions: _reactions,
+        // shouldChangeReaction: false,
+        reactions: _reactions, itemSize: Size(60.r, 60.r),
       ),
     );
   }

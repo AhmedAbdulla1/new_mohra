@@ -8,21 +8,17 @@ import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
 import 'package:starter_application/core/common/utils.dart';
-import 'package:starter_application/core/common/validators.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
 import 'package:starter_application/core/navigation/animations/animated_route.dart';
 import 'package:starter_application/core/ui/appbar/appbar.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_snackbar_based_error_type.dart';
-import 'package:starter_application/core/ui/error_ui/errors_screens/error_widget.dart';
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
 import 'package:starter_application/core/ui/widgets/custom_text_field.dart';
 import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/register_screen_2_notifier.dart';
-import 'package:starter_application/generated/l10n.dart';
 import 'dart:ui' as ui;
-import 'package:intl_phone_field/countries.dart';
 import '../../../../main.dart';
 class RegisterScreen2 extends StatefulWidget {
   static const routeName = "/RegisterScreen2";
@@ -333,6 +329,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       ),
       validator: (value) {
         sn.validateEmail(value);
+        return null;
       },
       onFieldSubmitted: (term) {
         fieldFocusChange(context, sn.myFocusNodeEmail, sn.myFocusNodePhone);
@@ -390,11 +387,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
               color: AppColors.mansourLightGreyColor_5,
               style: BorderStyle.solid)),
       child: Transform.translate(
-        offset: Offset(0, 10),
+        offset: const Offset(0, 10),
         child: IntlPhoneField(
           disableLengthCheck: false,
           flagsButtonMargin: EdgeInsets.zero,
-          dropdownTextStyle: TextStyle(),
+          dropdownTextStyle: const TextStyle(),
           onCountryChanged: (value) {
             print(value.dialCode);
             sn.countryCode = "+${value.dialCode}";
@@ -412,7 +409,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
           searchText: isArabic  ? "البحث عن بلد" : "Search country",
           textAlign: isArabic ? TextAlign.right : TextAlign.left,
           decoration: InputDecoration(
-            hintStyle: TextStyle(fontSize: 14),
+            hintStyle: const TextStyle(fontSize: 14),
             hintMaxLines: 1,
             hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
             enabled: true,
@@ -423,6 +420,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
           initialCountryCode: 'SA',
           validator: (phone) {
             sn.validatePhoneNumber(phone?.number,sn.country.maxLength);
+            return null;
           },
           onSubmitted: (term) {
             fieldFocusChange(
@@ -507,6 +505,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       ),
       validator: (value) {
         sn.validatePassword(value);
+        return null;
       },
       onFieldSubmitted: (term) {
         fieldFocusChange(
@@ -586,6 +585,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       ),
       validator: (value) {
         sn.validateConfirmPassword(value);
+        return null;
       },
       onFieldSubmitted: (term) {
         sn.myFocusNodeConfirmPassword.unfocus();

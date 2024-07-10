@@ -6,20 +6,13 @@ import 'package:flutter/cupertino.dart';
 
 // import 'package:mobile_scanner/mobile_scanner_web.dart';
 import 'package:starter_application/core/common/costum_modules/screen_notifier.dart';
-import 'package:starter_application/core/errors/app_errors.dart';
-import 'package:starter_application/core/models/empty_response.dart';
 import 'package:starter_application/core/navigation/nav.dart';
-import 'package:starter_application/core/results/result.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_error_snackbar.dart';
 import 'package:starter_application/core/ui/snackbars/show_snackbar.dart';
-import 'package:starter_application/features/account/data/model/request/check_exist_phone_params.dart';
-import 'package:starter_application/features/account/data/model/request/confirmPassword_request.dart';
 import 'package:starter_application/features/account/data/model/request/forgetpassword_request.dart';
 import 'package:starter_application/features/account/data/model/request/login_request.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
-import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';
 import 'package:starter_application/features/account/presentation/screen/confirmPassword_screen.dart';
-import 'package:starter_application/features/account/presentation/screen/set_username_screen.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/main.dart';
 

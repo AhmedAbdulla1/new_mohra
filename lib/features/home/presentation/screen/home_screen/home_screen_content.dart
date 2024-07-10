@@ -15,7 +15,6 @@ import 'package:shimmer/shimmer.dart';
 import 'package:starter_application/core/bloc/global/glogal_cubit.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/app_config.dart';
-import 'package:starter_application/core/common/extensions/extensions.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
 import 'package:starter_application/core/common/utils.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';

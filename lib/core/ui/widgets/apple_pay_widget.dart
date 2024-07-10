@@ -16,15 +16,15 @@ class ApplePayMohra extends StatelessWidget {
   PaymentConfig get paymentConfig => PaymentConfig(
         publishableApiKey: AppConstants.PublishableLiveKey,
         amount: (params.amount! * 100).round(),
-        creditCard: CreditCardConfig(
-          saveCard: true,
-          manual: false,
-        ),
-        applePay: ApplePayConfig(
-          merchantId: "merchant.app.mohraapp.com.ios",
-          label: 'Mohra',
-          manual: false,
-        ),
+        // creditCard: CreditCardConfig(
+        //   saveCard: true,
+        //   manual: false,
+        // ),
+        // applePay: ApplePayConfig(
+        //   merchantId: "merchant.app.mohraapp.com.ios",
+        //   label: 'Mohra',
+        //   manual: false,
+        // ),
         description: 'Mohra',
         currency: "SAR",
         metadata: metadata ?? null,

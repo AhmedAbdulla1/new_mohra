@@ -84,7 +84,7 @@ void main() async {
   textSecondaryColorGlobal = appTextPrimaryColor;
   textPrimaryColorGlobal = appTextSecondaryColor;
   defaultAppButtonElevation = 0;
-  pageRouteTransitionDurationGlobal = 400.milliseconds;
+  // pageRouteTransitionDurationGlobal = 400.milliseconds;
   textBoldSizeGlobal = 14;
   textPrimarySizeGlobal = 14;
   textSecondarySizeGlobal = 12;
