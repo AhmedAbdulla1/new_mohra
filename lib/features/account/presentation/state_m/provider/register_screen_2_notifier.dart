@@ -124,6 +124,9 @@ class RegisterScreen2Notifier extends ScreenNotifier {
   }
 
   onPhoneVerifiedFromTaqniat(SendOtpEntity sendOtpEntity) {
+   print('onPhoneVerifiedFromTaqniat');
+   print(sendOtpEntity.result.otp);
+   registerRequest.register_or_confirm =true;
     Nav.to(VerifyCodeScreen.routeName,
         arguments: [registerRequest, true, sendOtpEntity]);
   }

@@ -141,9 +141,12 @@ class VerifyCodeNotifier extends ScreenNotifier {
   void closeNotifier() {}
 
   verifyPhoneCode() async {
+    print('verifyPhoneCode');
+    print(sendOtpEntity?.result.otp);
+    print(registerRequest.register_or_confirm);
     changeVerifyStatus();
     bool result = false;
-    if (sendOtpEntity != null && registerRequest.countryCode!.contains('966')) {
+    if (sendOtpEntity != null) {
       if (code == sendOtpEntity?.result.otp) {
         result = true;
       }
@@ -158,6 +161,7 @@ class VerifyCodeNotifier extends ScreenNotifier {
       changeVerifyStatusToFalse();
     }
     if (result) {
+
       if (registerRequest.register_or_confirm ?? false) {
         Nav.to(SetUserNameScreen.routeName, arguments: registerRequest);
       } else {

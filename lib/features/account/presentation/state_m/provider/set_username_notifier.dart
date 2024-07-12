@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/costum_modules/screen_notifier.dart';
 import 'package:starter_application/core/common/provider/session_data.dart';
@@ -22,6 +23,7 @@ import 'package:starter_application/features/account/data/model/request/register
 import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';
 import 'package:starter_application/features/account/domain/entity/login_entity.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
+import 'package:starter_application/features/home/presentation/screen/app_main_screen.dart';
 import 'package:starter_application/features/home/presentation/screen/home_screen/home_screen.dart';
 import 'package:starter_application/main.dart';
 
@@ -54,9 +56,13 @@ class SetUserNameNotifier extends ScreenNotifier {
   }
 
   void register() {
+    DateTime defaultBirthDate = DateTime(2000, 1, 1);
     UserSessionDataModel.provider = 'normal';
     if (userNameKey.currentState!.validate()) {
       registerRequest.userName = userNameController.text;
+      registerRequest.firstName = userNameController.text;
+      registerRequest.lastName = userNameController.text;
+      registerRequest.birthDate = DateFormat('yMd').format(defaultBirthDate);
       accountCubit.register(
         registerRequest,
       );
@@ -81,7 +87,9 @@ class SetUserNameNotifier extends ScreenNotifier {
   }
 
   onRegisterDone() async {
-    confirmPhoneNumber();
+    print('on register done');
+    // Nav.toAndRemoveAll(AppMainScreen.routeName);
+    onPhoneNumberConfirmed();
   }
 
   confirmPhoneNumber() {
@@ -173,7 +181,6 @@ class SetUserNameNotifier extends ScreenNotifier {
         loginEntity.result.countryCode,
         loginEntity.result.avatarMonth);
     await loginHandyMan(userEntity: loginEntity);
-
     Nav.toAndRemoveAll(HomeScreen.routeName);
   }
 

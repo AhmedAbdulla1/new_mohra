@@ -213,9 +213,12 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
     return BlocConsumer<AccountCubit, AccountState>(
         listener: (context, state) {
           if(state is CheckPhoneNumberExistDone){
+            print('check phone number is done');
             sn.onValidPhoneNumber();
           }
           if(state is CheckPhoneNumberExistError){
+            print('check phone number error');
+
             showSnakBarBasedErrorType(context, state.error, (){}, retryWhenNotAuthorized: false);
           }
           if(state is CheckEmailExistDone){

@@ -45,6 +45,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   }
 
   void initState() {
+    print('ahmed');
+    print(widget.sendOtpEntity);
     sn.sendOtpEntity = widget.sendOtpEntity;
     sn.signUpCode = widget.signUpProcess;
     sn.registerRequest = widget.registerRequest;

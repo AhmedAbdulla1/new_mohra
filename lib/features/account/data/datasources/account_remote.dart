@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:gallery_saver/files.dart';
 import 'package:injectable/injectable.dart';
+import 'package:starter_application/core/common/extensions/extensions.dart';
 import 'package:starter_application/core/constants/enums/http_method.dart';
 import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/models/empty_response.dart';
@@ -43,6 +44,7 @@ import 'iaccount_remote.dart';
 class AccountRemoteSource extends IAccountRemoteSource {
   @override
   Future<Either<AppErrors, RegisterModel>> register(RegisterRequest params) {
+    params.toMap().toString().logD;
     return request(
       converter: (json) {
         return RegisterModel.fromMap(json);

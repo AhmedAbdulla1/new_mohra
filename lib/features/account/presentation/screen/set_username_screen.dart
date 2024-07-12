@@ -121,13 +121,13 @@ class _SetUserNameScreenState extends State<SetUserNameScreen> {
                               sn.onNextTapped();
                             },
                           ),
-                          registerLoaded: (s) => CustomMansourButton(
-                            titleText: isArabic?"التالي":"Next",
-                            textColor: AppColors.lightFontColor,
-                            onPressed: () {
-                              sn.onNextTapped();
-                            },
-                          ),
+                          // registerLoaded: (s) => CustomMansourButton(
+                          //   titleText: isArabic?"التالي":"Next",
+                          //   textColor: AppColors.lightFontColor,
+                          //   onPressed: () {
+                          //     sn.onNextTapped();
+                          //   },
+                          // ),
                           verifyLoaded: (s) => CustomMansourButton(
                             titleText: isArabic?"التالي":"Next",
                             textColor: AppColors.lightFontColor,
