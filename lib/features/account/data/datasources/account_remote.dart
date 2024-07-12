@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:gallery_saver/files.dart';
 import 'package:injectable/injectable.dart';
 import 'package:starter_application/core/constants/enums/http_method.dart';
 import 'package:starter_application/core/errors/app_errors.dart';
@@ -30,6 +34,7 @@ import 'package:starter_application/features/account/data/model/response/login_m
 import 'package:starter_application/features/account/data/model/response/logout_model.dart';
 import 'package:starter_application/features/account/data/model/response/nearby_clients_model.dart';
 import 'package:starter_application/features/account/data/model/response/register_model.dart';
+import 'package:starter_application/features/account/data/model/response/send_otp_model.dart';
 import 'package:starter_application/features/account/data/model/response/verify_model.dart';
 
 import 'iaccount_remote.dart';
@@ -197,7 +202,7 @@ class AccountRemoteSource extends IAccountRemoteSource {
   @override
   Future<Either<AppErrors, LoginModel>> loginWithGoogle(
       GoogleLoginParams loginRequest) {
-    print( loginRequest.toMap());
+    print(loginRequest.toMap());
     return request(
       converter: (json) {
         return LoginModel.fromMap(json);
@@ -240,6 +245,7 @@ class AccountRemoteSource extends IAccountRemoteSource {
       createModelInterceptor: const NullResponseModelInterceptor(),
       responseValidator: DefaultResponseValidator(),
     );
+
   }
 
   @override
@@ -259,20 +265,53 @@ class AccountRemoteSource extends IAccountRemoteSource {
   }
 
   @override
-  Future<Either<AppErrors, EmptyResponse>> sendOTPPhoneNumber(
-      CheckIfPhoneExistParams params) {
+  Future<Either<AppErrors, SendOtpModel>> sendOTPPhoneNumber(
+      CheckIfPhoneExistParams params) async {
     print('on remote to send otp ');
     print(params);
+
+    // try {
+      var data = FormData.fromMap({
+        'phoneNumber': params.phoneNumber,
+        'countryCode': '966'
+      });
+
+      var dio = Dio();
+      var response = await dio.request(
+        'https://shayal.herova.net/sms-mohar/send.php',
+        options: Options(
+          method: 'POST',
+        ),
+        data: data,
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        response.data;
+        print(response.data);
+        return Right(SendOtpModel.fromMap(response.data));
+      } else if (response.statusCode == 400) {
+        return const Left(AppErrors.badRequestError());
+      }else{
+        return const Left(AppErrors.internalServerError());
+      }
+    // } catch (e) {
+    //   return Left(CustomError(message: e.toString()));
+    // }
+
     return request(
       converter: (json) {
-        return EmptyResponse.fromMap(json);
+        // return   json["otp"]
+        return SendOtpModel.fromMap(json);
       },
       method: HttpMethod.POST,
-      url: APIUrls.sendOTPPhoneNumber,
+      // todo: change url for send otp in future
+      url: '/sms-mohar/send.php',
+      baseUrl: 'https://shayal.herova.net',
       body: params.toMap(),
       createModelInterceptor: const NullResponseModelInterceptor(),
     );
   }
+
   @override
   Future<Either<AppErrors, EmptyResponse>> verifyOTPPhoneNumber(
       VerifyOtpParams params) {

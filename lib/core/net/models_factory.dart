@@ -1,3 +1,4 @@
+import 'package:starter_application/core/common/extensions/extensions.dart';
 import 'package:starter_application/core/models/base_model.dart';
 import 'package:starter_application/core/net/create_model_interceptor/create_model.interceptor.dart';
 
@@ -41,8 +42,6 @@ class ModelsFactory {
 
   /// Generate the desired T model.
   T createModel<T extends BaseModel>(json) {
-    print(json);
-    print('aaaaaaaadddd');
     final modelName = T.toString();
     final modelInfo = _modelsMap[modelName];
     final fromJson = modelInfo[FROM_JSON];

@@ -25,6 +25,7 @@ import 'package:starter_application/features/account/domain/entity/login_entity.
 import 'package:starter_application/features/account/domain/entity/logout_entity.dart';
 import 'package:starter_application/features/account/domain/entity/nearby_clients_entity.dart';
 import 'package:starter_application/features/account/domain/entity/register_entity.dart';
+import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/domain/entity/verify_entity.dart';
 
 abstract class IAccountRepository extends Repository {
@@ -62,7 +63,7 @@ abstract class IAccountRepository extends Repository {
   Future<Result<AppErrors, EmptyResponse>> confirmPhoneNumber(ConfirmPhoneNumberParams params);
   Future<Result<AppErrors, EmptyResponse>> checkIfPhoneExist(
       CheckIfPhoneExistParams params);
-  Future<Result<AppErrors, EmptyResponse>> sendOTPPhoneNumber(
+  Future<Result<AppErrors, SendOtpEntity>> sendOTPPhoneNumber(
       CheckIfPhoneExistParams params);
   Future<Result<AppErrors, EmptyResponse>> verifyOTP(
       VerifyOtpParams params);

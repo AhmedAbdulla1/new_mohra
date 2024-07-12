@@ -89,8 +89,8 @@ class SetUserNameNotifier extends ScreenNotifier {
         CheckIfPhoneExistParams(phoneNumber: registerRequest.phoneNumber!,countryCode: registerRequest.countryCode??'+966'));
   }
   verifyOtp() {
-    accountCubit.verifyOtp(
-        VerifyOtpParams(phoneNumberWithCountryCode: registerRequest.phoneNumber!,otpCode: ''));
+    // accountCubit.verifyOtp(
+    //     VerifyOtpParams(phoneNumberWithCountryCode: registerRequest.phoneNumber!,otpCode: ''));
   }
 
   onPhoneNumberConfirmed() async {

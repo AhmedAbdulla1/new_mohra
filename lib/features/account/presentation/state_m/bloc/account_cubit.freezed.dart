@@ -39,7 +39,7 @@ mixin _$AccountState {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -76,7 +76,7 @@ mixin _$AccountState {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -111,7 +111,7 @@ mixin _$AccountState {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -319,7 +319,7 @@ class _$AccountInitImpl implements AccountInit {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -359,7 +359,7 @@ class _$AccountInitImpl implements AccountInit {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -397,7 +397,7 @@ class _$AccountInitImpl implements AccountInit {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -607,7 +607,7 @@ class _$AccountLoadingImpl implements AccountLoading {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -647,7 +647,7 @@ class _$AccountLoadingImpl implements AccountLoading {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -685,7 +685,7 @@ class _$AccountLoadingImpl implements AccountLoading {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -923,7 +923,7 @@ class _$AccLoginLoadedImpl implements AccLoginLoaded {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -963,7 +963,7 @@ class _$AccLoginLoadedImpl implements AccLoginLoaded {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -1001,7 +1001,7 @@ class _$AccLoginLoadedImpl implements AccLoginLoaded {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -1245,7 +1245,7 @@ class _$AccLogoutLoadedImpl implements AccLogoutLoaded {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -1285,7 +1285,7 @@ class _$AccLogoutLoadedImpl implements AccLogoutLoaded {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -1323,7 +1323,7 @@ class _$AccLogoutLoadedImpl implements AccLogoutLoaded {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -1567,7 +1567,7 @@ class _$AccRegisterLoadedImpl implements AccRegisterLoaded {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -1607,7 +1607,7 @@ class _$AccRegisterLoadedImpl implements AccRegisterLoaded {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -1645,7 +1645,7 @@ class _$AccRegisterLoadedImpl implements AccRegisterLoaded {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -1906,7 +1906,7 @@ class _$AccountErrorImpl implements AccountError {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -1946,7 +1946,7 @@ class _$AccountErrorImpl implements AccountError {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -1984,7 +1984,7 @@ class _$AccountErrorImpl implements AccountError {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -2228,7 +2228,7 @@ class _$VerifyLoadedImpl implements VerifyLoaded {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -2268,7 +2268,7 @@ class _$VerifyLoadedImpl implements VerifyLoaded {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -2306,7 +2306,7 @@ class _$VerifyLoadedImpl implements VerifyLoaded {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -2551,7 +2551,7 @@ class _$ForgetpasswordLoadedImpl implements ForgetpasswordLoaded {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -2591,7 +2591,7 @@ class _$ForgetpasswordLoadedImpl implements ForgetpasswordLoaded {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -2629,7 +2629,7 @@ class _$ForgetpasswordLoadedImpl implements ForgetpasswordLoaded {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -2876,7 +2876,7 @@ class _$ClientProfileLoadedStateImpl implements ClientProfileLoadedState {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -2916,7 +2916,7 @@ class _$ClientProfileLoadedStateImpl implements ClientProfileLoadedState {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -2954,7 +2954,7 @@ class _$ClientProfileLoadedStateImpl implements ClientProfileLoadedState {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -3172,7 +3172,7 @@ class _$PasswordCodeVerifiedImpl implements PasswordCodeVerified {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -3212,7 +3212,7 @@ class _$PasswordCodeVerifiedImpl implements PasswordCodeVerified {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -3250,7 +3250,7 @@ class _$PasswordCodeVerifiedImpl implements PasswordCodeVerified {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -3460,7 +3460,7 @@ class _$GetAvatarImpl implements GetAvatar {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -3500,7 +3500,7 @@ class _$GetAvatarImpl implements GetAvatar {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -3538,7 +3538,7 @@ class _$GetAvatarImpl implements GetAvatar {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -3778,7 +3778,7 @@ class _$NearbyClientsLoadedStateImpl implements NearbyClientsLoadedState {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -3818,7 +3818,7 @@ class _$NearbyClientsLoadedStateImpl implements NearbyClientsLoadedState {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -3856,7 +3856,7 @@ class _$NearbyClientsLoadedStateImpl implements NearbyClientsLoadedState {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -4102,7 +4102,7 @@ class _$LocationUpdatedStateImpl implements LocationUpdatedState {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -4142,7 +4142,7 @@ class _$LocationUpdatedStateImpl implements LocationUpdatedState {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -4180,7 +4180,7 @@ class _$LocationUpdatedStateImpl implements LocationUpdatedState {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -4425,7 +4425,7 @@ class _$FirebaseTokenUpdatedImpl implements FirebaseTokenUpdated {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -4465,7 +4465,7 @@ class _$FirebaseTokenUpdatedImpl implements FirebaseTokenUpdated {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -4503,7 +4503,7 @@ class _$FirebaseTokenUpdatedImpl implements FirebaseTokenUpdated {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -4747,7 +4747,7 @@ class _$HasAvatarCheckedImpl implements HasAvatarChecked {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -4787,7 +4787,7 @@ class _$HasAvatarCheckedImpl implements HasAvatarChecked {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -4825,7 +4825,7 @@ class _$HasAvatarCheckedImpl implements HasAvatarChecked {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -5069,7 +5069,7 @@ class _$LoginWithGoogleDoneImpl implements LoginWithGoogleDone {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -5109,7 +5109,7 @@ class _$LoginWithGoogleDoneImpl implements LoginWithGoogleDone {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -5147,7 +5147,7 @@ class _$LoginWithGoogleDoneImpl implements LoginWithGoogleDone {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -5393,7 +5393,7 @@ class _$RegisterWithGoogleDoneImpl implements RegisterWithGoogleDone {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -5433,7 +5433,7 @@ class _$RegisterWithGoogleDoneImpl implements RegisterWithGoogleDone {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -5471,7 +5471,7 @@ class _$RegisterWithGoogleDoneImpl implements RegisterWithGoogleDone {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -5634,7 +5634,7 @@ abstract class _$$PhoneNumberConfirmedImplCopyWith<$Res> {
           $Res Function(_$PhoneNumberConfirmedImpl) then) =
       __$$PhoneNumberConfirmedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({EmptyResponse emptyResponse});
+  $Res call({SendOtpEntity sendOtpEntity});
 }
 
 /// @nodoc
@@ -5648,13 +5648,13 @@ class __$$PhoneNumberConfirmedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? emptyResponse = null,
+    Object? sendOtpEntity = null,
   }) {
     return _then(_$PhoneNumberConfirmedImpl(
-      null == emptyResponse
-          ? _value.emptyResponse
-          : emptyResponse // ignore: cast_nullable_to_non_nullable
-              as EmptyResponse,
+      null == sendOtpEntity
+          ? _value.sendOtpEntity
+          : sendOtpEntity // ignore: cast_nullable_to_non_nullable
+              as SendOtpEntity,
     ));
   }
 }
@@ -5662,14 +5662,14 @@ class __$$PhoneNumberConfirmedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PhoneNumberConfirmedImpl implements PhoneNumberConfirmed {
-  const _$PhoneNumberConfirmedImpl(this.emptyResponse);
+  const _$PhoneNumberConfirmedImpl(this.sendOtpEntity);
 
   @override
-  final EmptyResponse emptyResponse;
+  final SendOtpEntity sendOtpEntity;
 
   @override
   String toString() {
-    return 'AccountState.phoneNumberConfirmed(emptyResponse: $emptyResponse)';
+    return 'AccountState.phoneNumberConfirmed(sendOtpEntity: $sendOtpEntity)';
   }
 
   @override
@@ -5677,12 +5677,12 @@ class _$PhoneNumberConfirmedImpl implements PhoneNumberConfirmed {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PhoneNumberConfirmedImpl &&
-            (identical(other.emptyResponse, emptyResponse) ||
-                other.emptyResponse == emptyResponse));
+            (identical(other.sendOtpEntity, sendOtpEntity) ||
+                other.sendOtpEntity == sendOtpEntity));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, emptyResponse);
+  int get hashCode => Object.hash(runtimeType, sendOtpEntity);
 
   @JsonKey(ignore: true)
   @override
@@ -5716,7 +5716,7 @@ class _$PhoneNumberConfirmedImpl implements PhoneNumberConfirmed {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -5730,7 +5730,7 @@ class _$PhoneNumberConfirmedImpl implements PhoneNumberConfirmed {
     required TResult Function(EmptyResponse emptyResponse) checkEmailExistDone,
     required TResult Function(EmptyResponse emptyResponse) checkDeviceIdDone,
   }) {
-    return phoneNumberConfirmed(emptyResponse);
+    return phoneNumberConfirmed(sendOtpEntity);
   }
 
   @override
@@ -5756,7 +5756,7 @@ class _$PhoneNumberConfirmedImpl implements PhoneNumberConfirmed {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -5768,7 +5768,7 @@ class _$PhoneNumberConfirmedImpl implements PhoneNumberConfirmed {
     TResult? Function(EmptyResponse emptyResponse)? checkEmailExistDone,
     TResult? Function(EmptyResponse emptyResponse)? checkDeviceIdDone,
   }) {
-    return phoneNumberConfirmed?.call(emptyResponse);
+    return phoneNumberConfirmed?.call(sendOtpEntity);
   }
 
   @override
@@ -5794,7 +5794,7 @@ class _$PhoneNumberConfirmedImpl implements PhoneNumberConfirmed {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -5808,7 +5808,7 @@ class _$PhoneNumberConfirmedImpl implements PhoneNumberConfirmed {
     required TResult orElse(),
   }) {
     if (phoneNumberConfirmed != null) {
-      return phoneNumberConfirmed(emptyResponse);
+      return phoneNumberConfirmed(sendOtpEntity);
     }
     return orElse();
   }
@@ -5942,10 +5942,10 @@ class _$PhoneNumberConfirmedImpl implements PhoneNumberConfirmed {
 }
 
 abstract class PhoneNumberConfirmed implements AccountState {
-  const factory PhoneNumberConfirmed(final EmptyResponse emptyResponse) =
+  const factory PhoneNumberConfirmed(final SendOtpEntity sendOtpEntity) =
       _$PhoneNumberConfirmedImpl;
 
-  EmptyResponse get emptyResponse;
+  SendOtpEntity get sendOtpEntity;
   @JsonKey(ignore: true)
   _$$PhoneNumberConfirmedImplCopyWith<_$PhoneNumberConfirmedImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -6014,7 +6014,7 @@ class _$CheckPhoneNumberExistLoadingImpl
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -6054,7 +6054,7 @@ class _$CheckPhoneNumberExistLoadingImpl
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -6092,7 +6092,7 @@ class _$CheckPhoneNumberExistLoadingImpl
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -6342,7 +6342,7 @@ class _$CheckPhoneNumberExistErrorImpl implements CheckPhoneNumberExistError {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -6382,7 +6382,7 @@ class _$CheckPhoneNumberExistErrorImpl implements CheckPhoneNumberExistError {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -6420,7 +6420,7 @@ class _$CheckPhoneNumberExistErrorImpl implements CheckPhoneNumberExistError {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -6666,7 +6666,7 @@ class _$CheckPhoneNumberExistDoneImpl implements CheckPhoneNumberExistDone {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -6706,7 +6706,7 @@ class _$CheckPhoneNumberExistDoneImpl implements CheckPhoneNumberExistDone {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -6744,7 +6744,7 @@ class _$CheckPhoneNumberExistDoneImpl implements CheckPhoneNumberExistDone {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -6963,7 +6963,7 @@ class _$CheckUsernameExistLoadingImpl implements CheckUsernameExistLoading {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -7003,7 +7003,7 @@ class _$CheckUsernameExistLoadingImpl implements CheckUsernameExistLoading {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -7041,7 +7041,7 @@ class _$CheckUsernameExistLoadingImpl implements CheckUsernameExistLoading {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -7290,7 +7290,7 @@ class _$CheckUsernameExistErrorImpl implements CheckUsernameExistError {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -7330,7 +7330,7 @@ class _$CheckUsernameExistErrorImpl implements CheckUsernameExistError {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -7368,7 +7368,7 @@ class _$CheckUsernameExistErrorImpl implements CheckUsernameExistError {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -7614,7 +7614,7 @@ class _$CheckUsernameExistDoneImpl implements CheckUsernameExistDone {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -7654,7 +7654,7 @@ class _$CheckUsernameExistDoneImpl implements CheckUsernameExistDone {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -7692,7 +7692,7 @@ class _$CheckUsernameExistDoneImpl implements CheckUsernameExistDone {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -7911,7 +7911,7 @@ class _$CheckEmailExistLoadingImpl implements CheckEmailExistLoading {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -7951,7 +7951,7 @@ class _$CheckEmailExistLoadingImpl implements CheckEmailExistLoading {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -7989,7 +7989,7 @@ class _$CheckEmailExistLoadingImpl implements CheckEmailExistLoading {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -8237,7 +8237,7 @@ class _$CheckEmailExistErrorImpl implements CheckEmailExistError {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -8277,7 +8277,7 @@ class _$CheckEmailExistErrorImpl implements CheckEmailExistError {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -8315,7 +8315,7 @@ class _$CheckEmailExistErrorImpl implements CheckEmailExistError {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -8559,7 +8559,7 @@ class _$CheckEmailExistDoneImpl implements CheckEmailExistDone {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -8599,7 +8599,7 @@ class _$CheckEmailExistDoneImpl implements CheckEmailExistDone {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -8637,7 +8637,7 @@ class _$CheckEmailExistDoneImpl implements CheckEmailExistDone {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -8881,7 +8881,7 @@ class _$CheckDeviceIdDoneImpl implements CheckDeviceIdDone {
     required TResult Function(HasAvatarEntity hasAvatarEntity) hasAvatarChecked,
     required TResult Function(LoginEntity loginEntity) loginWithGoogleDone,
     required TResult Function(LoginEntity loginEntity) registerWithGoogleDone,
-    required TResult Function(EmptyResponse emptyResponse) phoneNumberConfirmed,
+    required TResult Function(SendOtpEntity sendOtpEntity) phoneNumberConfirmed,
     required TResult Function() checkPhoneNumberExistLoading,
     required TResult Function(AppErrors error) checkPhoneNumberExistError,
     required TResult Function(EmptyResponse emptyResponse)
@@ -8921,7 +8921,7 @@ class _$CheckDeviceIdDoneImpl implements CheckDeviceIdDone {
     TResult? Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult? Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult? Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult? Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult? Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult? Function()? checkPhoneNumberExistLoading,
     TResult? Function(AppErrors error)? checkPhoneNumberExistError,
     TResult? Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,
@@ -8959,7 +8959,7 @@ class _$CheckDeviceIdDoneImpl implements CheckDeviceIdDone {
     TResult Function(HasAvatarEntity hasAvatarEntity)? hasAvatarChecked,
     TResult Function(LoginEntity loginEntity)? loginWithGoogleDone,
     TResult Function(LoginEntity loginEntity)? registerWithGoogleDone,
-    TResult Function(EmptyResponse emptyResponse)? phoneNumberConfirmed,
+    TResult Function(SendOtpEntity sendOtpEntity)? phoneNumberConfirmed,
     TResult Function()? checkPhoneNumberExistLoading,
     TResult Function(AppErrors error)? checkPhoneNumberExistError,
     TResult Function(EmptyResponse emptyResponse)? checkPhoneNumberExistDone,

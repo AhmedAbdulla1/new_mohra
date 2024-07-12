@@ -31,6 +31,7 @@ import 'package:starter_application/features/account/domain/entity/login_entity.
 import 'package:starter_application/features/account/domain/entity/logout_entity.dart';
 import 'package:starter_application/features/account/domain/entity/nearby_clients_entity.dart';
 import 'package:starter_application/features/account/domain/entity/register_entity.dart';
+import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/domain/entity/verify_entity.dart';
 import 'package:starter_application/features/account/domain/repository/iaccount_repository.dart';
 
@@ -147,10 +148,10 @@ class AccountRepository extends IAccountRepository {
     return remote.result<EmptyResponse>();
   }
   @override
-  Future<Result<AppErrors, EmptyResponse>> sendOTPPhoneNumber(CheckIfPhoneExistParams params) async {
+  Future<Result<AppErrors, SendOtpEntity>> sendOTPPhoneNumber(CheckIfPhoneExistParams params) async {
     final remote = await iAccountRemoteSource.sendOTPPhoneNumber(params);
     print(remote);
-    return remote.result<EmptyResponse>();
+    return remote.result<SendOtpEntity>();
   }
   @override
   Future<Result<AppErrors, EmptyResponse>> verifyOTP(VerifyOtpParams params) async {

@@ -25,6 +25,7 @@ import 'package:starter_application/features/account/data/model/response/login_m
 import 'package:starter_application/features/account/data/model/response/logout_model.dart';
 import 'package:starter_application/features/account/data/model/response/nearby_clients_model.dart';
 import 'package:starter_application/features/account/data/model/response/register_model.dart';
+import 'package:starter_application/features/account/data/model/response/send_otp_model.dart';
 import 'package:starter_application/features/account/data/model/response/verify_model.dart';
 
 abstract class IAccountRemoteSource extends RemoteDataSource {
@@ -63,7 +64,7 @@ abstract class IAccountRemoteSource extends RemoteDataSource {
 
   Future<Either<AppErrors, EmptyResponse>> checkIfPhoneExist(
       CheckIfPhoneExistParams params);
-  Future<Either<AppErrors, EmptyResponse>> sendOTPPhoneNumber(
+  Future<Either<AppErrors, SendOtpModel>> sendOTPPhoneNumber(
       CheckIfPhoneExistParams params);
   Future<Either<AppErrors, EmptyResponse>> verifyOTPPhoneNumber(
       VerifyOtpParams params);

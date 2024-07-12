@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -226,7 +227,9 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
           if(state is CheckEmailExistLoading){
             sn.notifyListeners();
           }
-
+          if(state is PhoneNumberConfirmed  ){
+            sn.onPhoneVerifiedFromTaqniat(state.sendOtpEntity);
+          }
         },
         bloc: sn.accountCubit,
         builder: (context, state) {

@@ -12,6 +12,7 @@ class CheckIfPhoneExistParams extends BaseParams{
 
   @override
   Map<String, dynamic> toMap() {
+    print('phone number = $phoneNumber');
     return {
       'phoneNumber' : phoneNumber,
       'countryCode' : countryCode,

@@ -21,6 +21,7 @@ import 'package:starter_application/core/params/screen_params/visit_user_profile
 import 'package:starter_application/core/ui/mansour/onboarding_screen.dart';
 import 'package:starter_application/di/service_locator.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
+import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/presentation/screen/confirmPassword_screen.dart';
 import 'package:starter_application/features/account/presentation/screen/forgetPassword_screen.dart';
 import 'package:starter_application/features/account/presentation/screen/login_screen.dart';
@@ -30,6 +31,7 @@ import 'package:starter_application/features/account/presentation/screen/registe
 import 'package:starter_application/features/account/presentation/screen/set_username_screen.dart';
 import 'package:starter_application/features/account/presentation/screen/start_personality_test.dart';
 import 'package:starter_application/features/account/presentation/screen/verify_code_screen.dart';
+import 'package:starter_application/features/account/presentation/state_m/provider/firebase_otp.dart';
 import 'package:starter_application/features/challenge/presentation/screen/challenge_screen.dart';
 import 'package:starter_application/features/challenge/presentation/screen/view.dart';
 import 'package:starter_application/features/event/presentation/screen/buy_ticket_screen.dart';
@@ -227,14 +229,14 @@ class NavigationRoute {
       case TermsandConditionsScreen.routeName:
         return CupertinoRoute(
             page: TermsandConditionsScreen(), settings: settings);
-        // case AddTracksToPlaylistScreen.routeName:
-        //   if (args != null && args is AddTracksToPlaylistScreenParam)
-        //     return CupertinoRoute(
-        //         page: AddTracksToPlaylistScreen(
-        //           param: args,
-        //         ),
-        //         settings: settings);
-        // return errorRoute();
+      // case AddTracksToPlaylistScreen.routeName:
+      //   if (args != null && args is AddTracksToPlaylistScreenParam)
+      //     return CupertinoRoute(
+      //         page: AddTracksToPlaylistScreen(
+      //           param: args,
+      //         ),
+      //         settings: settings);
+      // return errorRoute();
       case AttendanceScreen.routeName:
         if (args != null && args is EventTickettEntity)
           return CupertinoRoute(
@@ -279,16 +281,16 @@ class NavigationRoute {
               ),
               settings: settings);
         return errorRoute();
-        // case MusicMainScreen.routeName:
-        //   if (args == null || args is MusicMainScreenParam)
-        //     return CupertinoRoute(
-        //         page: MusicMainScreen(
-        //           param: args == null
-        //               ? MusicMainScreenParam()
-        //               : args as MusicMainScreenParam,
-        // ),
-        // settings: settings);
-        // return errorRoute();
+      // case MusicMainScreen.routeName:
+      //   if (args == null || args is MusicMainScreenParam)
+      //     return CupertinoRoute(
+      //         page: MusicMainScreen(
+      //           param: args == null
+      //               ? MusicMainScreenParam()
+      //               : args as MusicMainScreenParam,
+      // ),
+      // settings: settings);
+      // return errorRoute();
       // case MusicHomeScreen.routeName:
       //   return CupertinoRoute(page: const MusicHomeScreen(), settings: settings);
       // case MyLibraryScreen.routeName:
@@ -341,12 +343,12 @@ class NavigationRoute {
       case RegisterScreen2.routeName:
         // Edit to remove required register request <<>>
         // if (args != null && args is RegisterRequest)
-          return CupertinoRoute(
-              page: RegisterScreen2(
+        return CupertinoRoute(
+            page: RegisterScreen2(
                 // registerRequest: args,
-              ),
-              settings: settings);
-        // return errorRoute();
+                ),
+            settings: settings);
+      // return errorRoute();
       case RegisterWithGoogleScreen.routeName:
         return CupertinoRoute(
             page: RegisterWithGoogleScreen(), settings: settings);
@@ -356,7 +358,7 @@ class NavigationRoute {
               page: VerifyCodeScreen(
                 registerRequest: args[0],
                 signUpProcess: args[1],
-                phoneAuthCredential: args[2],
+                sendOtpEntity: args[2],
               ),
               settings: settings);
         return errorRoute();
@@ -379,9 +381,11 @@ class NavigationRoute {
       case StartPersonalityTest.routeName:
         return CupertinoRoute(page: StartPersonalityTest(), settings: settings);
       case SettingMainScreen.routeName:
-        return CupertinoRoute(page: const SettingMainScreen(), settings: settings);
+        return CupertinoRoute(
+            page: const SettingMainScreen(), settings: settings);
       case SettingPrivacyScreen.routeName:
-        return CupertinoRoute(page: const SettingPrivacyScreen(), settings: settings);
+        return CupertinoRoute(
+            page: const SettingPrivacyScreen(), settings: settings);
       case PrivacyOptionSettingScreen.routeName:
         return CupertinoRoute(
             page: PrivacyOptionSettingScreen(
@@ -389,7 +393,8 @@ class NavigationRoute {
             ),
             settings: settings);
       case MutedAccountsScreen.routeName:
-        return CupertinoRoute(page: const MutedAccountsScreen(), settings: settings);
+        return CupertinoRoute(
+            page: const MutedAccountsScreen(), settings: settings);
       case BlockedAccountsScreen.routeName:
         return CupertinoRoute(
             page: const BlockedAccountsScreen(), settings: settings);
@@ -528,7 +533,8 @@ class NavigationRoute {
               settings: settings);
         return errorRoute();
       case EventOrganizerScreen.routeName:
-        return CupertinoRoute(page: const EventOrganizerScreen(), settings: settings);
+        return CupertinoRoute(
+            page: const EventOrganizerScreen(), settings: settings);
       case EventOrganizerDetailsScreen.routeName:
         if (args != null)
           return CupertinoRoute(
@@ -920,9 +926,11 @@ class NavigationRoute {
       case DreamScreen.routeName:
         return CupertinoRoute(page: const DreamScreen(), settings: settings);
       case MyLifeVideoScreen.routeName:
-        return CupertinoRoute(page: const MyLifeVideoScreen(), settings: settings);
+        return CupertinoRoute(
+            page: const MyLifeVideoScreen(), settings: settings);
       case MylifeAudioScreen.routeName:
-        return CupertinoRoute(page: const MylifeAudioScreen(), settings: settings);
+        return CupertinoRoute(
+            page: const MylifeAudioScreen(), settings: settings);
       case AppointmentScreen.routeName:
         return CupertinoRoute(
             page: const AppointmentScreen(), settings: settings);

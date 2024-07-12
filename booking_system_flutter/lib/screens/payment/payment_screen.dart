@@ -17,7 +17,6 @@ import 'package:starter_application/core/models/user_session_data_model.dart';
 import 'package:starter_application/core/params/payment_params.dart';
 import 'package:starter_application/core/ui/widgets/apple_pay_widget.dart';
 import 'package:starter_application/core/ui/screens/payment_screen.dart';
-
 import '../../component/empty_error_state_widget.dart';
 import '../../component/wallet_balance_component.dart';
 import '../../model/configuration_response.dart';

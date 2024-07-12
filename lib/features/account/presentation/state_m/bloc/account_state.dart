@@ -35,7 +35,7 @@ class AccountState with _$AccountState {
   const factory AccountState.registerWithGoogleDone(LoginEntity loginEntity) =
   RegisterWithGoogleDone;
 
-  const factory AccountState.phoneNumberConfirmed(EmptyResponse emptyResponse) =
+  const factory AccountState.phoneNumberConfirmed(SendOtpEntity sendOtpEntity) =
   PhoneNumberConfirmed;
 
   const factory AccountState.checkPhoneNumberExistLoading() =

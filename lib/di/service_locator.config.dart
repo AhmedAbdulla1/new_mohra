@@ -198,7 +198,7 @@ import 'package:starter_application/features/friend/domain/usecase/change_mute_s
 import 'package:starter_application/features/friend/domain/usecase/delete_friend_usecase.dart'
     as _i233;
 import 'package:starter_application/features/friend/domain/usecase/get_clients_usecase.dart'
-    as _i256;
+    as _i257;
 import 'package:starter_application/features/friend/domain/usecase/get_clients_without_friends_usecase.dart'
     as _i258;
 import 'package:starter_application/features/friend/domain/usecase/get_count_friends_and_notifications_usecase.dart'
@@ -276,7 +276,7 @@ import 'package:starter_application/features/health/domain/usecase/update_goal_u
 import 'package:starter_application/features/health/domain/usecase/update_health_profile_usecase.dart'
     as _i166;
 import 'package:starter_application/features/health/domain/usecase/upload_image_usecase.dart'
-    as _i173;
+    as _i174;
 import 'package:starter_application/features/help/data/datasource/help_remote.dart'
     as _i38;
 import 'package:starter_application/features/help/data/datasource/ihelp_remote.dart'
@@ -454,7 +454,7 @@ import 'package:starter_application/features/mylife/domain/usecase/get_all_tasks
 import 'package:starter_application/features/mylife/domain/usecase/get_appointments.dart'
     as _i252;
 import 'package:starter_application/features/mylife/domain/usecase/get_clients_usecase.dart'
-    as _i257;
+    as _i256;
 import 'package:starter_application/features/mylife/domain/usecase/get_dreams_usecase.dart'
     as _i267;
 import 'package:starter_application/features/mylife/domain/usecase/get_positives_usecase.dart'
@@ -468,7 +468,7 @@ import 'package:starter_application/features/mylife/domain/usecase/get_story_use
 import 'package:starter_application/features/mylife/domain/usecase/update_appointment_usecase.dart'
     as _i159;
 import 'package:starter_application/features/mylife/domain/usecase/upload_image_usecase.dart'
-    as _i174;
+    as _i173;
 import 'package:starter_application/features/news/data/datasource/inews_remote.dart'
     as _i79;
 import 'package:starter_application/features/news/data/datasource/news_remote.dart'
@@ -713,569 +713,577 @@ import 'package:starter_application/features/user/domain/usecase/update_profile_
     as _i170;
 
 Future<_i1.GetIt> $initGetIt(
-  _i1.GetIt get, {
-  String? environment,
-  _i2.EnvironmentFilter? environmentFilter,
-}) async {
-  final gh = _i2.GetItHelper(
-    get,
-    environment,
-    environmentFilter,
-  );
-  final facebookLoginModule = _$FacebookLoginModule();
-  final sharedPreferencesModule = _$SharedPreferencesModule();
-  gh.lazySingleton<_i3.AppTextStyles>(() => _i3.AppTextStyles());
-  gh.lazySingleton<_i4.HttpClient>(() => _i4.HttpClient());
-  gh.factory<_i5.IAccountRemoteSource>(() => _i6.AccountRemoteSource());
-  gh.factory<_i7.IAccountRepository>(
-      () => _i8.AccountRepository(gh<_i5.IAccountRemoteSource>()));
-  gh.singleton<_i9.IChallengeRemoteSource>(() => _i10.ChallengeRemoteSource());
-  gh.singleton<_i11.IChallengeRepository>(
-      () => _i12.ChallengeRepository(gh<_i9.IChallengeRemoteSource>()));
-  gh.singleton<_i13.ICommentRemoteSource>(() => _i14.CommentRemoteSource());
-  gh.singleton<_i15.ICommentRepository>(
-      () => _i16.CommentRepository(gh<_i13.ICommentRemoteSource>()));
-  gh.singleton<_i17.IEventOrginizerRemoteSource>(
-      () => _i18.EventOrginizerRemoteSource());
-  gh.singleton<_i19.IEventOrginizerRepository>(() =>
-      _i20.EventOrginizerRepository(gh<_i17.IEventOrginizerRemoteSource>()));
-  gh.singleton<_i21.IEventRemoteSource>(() => _i22.EventRemoteSource());
-  gh.singleton<_i23.IEventRepository>(
-      () => _i24.EventRepository(gh<_i21.IEventRemoteSource>()));
-  gh.singleton<_i25.IFavoriteRemoteSource>(() => _i26.FavoriteRemoteSource());
-  gh.singleton<_i27.IFavoriteRepository>(
-      () => _i28.FavoriteRepository(gh<_i25.IFavoriteRemoteSource>()));
-  gh.singleton<_i29.IFriendRemoteSource>(() => _i30.FriendRemoteSource());
-  gh.singleton<_i31.IFriendRepository>(
-      () => _i32.FriendRepository(gh<_i29.IFriendRemoteSource>()));
-  gh.singleton<_i33.IHealthRemoteSource>(() => _i34.HealthRemoteSource());
-  gh.singleton<_i35.IHealthRepository>(
-      () => _i36.HealthRepository(gh<_i33.IHealthRemoteSource>()));
-  gh.singleton<_i37.IHelpRemoteSource>(() => _i38.HelpRemoteSource());
-  gh.singleton<_i39.IHelpRepository>(
-      () => _i40.HelpRepository(gh<_i37.IHelpRemoteSource>()));
-  gh.factory<_i41.IHomeRemoteSource>(() => _i42.HomeRemoteSource());
-  gh.factory<_i43.IHomeRepository>(
-      () => _i44.HomeRepository(gh<_i41.IHomeRemoteSource>()));
-  gh.factory<_i45.IHomeServicesRemoteSource>(
-      () => _i46.HomeServicesRemoteSource());
-  gh.factory<_i47.IHomeServicesRemoteSource>(
-      () => _i48.HomeServicesRemoteSource());
-  gh.factory<_i49.IHomeServicesRepository>(
-      () => _i50.HomeServicesRepository(gh<_i45.IHomeServicesRemoteSource>()));
-  gh.singleton<_i51.IInteractRemoteSource>(() => _i52.InteractRemoteSource());
-  gh.singleton<_i53.IInteractRepository>(
-      () => _i54.InteractRepository(gh<_i51.IInteractRemoteSource>()));
-  gh.singleton<_i55.ILikeRemoteSource>(() => _i56.LikeRemoteSource());
-  gh.singleton<_i57.ILikeRepository>(
-      () => _i58.LikeRepository(gh<_i55.ILikeRemoteSource>()));
-  gh.singleton<_i59.ILocationRemoteSource>(() => _i60.LocationRemoteSource());
-  gh.singleton<_i61.ILocationRepository>(
-      () => _i62.LocationRepository(gh<_i59.ILocationRemoteSource>()));
-  gh.singleton<_i63.IMessagesRemoteSource>(() => _i64.MessagesRemoteSource());
-  gh.singleton<_i65.IMessagesRepository>(
-      () => _i66.MessagesRepository(gh<_i63.IMessagesRemoteSource>()));
-  gh.singleton<_i67.IMobileAdsRemoteSource>(() => _i68.MobileAdsRemoteSource());
-  gh.singleton<_i69.IMobileAdsRepository>(
-      () => _i70.MobileAdsRepository(gh<_i67.IMobileAdsRemoteSource>()));
-  gh.singleton<_i71.IMomentRemoteSource>(() => _i72.MomentRemoteSource());
-  gh.singleton<_i73.IMomentRepository>(
-      () => _i74.MomentRepository(gh<_i71.IMomentRemoteSource>()));
-  gh.singleton<_i75.IMylifeRemoteSource>(() => _i76.MylifeRemoteSource());
-  gh.singleton<_i77.IMylifeRepository>(
-      () => _i78.MylifeRepository(gh<_i75.IMylifeRemoteSource>()));
-  gh.singleton<_i79.INewsRemoteSource>(() => _i80.NewsRemoteSource());
-  gh.singleton<_i81.INewsRepository>(
-      () => _i82.NewsRepository(gh<_i79.INewsRemoteSource>()));
-  gh.singleton<_i83.INotificationRemoteSource>(
-      () => _i84.NotificationRemoteSource());
-  gh.singleton<_i85.INotificationRepository>(
-      () => _i86.NotificationRepository(gh<_i83.INotificationRemoteSource>()));
-  gh.singleton<_i87.IPersonalityRemoteSource>(
-      () => _i88.PersonalityRemoteSource());
-  gh.singleton<_i89.IPersonalityRepository>(
-      () => _i90.PersonalityRepository(gh<_i87.IPersonalityRemoteSource>()));
-  gh.singleton<_i91.IPlaceRemoteSource>(() => _i92.PlaceRemoteSource());
-  gh.singleton<_i93.IPlaceRepository>(
-      () => _i94.PlaceRepository(gh<_i91.IPlaceRemoteSource>()));
-  gh.singleton<_i95.IReligionRemoteSource>(() => _i96.ReligionRemoteSource());
-  gh.singleton<_i97.IReligionRepository>(
-      () => _i98.ReligionRepository(gh<_i95.IReligionRemoteSource>()));
-  gh.singleton<_i99.ISalaryCountRemoteSource>(
-      () => _i100.SalaryCountRemoteSource());
-  gh.singleton<_i101.ISalaryCountRepository>(
-      () => _i102.SalaryCountRepository(gh<_i99.ISalaryCountRemoteSource>()));
-  gh.singleton<_i103.ISettingsRemoteSource>(() => _i104.SettingsRemoteSource());
-  gh.singleton<_i105.ISettingsRepository>(
-      () => _i106.SettingsRepository(gh<_i103.ISettingsRemoteSource>()));
-  gh.singleton<_i107.IShopSource>(() => _i108.ShopRemoteSource());
-  gh.singleton<_i109.ISplashRemoteSource>(() => _i110.SplashRemoteSource());
-  gh.singleton<_i111.ISplashRepository>(
-      () => _i112.SplashRepository(gh<_i109.ISplashRemoteSource>()));
-  gh.singleton<_i113.ISportsRemoteSource>(() => _i114.SportsRemoteSource());
-  gh.singleton<_i115.ISportsRepository>(
-      () => _i116.SportsRepository(gh<_i113.ISportsRemoteSource>()));
-  gh.singleton<_i117.IUploadRemoteSource>(() => _i118.UploadRemoteSource());
-  gh.singleton<_i119.IUploadRepository>(
-      () => _i120.UploadRepository(gh<_i117.IUploadRemoteSource>()));
-  gh.singleton<_i121.IUserRemoteSource>(() => _i122.UserRemoteSource());
-  gh.singleton<_i123.IUserRepository>(
-      () => _i124.UserRepository(gh<_i121.IUserRemoteSource>()));
-  gh.factory<_i125.InteractUseCase>(
-      () => _i125.InteractUseCase(gh<_i53.IInteractRepository>()));
-  gh.factory<_i126.InviteFriendsUseCase>(
-      () => _i126.InviteFriendsUseCase(gh<_i11.IChallengeRepository>()));
-  gh.factory<_i127.JoinUseCase>(
-      () => _i127.JoinUseCase(gh<_i11.IChallengeRepository>()));
-  gh.singleton<_i128.LifecycleService>(() => _i128.LifecycleService());
-  gh.factory<_i129.LikeActionUseCase>(
-      () => _i129.LikeActionUseCase(gh<_i57.ILikeRepository>()));
-  gh.singleton<_i130.LocalizationProvider>(() => _i130.LocalizationProvider());
-  gh.lazySingleton<_i131.Logger>(() => facebookLoginModule.facebookLogin);
-  gh.factory<_i132.LoginUseCase>(
-      () => _i132.LoginUseCase(gh<_i7.IAccountRepository>()));
-  gh.singleton<_i133.LoginWithGoogleUsecase>(
-      () => _i133.LoginWithGoogleUsecase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i134.LogoutUseCase>(
-      () => _i134.LogoutUseCase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i135.MakeCallNotificationUseCase>(
-      () => _i135.MakeCallNotificationUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i136.ManualCheckTicketUsecase>(() =>
-      _i136.ManualCheckTicketUsecase(gh<_i19.IEventOrginizerRepository>()));
-  gh.singleton<_i137.MatchStatisticsUsecase>(
-      () => _i137.MatchStatisticsUsecase(gh<_i115.ISportsRepository>()));
-  gh.lazySingleton<_i138.NavigationRoute>(() => _i138.NavigationRoute());
-  gh.singleton<_i139.NavigationService>(() => _i139.NavigationService());
-  gh.singleton<_i140.OpenAppUsecase>(
-      () => _i140.OpenAppUsecase(gh<_i89.IPersonalityRepository>()));
-  gh.factory<_i141.ReadMessagesUseCase>(
-      () => _i141.ReadMessagesUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i142.RegisterUseCase>(
-      () => _i142.RegisterUseCase(gh<_i7.IAccountRepository>()));
-  gh.singleton<_i143.RegisterWithGoogleUsecase>(
-      () => _i143.RegisterWithGoogleUsecase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i144.RejectFriendRequestUseCase>(
-      () => _i144.RejectFriendRequestUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i145.ReportPostUseCase>(
-      () => _i145.ReportPostUseCase(gh<_i73.IMomentRepository>()));
-  gh.singleton<_i146.SaveAnswersUsecase>(
-      () => _i146.SaveAnswersUsecase(gh<_i89.IPersonalityRepository>()));
-  gh.factory<_i147.ScanTicketQrCodeUseCase>(
-      () => _i147.ScanTicketQrCodeUseCase(gh<_i23.IEventRepository>()));
-  gh.factory<_i148.ScanTicketQrCodeUseCase>(() =>
-      _i148.ScanTicketQrCodeUseCase(gh<_i19.IEventOrginizerRepository>()));
-  gh.factory<_i149.SearchMyRunningEventsUseCase>(() =>
-      _i149.SearchMyRunningEventsUseCase(gh<_i19.IEventOrginizerRepository>()));
-  gh.singleton<_i150.SelectAddressUsecase>(
-      () => _i150.SelectAddressUsecase(gh<_i123.IUserRepository>()));
-  gh.factory<_i151.SendFriendRequestUseCase>(
-      () => _i151.SendFriendRequestUseCase(gh<_i31.IFriendRepository>()));
-  gh.singleton<_i152.SendOtpUsecase>(
-      () => _i152.SendOtpUsecase(gh<_i7.IAccountRepository>()));
-  await gh.factoryAsync<_i153.SharedPreferences>(
-    () => sharedPreferencesModule.prefs,
-    preResolve: true,
-  );
-  gh.lazySingleton<_i154.SpotifyHttpClient>(() => _i154.SpotifyHttpClient());
-  gh.lazySingleton<_i155.ThemeConfig>(() => _i155.ThemeConfig());
-  gh.factory<_i156.UnblockFriendUseCase>(
-      () => _i156.UnblockFriendUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i157.UnlikeUseCase>(
-      () => _i157.UnlikeUseCase(gh<_i57.ILikeRepository>()));
-  gh.singleton<_i158.UpdateAddressUseCase>(
-      () => _i158.UpdateAddressUseCase(gh<_i123.IUserRepository>()));
-  gh.factory<_i159.UpdateAppointmentUseCase>(
-      () => _i159.UpdateAppointmentUseCase(gh<_i77.IMylifeRepository>()));
-  gh.singleton<_i160.UpdateCommentsSettingsUsecase>(() =>
-      _i160.UpdateCommentsSettingsUsecase(gh<_i105.ISettingsRepository>()));
-  gh.singleton<_i161.UpdateDailyStepsUsecase>(
-      () => _i161.UpdateDailyStepsUsecase(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i162.UpdateDailyWaterUsecase>(
-      () => _i162.UpdateDailyWaterUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i163.UpdateFirebaseTokenUseCase>(
-      () => _i163.UpdateFirebaseTokenUseCase(gh<_i7.IAccountRepository>()));
-  gh.singleton<_i164.UpdateGoalUsecase>(
-      () => _i164.UpdateGoalUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i165.UpdateGroupUseCase>(
-      () => _i165.UpdateGroupUseCase(gh<_i65.IMessagesRepository>()));
-  gh.singleton<_i166.UpdateHealthProfileUsecase>(
-      () => _i166.UpdateHealthProfileUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i167.UpdateLocationUseCase>(
-      () => _i167.UpdateLocationUseCase(gh<_i7.IAccountRepository>()));
-  gh.singleton<_i168.UpdateMomentsSettingsUsecase>(() =>
-      _i168.UpdateMomentsSettingsUsecase(gh<_i105.ISettingsRepository>()));
-  gh.singleton<_i169.UpdateTimeTableUsecase>(
-      () => _i169.UpdateTimeTableUsecase(gh<_i101.ISalaryCountRepository>()));
-  gh.singleton<_i170.UpdateUserProfileUseCase>(
-      () => _i170.UpdateUserProfileUseCase(gh<_i123.IUserRepository>()));
-  gh.singleton<_i171.UpdateUserSettingsUsecase>(
-      () => _i171.UpdateUserSettingsUsecase(gh<_i105.ISettingsRepository>()));
-  gh.singleton<_i172.UploadFileUseCase>(
-      () => _i172.UploadFileUseCase(gh<_i119.IUploadRepository>()));
-  gh.singleton<_i173.UploadImageUsecase>(
-      () => _i173.UploadImageUsecase(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i174.UploadImageUsecase>(
-      () => _i174.UploadImageUsecase(gh<_i77.IMylifeRepository>()));
-  gh.singleton<_i175.VerifyOTpUseCase>(
-      () => _i175.VerifyOTpUseCase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i176.VerifyUseCase>(
-      () => _i176.VerifyUseCase(gh<_i7.IAccountRepository>()));
-  gh.singleton<_i177.AddAddressUseCase>(
-      () => _i177.AddAddressUseCase(gh<_i123.IUserRepository>()));
-  gh.factory<_i178.AddFriendByQrCodeUseCase>(
-      () => _i178.AddFriendByQrCodeUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i179.AddFriendToGroupUseCase>(
-      () => _i179.AddFriendToGroupUseCase(gh<_i65.IMessagesRepository>()));
-  gh.singleton<_i180.AnswerQuestionUsecase>(
-      () => _i180.AnswerQuestionUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i181.ApproveFriendRequestUseCase>(
-      () => _i181.ApproveFriendRequestUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i182.BlockFriendUseCase>(
-      () => _i182.BlockFriendUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i183.CancelFriendRequestUseCase>(
-      () => _i183.CancelFriendRequestUseCase(gh<_i31.IFriendRepository>()));
-  gh.singleton<_i184.ChangeEmailUseCase>(
-      () => _i184.ChangeEmailUseCase(gh<_i123.IUserRepository>()));
-  gh.factory<_i185.ChangeMuteStatusUsecase>(
-      () => _i185.ChangeMuteStatusUsecase(gh<_i31.IFriendRepository>()));
-  gh.singleton<_i186.ChangePasswordUsecase>(
-      () => _i186.ChangePasswordUsecase(gh<_i123.IUserRepository>()));
-  gh.singleton<_i187.ChangeSelectedTimeTableUsecase>(() =>
-      _i187.ChangeSelectedTimeTableUsecase(gh<_i101.ISalaryCountRepository>()));
-  gh.factory<_i188.ChangeStatusGroupUseCase>(
-      () => _i188.ChangeStatusGroupUseCase(gh<_i65.IMessagesRepository>()));
-  gh.singleton<_i189.ChangeTimeTableOrderUsecase>(() =>
-      _i189.ChangeTimeTableOrderUsecase(gh<_i101.ISalaryCountRepository>()));
-  gh.factory<_i190.CheckAppointmentUseCase>(
-      () => _i190.CheckAppointmentUseCase(gh<_i77.IMylifeRepository>()));
-  gh.singleton<_i191.CheckDeviceIdUsecase>(
-      () => _i191.CheckDeviceIdUsecase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i192.CheckDreamUsecase>(
-      () => _i192.CheckDreamUsecase(gh<_i77.IMylifeRepository>()));
-  gh.singleton<_i193.CheckHasAvatarUsecase>(
-      () => _i193.CheckHasAvatarUsecase(gh<_i89.IPersonalityRepository>()));
-  gh.singleton<_i194.CheckHealthProfileUsecase>(
-      () => _i194.CheckHealthProfileUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i195.CheckIfCanPayUseCase>(
-      () => _i195.CheckIfCanPayUseCase(gh<_i23.IEventRepository>()));
-  gh.singleton<_i196.CheckIfEmailExistUsecase>(
-      () => _i196.CheckIfEmailExistUsecase(gh<_i7.IAccountRepository>()));
-  gh.singleton<_i197.CheckIfPhoneExistUsecase>(
-      () => _i197.CheckIfPhoneExistUsecase(gh<_i7.IAccountRepository>()));
-  gh.singleton<_i198.CheckIfUsernameExistUsecase>(
-      () => _i198.CheckIfUsernameExistUsecase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i199.CheckTaskUseCase>(
-      () => _i199.CheckTaskUseCase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i200.ClaimRewardsUseCase>(
-      () => _i200.ClaimRewardsUseCase(gh<_i11.IChallengeRepository>()));
-  gh.factory<_i201.ClearConversationMessagesUseCase>(() =>
-      _i201.ClearConversationMessagesUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i202.ClearGroupMessagesUseCase>(
-      () => _i202.ClearGroupMessagesUseCase(gh<_i65.IMessagesRepository>()));
-  gh.singleton<_i203.CloseAppUsecase>(
-      () => _i203.CloseAppUsecase(gh<_i89.IPersonalityRepository>()));
-  gh.factory<_i204.CommentUseCase>(
-      () => _i204.CommentUseCase(gh<_i15.ICommentRepository>()));
-  gh.factory<_i205.ConfirmPasswordCodeUseCase>(
-      () => _i205.ConfirmPasswordCodeUseCase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i206.ConfirmPasswordUseCase>(
-      () => _i206.ConfirmPasswordUseCase(gh<_i7.IAccountRepository>()));
-  gh.singleton<_i207.ConfirmPhoneNumberUsecase>(
-      () => _i207.ConfirmPhoneNumberUsecase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i208.CreateAppointmentUseCase>(
-      () => _i208.CreateAppointmentUseCase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i209.CreateBrodCastMessageUseCase>(
-      () => _i209.CreateBrodCastMessageUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i210.CreateContactUSTicketUseCase>(
-      () => _i210.CreateContactUSTicketUseCase(gh<_i39.IHelpRepository>()));
-  gh.singleton<_i211.CreateDailyDishUsecase>(
-      () => _i211.CreateDailyDishUsecase(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i212.CreateDailySessionUseCase>(
-      () => _i212.CreateDailySessionUseCase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i213.CreateDreamUsecase>(
-      () => _i213.CreateDreamUsecase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i214.CreateEventTicketUseCase>(
-      () => _i214.CreateEventTicketUseCase(gh<_i23.IEventRepository>()));
-  gh.factory<_i215.CreateFavoriteUseCase>(
-      () => _i215.CreateFavoriteUseCase(gh<_i27.IFavoriteRepository>()));
-  gh.factory<_i216.CreateGroupUseCase>(
-      () => _i216.CreateGroupUseCase(gh<_i65.IMessagesRepository>()));
-  gh.singleton<_i217.CreateHealthProfileUsecase>(
-      () => _i217.CreateHealthProfileUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i218.CreateMessageUseCase>(
-      () => _i218.CreateMessageUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i219.CreatePaymentUseCase>(
-      () => _i219.CreatePaymentUseCase(gh<_i23.IEventRepository>()));
-  gh.factory<_i220.CreatePositiveUsecase>(
-      () => _i220.CreatePositiveUsecase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i221.CreatePostUseCase>(
-      () => _i221.CreatePostUseCase(gh<_i73.IMomentRepository>()));
-  gh.factory<_i222.CreateTaskUseCase>(
-      () => _i222.CreateTaskUseCase(gh<_i77.IMylifeRepository>()));
-  gh.singleton<_i223.CreateTimeTableUsecase>(
-      () => _i223.CreateTimeTableUsecase(gh<_i101.ISalaryCountRepository>()));
-  gh.singleton<_i224.CustomizeTimeTable>(
-      () => _i224.CustomizeTimeTable(gh<_i101.ISalaryCountRepository>()));
-  gh.singleton<_i225.DeleteAccountUsecase>(
-      () => _i225.DeleteAccountUsecase(gh<_i123.IUserRepository>()));
-  gh.singleton<_i226.DeleteAddressUsecase>(
-      () => _i226.DeleteAddressUsecase(gh<_i123.IUserRepository>()));
-  gh.factory<_i227.DeleteAllNotificationUsecase>(() =>
-      _i227.DeleteAllNotificationUsecase(gh<_i85.INotificationRepository>()));
-  gh.factory<_i228.DeleteByIdNotificationUsecase>(() =>
-      _i228.DeleteByIdNotificationUsecase(gh<_i85.INotificationRepository>()));
-  gh.factory<_i229.DeleteDreamUsecase>(
-      () => _i229.DeleteDreamUsecase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i230.DeleteFavoriteByRefUseCase>(
-      () => _i230.DeleteFavoriteByRefUseCase(gh<_i27.IFavoriteRepository>()));
-  gh.factory<_i231.DeleteFavoriteUseCase>(
-      () => _i231.DeleteFavoriteUseCase(gh<_i27.IFavoriteRepository>()));
-  gh.factory<_i232.DeleteFriendFromGroupUseCase>(
-      () => _i232.DeleteFriendFromGroupUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i233.DeleteFriendUseCase>(
-      () => _i233.DeleteFriendUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i234.DeleteGroupUseCase>(
-      () => _i234.DeleteGroupUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i235.DeleteInteractUseCase>(
-      () => _i235.DeleteInteractUseCase(gh<_i53.IInteractRepository>()));
-  gh.factory<_i236.DeleteItemUseCase>(
-      () => _i236.DeleteItemUseCase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i237.DeletePositiveUsecase>(
-      () => _i237.DeletePositiveUsecase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i238.DeletePostUseCase>(
-      () => _i238.DeletePostUseCase(gh<_i73.IMomentRepository>()));
-  gh.singleton<_i239.DeleteTimeTableUsecase>(
-      () => _i239.DeleteTimeTableUsecase(gh<_i101.ISalaryCountRepository>()));
-  gh.factory<_i240.EditPostUseCase>(
-      () => _i240.EditPostUseCase(gh<_i73.IMomentRepository>()));
-  gh.factory<_i241.FindPlaceUseCase>(
-      () => _i241.FindPlaceUseCase(gh<_i73.IMomentRepository>()));
-  gh.factory<_i242.ForgetPasswordUseCase>(
-      () => _i242.ForgetPasswordUseCase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i243.GetAboutUsUseCase>(
-      () => _i243.GetAboutUsUseCase(gh<_i39.IHelpRepository>()));
-  gh.singleton<_i244.GetAllAddressesUseCase>(
-      () => _i244.GetAllAddressesUseCase(gh<_i123.IUserRepository>()));
-  gh.factory<_i245.GetAllBannersUseCase>(
-      () => _i245.GetAllBannersUseCase(gh<_i43.IHomeRepository>()));
-  gh.factory<_i246.GetAllChallengesUsecase>(
-      () => _i246.GetAllChallengesUsecase(gh<_i11.IChallengeRepository>()));
-  gh.singleton<_i247.GetAllCityUseCase>(
-      () => _i247.GetAllCityUseCase(gh<_i123.IUserRepository>()));
-  gh.factory<_i248.GetAllFaqsUseCase>(
-      () => _i248.GetAllFaqsUseCase(gh<_i39.IHelpRepository>()));
-  gh.factory<_i249.GetAllNotificationUsecase>(() =>
-      _i249.GetAllNotificationUsecase(gh<_i85.INotificationRepository>()));
-  gh.factory<_i250.GetAllReasonsUseCase>(
-      () => _i250.GetAllReasonsUseCase(gh<_i39.IHelpRepository>()));
-  gh.singleton<_i251.GetAllSettingsUsecase>(
-      () => _i251.GetAllSettingsUsecase(gh<_i105.ISettingsRepository>()));
-  gh.factory<_i252.GetAppointmentsUseCase>(
-      () => _i252.GetAppointmentsUseCase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i253.GetAzkarByCategoryUsecase>(
-      () => _i253.GetAzkarByCategoryUsecase(gh<_i97.IReligionRepository>()));
-  gh.factory<_i254.GetChallengDetailsUseCase>(
-      () => _i254.GetChallengDetailsUseCase(gh<_i11.IChallengeRepository>()));
-  gh.factory<_i255.GetClientProfileUseCase>(
-      () => _i255.GetClientProfileUseCase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i256.GetClientsUseCase>(
-      () => _i256.GetClientsUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i257.GetClientsUseCase>(
-      () => _i257.GetClientsUseCase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i258.GetClientsWithoutFriendsUseCase>(() =>
-      _i258.GetClientsWithoutFriendsUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i259.GetCommentsUseCase>(
-      () => _i259.GetCommentsUseCase(gh<_i15.ICommentRepository>()));
-  gh.factory<_i260.GetConversationsUseCase>(
-      () => _i260.GetConversationsUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i261.GetCountFriendsAndNotifications>(() =>
-      _i261.GetCountFriendsAndNotifications(gh<_i31.IFriendRepository>()));
-  gh.factory<_i262.GetCreationTimeNewsUsecase>(
-      () => _i262.GetCreationTimeNewsUsecase(gh<_i81.INewsRepository>()));
-  gh.singleton<_i263.GetDailyDishListUsecase>(
-      () => _i263.GetDailyDishListUsecase(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i264.GetDailySessionUsecase>(
-      () => _i264.GetDailySessionUsecase(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i265.GetDishByIdUsecase>(
-      () => _i265.GetDishByIdUsecase(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i266.GetDishedListByCategoryUsecase>(
-      () => _i266.GetDishedListByCategoryUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i267.GetDreamsUseCase>(
-      () => _i267.GetDreamsUseCase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i268.GetEventCategoriesUseCase>(
-      () => _i268.GetEventCategoriesUseCase(gh<_i23.IEventRepository>()));
-  gh.factory<_i269.GetEventTicketUseCase>(
-      () => _i269.GetEventTicketUseCase(gh<_i23.IEventRepository>()));
-  gh.factory<_i270.GetEventTicketsUseCase>(
-      () => _i270.GetEventTicketsUseCase(gh<_i23.IEventRepository>()));
-  gh.factory<_i271.GetEventTicketssUseCase>(() =>
-      _i271.GetEventTicketssUseCase(gh<_i19.IEventOrginizerRepository>()));
-  gh.factory<_i272.GetEventUseCase>(
-      () => _i272.GetEventUseCase(gh<_i23.IEventRepository>()));
-  gh.factory<_i273.GetEventsUseCase>(
-      () => _i273.GetEventsUseCase(gh<_i23.IEventRepository>()));
-  gh.singleton<_i274.GetExercisesUsecase>(
-      () => _i274.GetExercisesUsecase(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i275.GetFavoriteDishesUseCase>(
-      () => _i275.GetFavoriteDishesUseCase(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i276.GetFavoriteRecipesUseCase>(
-      () => _i276.GetFavoriteRecipesUseCase(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i277.GetFavoriteSessionListUsecase>(
-      () => _i277.GetFavoriteSessionListUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i278.GetFavoritesUseCase>(
-      () => _i278.GetFavoritesUseCase(gh<_i27.IFavoriteRepository>()));
-  gh.singleton<_i279.GetFoodCategoriesUsecase>(
-      () => _i279.GetFoodCategoriesUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i280.GetFriendRequestsUseCase>(
-      () => _i280.GetFriendRequestsUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i281.GetGroupsUseCase>(
-      () => _i281.GetGroupsUseCase(gh<_i65.IMessagesRepository>()));
-  gh.singleton<_i282.GetHealthDashboardUsecase>(
-      () => _i282.GetHealthDashboardUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i283.GetInteractListUseCase>(
-      () => _i283.GetInteractListUseCase(gh<_i53.IInteractRepository>()));
-  gh.singleton<_i284.GetLiveScoresUsecase>(
-      () => _i284.GetLiveScoresUsecase(gh<_i115.ISportsRepository>()));
-  gh.factory<_i285.GetLocationsLiteUseCase>(
-      () => _i285.GetLocationsLiteUseCase(gh<_i61.ILocationRepository>()));
-  gh.singleton<_i286.GetMatchEventsUsecase>(
-      () => _i286.GetMatchEventsUsecase(gh<_i115.ISportsRepository>()));
-  gh.singleton<_i287.GetMatchLineUpUsecase>(
-      () => _i287.GetMatchLineUpUsecase(gh<_i115.ISportsRepository>()));
-  gh.factory<_i288.GetMessagesUseCase>(
-      () => _i288.GetMessagesUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i289.GetMomentsUseCase>(
-      () => _i289.GetMomentsUseCase(gh<_i73.IMomentRepository>()));
-  gh.singleton<_i290.GetMyAvatarUsecase>(
-      () => _i290.GetMyAvatarUsecase(gh<_i89.IPersonalityRepository>()));
-  gh.singleton<_i291.GetMyFriendMomentsUseCase>(
-      () => _i291.GetMyFriendMomentsUseCase(gh<_i123.IUserRepository>()));
-  gh.factory<_i292.GetMyFriendsToChallengeUseCase>(
-      () => _i292.GetMyFriendsToChallengeUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i293.GetMyFriendsUseCase>(
-      () => _i293.GetMyFriendsUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i294.GetMyRunningEventsUseCase>(() =>
-      _i294.GetMyRunningEventsUseCase(gh<_i19.IEventOrginizerRepository>()));
-  gh.factory<_i295.GetMyRunningEventsUsecase>(
-      () => _i295.GetMyRunningEventsUsecase(gh<_i23.IEventRepository>()));
-  gh.factory<_i296.GetNearbyClientsUseCase>(
-      () => _i296.GetNearbyClientsUseCase(gh<_i7.IAccountRepository>()));
-  gh.factory<_i297.GetNearbyMosquesUsecase>(
-      () => _i297.GetNearbyMosquesUsecase(gh<_i97.IReligionRepository>()));
-  gh.factory<_i298.GetNewsCategoryUsecase>(
-      () => _i298.GetNewsCategoryUsecase(gh<_i81.INewsRepository>()));
-  gh.factory<_i299.GetNewsOfSingleCategoryUsecase>(
-      () => _i299.GetNewsOfSingleCategoryUsecase(gh<_i81.INewsRepository>()));
-  gh.factory<_i300.GetNewsUseCase>(
-      () => _i300.GetNewsUseCase(gh<_i81.INewsRepository>()));
-  gh.singleton<_i301.GetPersonalityQuestionUsecase>(() =>
-      _i301.GetPersonalityQuestionUsecase(gh<_i89.IPersonalityRepository>()));
-  gh.factory<_i302.GetPointsUseCase>(
-      () => _i302.GetPointsUseCase(gh<_i73.IMomentRepository>()));
-  gh.factory<_i303.GetPositivesUseCase>(
-      () => _i303.GetPositivesUseCase(gh<_i77.IMylifeRepository>()));
-  gh.singleton<_i304.GetPrayerTimesUsecase>(
-      () => _i304.GetPrayerTimesUsecase(gh<_i97.IReligionRepository>()));
-  gh.singleton<_i305.GetQuestionsUsecase>(
-      () => _i305.GetQuestionsUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i306.GetQuoteUseCase>(
-      () => _i306.GetQuoteUseCase(gh<_i77.IMylifeRepository>()));
-  gh.singleton<_i307.GetRecipeListByCategoryUsecase>(
-      () => _i307.GetRecipeListByCategoryUsecase(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i308.GetRecommendedFood>(
-      () => _i308.GetRecommendedFood(gh<_i35.IHealthRepository>()));
-  gh.singleton<_i309.GetRecommendedSessionUseCase>(
-      () => _i309.GetRecommendedSessionUseCase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i310.GetReverseGeocodingUseCase>(
-      () => _i310.GetReverseGeocodingUseCase(gh<_i93.IPlaceRepository>()));
-  gh.singleton<_i311.GetSessionsUsecase>(
-      () => _i311.GetSessionsUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i312.GetSingleNewsCategoryUsecase>(
-      () => _i312.GetSingleNewsCategoryUsecase(gh<_i81.INewsRepository>()));
-  gh.factory<_i313.GetStatusFriendUseCase>(
-      () => _i313.GetStatusFriendUseCase(gh<_i31.IFriendRepository>()));
-  gh.factory<_i314.GetStatusGroupUseCase>(
-      () => _i314.GetStatusGroupUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i315.GetStoriesUseCase>(
-      () => _i315.GetStoriesUseCase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i316.GetStoryUseCase>(
-      () => _i316.GetStoryUseCase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i317.GetSummeryNewsUsecase>(
-      () => _i317.GetSummeryNewsUsecase(gh<_i81.INewsRepository>()));
-  gh.factory<_i318.GetTasksUseCase>(
-      () => _i318.GetTasksUseCase(gh<_i77.IMylifeRepository>()));
-  gh.factory<_i319.GetTicketDetailsUsecase>(() =>
-      _i319.GetTicketDetailsUsecase(gh<_i19.IEventOrginizerRepository>()));
-  gh.factory<_i320.GetTicketReportUsecase>(
-      () => _i320.GetTicketReportUsecase(gh<_i19.IEventOrginizerRepository>()));
-  gh.singleton<_i321.GetTimeTableListUsecase>(
-      () => _i321.GetTimeTableListUsecase(gh<_i101.ISalaryCountRepository>()));
-  gh.factory<_i322.GetTokenRtmUseCase>(
-      () => _i322.GetTokenRtmUseCase(gh<_i65.IMessagesRepository>()));
-  gh.factory<_i323.GetTokenUseCase>(
-      () => _i323.GetTokenUseCase(gh<_i65.IMessagesRepository>()));
-  gh.singleton<_i324.GetUserProfileUseCase>(
-      () => _i324.GetUserProfileUseCase(gh<_i123.IUserRepository>()));
-  gh.singleton<_i325.GetUserResultsUsecase>(
-      () => _i325.GetUserResultsUsecase(gh<_i35.IHealthRepository>()));
-  gh.factory<_i326.GetWeatherUseCase>(
-      () => _i326.GetWeatherUseCase(gh<_i43.IHomeRepository>()));
-  gh.singleton<_i327.IShopRepository>(
-      () => _i328.ShopRepository(gh<_i107.IShopSource>()));
-  gh.singleton<_i329.RemoveFavoriteProductUseCase>(
-      () => _i329.RemoveFavoriteProductUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i330.ReviewProductUsecase>(
-      () => _i330.ReviewProductUsecase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i331.UnFolloWShopUseCase>(
-      () => _i331.UnFolloWShopUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i332.UpdateShippingAddressUseCase>(
-      () => _i332.UpdateShippingAddressUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i333.UploadImagesUsecase>(
-      () => _i333.UploadImagesUsecase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i334.AddFavoriteProductUseCase>(
-      () => _i334.AddFavoriteProductUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i335.CheckCouponUseCase>(
-      () => _i335.CheckCouponUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i336.CheckIfCreateOrderUseCase>(
-      () => _i336.CheckIfCreateOrderUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i337.CreateOrderUseCase>(
-      () => _i337.CreateOrderUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i338.CreateShippingAddressUseCase>(
-      () => _i338.CreateShippingAddressUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i339.DeleteShippingAddressUseCase>(
-      () => _i339.DeleteShippingAddressUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i340.FolloWShopUseCase>(
-      () => _i340.FolloWShopUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i341.GetFavoriteProductsUseCase>(
-      () => _i341.GetFavoriteProductsUseCase(gh<_i327.IShopRepository>()));
-  gh.factory<_i342.GetOrdersDetailsUseCase>(
-      () => _i342.GetOrdersDetailsUseCase(gh<_i327.IShopRepository>()));
-  gh.factory<_i343.GetOrderssUseCase>(
-      () => _i343.GetOrderssUseCase(gh<_i327.IShopRepository>()));
-  gh.factory<_i344.GetProductItemUsecase>(
-      () => _i344.GetProductItemUsecase(gh<_i327.IShopRepository>()));
-  gh.factory<_i345.GetProductsListUseCase>(
-      () => _i345.GetProductsListUseCase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i346.GetShippingAddressesUseCase>(
-      () => _i346.GetShippingAddressesUseCase(gh<_i327.IShopRepository>()));
-  gh.factory<_i347.GetShopsListUsecase>(
-      () => _i347.GetShopsListUsecase(gh<_i327.IShopRepository>()));
-  gh.factory<_i348.GetSingleShopUseCase>(
-      () => _i348.GetSingleShopUseCase(gh<_i327.IShopRepository>()));
-  gh.factory<_i349.GetSliderImagesUsecase>(
-      () => _i349.GetSliderImagesUsecase(gh<_i327.IShopRepository>()));
-  gh.factory<_i350.GetStorecategoryUsecase>(
-      () => _i350.GetStorecategoryUsecase(gh<_i327.IShopRepository>()));
-  gh.singleton<_i351.GetTaxFeeUseCase>(
-      () => _i351.GetTaxFeeUseCase(gh<_i327.IShopRepository>()));
-  gh.factory<_i352.GetTopCategoryUsecase>(
-      () => _i352.GetTopCategoryUsecase(gh<_i327.IShopRepository>()));
-  gh.factory<_i353.GetTopProductsUsecase>(
-      () => _i353.GetTopProductsUsecase(gh<_i327.IShopRepository>()));
-  gh.factory<_i354.GetgetReviewUsecase>(
-      () => _i354.GetgetReviewUsecase(gh<_i327.IShopRepository>()));
-  return get;
-}
+    _i1.GetIt get, {
+        String? environment,
+        _i2.EnvironmentFilter? environmentFilter,
+    }) async {
+    final gh = _i2.GetItHelper(
+      get,
+      environment,
+      environmentFilter,
+    );
+    final facebookLoginModule = _$FacebookLoginModule();
+    final sharedPreferencesModule = _$SharedPreferencesModule();
+    gh.lazySingleton<_i3.AppTextStyles>(() => _i3.AppTextStyles());
+    gh.lazySingleton<_i4.HttpClient>(() => _i4.HttpClient());
+    gh.factory<_i5.IAccountRemoteSource>(() => _i6.AccountRemoteSource());
+    gh.factory<_i7.IAccountRepository>(
+        () => _i8.AccountRepository(gh<_i5.IAccountRemoteSource>()));
+    gh.singleton<_i9.IChallengeRemoteSource>(
+        () => _i10.ChallengeRemoteSource());
+    gh.singleton<_i11.IChallengeRepository>(
+        () => _i12.ChallengeRepository(gh<_i9.IChallengeRemoteSource>()));
+    gh.singleton<_i13.ICommentRemoteSource>(() => _i14.CommentRemoteSource());
+    gh.singleton<_i15.ICommentRepository>(
+        () => _i16.CommentRepository(gh<_i13.ICommentRemoteSource>()));
+    gh.singleton<_i17.IEventOrginizerRemoteSource>(
+        () => _i18.EventOrginizerRemoteSource());
+    gh.singleton<_i19.IEventOrginizerRepository>(() =>
+        _i20.EventOrginizerRepository(gh<_i17.IEventOrginizerRemoteSource>()));
+    gh.singleton<_i21.IEventRemoteSource>(() => _i22.EventRemoteSource());
+    gh.singleton<_i23.IEventRepository>(
+        () => _i24.EventRepository(gh<_i21.IEventRemoteSource>()));
+    gh.singleton<_i25.IFavoriteRemoteSource>(() => _i26.FavoriteRemoteSource());
+    gh.singleton<_i27.IFavoriteRepository>(
+        () => _i28.FavoriteRepository(gh<_i25.IFavoriteRemoteSource>()));
+    gh.singleton<_i29.IFriendRemoteSource>(() => _i30.FriendRemoteSource());
+    gh.singleton<_i31.IFriendRepository>(
+        () => _i32.FriendRepository(gh<_i29.IFriendRemoteSource>()));
+    gh.singleton<_i33.IHealthRemoteSource>(() => _i34.HealthRemoteSource());
+    gh.singleton<_i35.IHealthRepository>(
+        () => _i36.HealthRepository(gh<_i33.IHealthRemoteSource>()));
+    gh.singleton<_i37.IHelpRemoteSource>(() => _i38.HelpRemoteSource());
+    gh.singleton<_i39.IHelpRepository>(
+        () => _i40.HelpRepository(gh<_i37.IHelpRemoteSource>()));
+    gh.factory<_i41.IHomeRemoteSource>(() => _i42.HomeRemoteSource());
+    gh.factory<_i43.IHomeRepository>(
+        () => _i44.HomeRepository(gh<_i41.IHomeRemoteSource>()));
+    gh.factory<_i45.IHomeServicesRemoteSource>(
+        () => _i46.HomeServicesRemoteSource());
+    gh.factory<_i47.IHomeServicesRemoteSource>(
+        () => _i48.HomeServicesRemoteSource());
+    gh.factory<_i49.IHomeServicesRepository>(() =>
+        _i50.HomeServicesRepository(gh<_i45.IHomeServicesRemoteSource>()));
+    gh.singleton<_i51.IInteractRemoteSource>(() => _i52.InteractRemoteSource());
+    gh.singleton<_i53.IInteractRepository>(
+        () => _i54.InteractRepository(gh<_i51.IInteractRemoteSource>()));
+    gh.singleton<_i55.ILikeRemoteSource>(() => _i56.LikeRemoteSource());
+    gh.singleton<_i57.ILikeRepository>(
+        () => _i58.LikeRepository(gh<_i55.ILikeRemoteSource>()));
+    gh.singleton<_i59.ILocationRemoteSource>(() => _i60.LocationRemoteSource());
+    gh.singleton<_i61.ILocationRepository>(
+        () => _i62.LocationRepository(gh<_i59.ILocationRemoteSource>()));
+    gh.singleton<_i63.IMessagesRemoteSource>(() => _i64.MessagesRemoteSource());
+    gh.singleton<_i65.IMessagesRepository>(
+        () => _i66.MessagesRepository(gh<_i63.IMessagesRemoteSource>()));
+    gh.singleton<_i67.IMobileAdsRemoteSource>(
+        () => _i68.MobileAdsRemoteSource());
+    gh.singleton<_i69.IMobileAdsRepository>(
+        () => _i70.MobileAdsRepository(gh<_i67.IMobileAdsRemoteSource>()));
+    gh.singleton<_i71.IMomentRemoteSource>(() => _i72.MomentRemoteSource());
+    gh.singleton<_i73.IMomentRepository>(
+        () => _i74.MomentRepository(gh<_i71.IMomentRemoteSource>()));
+    gh.singleton<_i75.IMylifeRemoteSource>(() => _i76.MylifeRemoteSource());
+    gh.singleton<_i77.IMylifeRepository>(
+        () => _i78.MylifeRepository(gh<_i75.IMylifeRemoteSource>()));
+    gh.singleton<_i79.INewsRemoteSource>(() => _i80.NewsRemoteSource());
+    gh.singleton<_i81.INewsRepository>(
+        () => _i82.NewsRepository(gh<_i79.INewsRemoteSource>()));
+    gh.singleton<_i83.INotificationRemoteSource>(
+        () => _i84.NotificationRemoteSource());
+    gh.singleton<_i85.INotificationRepository>(() =>
+        _i86.NotificationRepository(gh<_i83.INotificationRemoteSource>()));
+    gh.singleton<_i87.IPersonalityRemoteSource>(
+        () => _i88.PersonalityRemoteSource());
+    gh.singleton<_i89.IPersonalityRepository>(
+        () => _i90.PersonalityRepository(gh<_i87.IPersonalityRemoteSource>()));
+    gh.singleton<_i91.IPlaceRemoteSource>(() => _i92.PlaceRemoteSource());
+    gh.singleton<_i93.IPlaceRepository>(
+        () => _i94.PlaceRepository(gh<_i91.IPlaceRemoteSource>()));
+    gh.singleton<_i95.IReligionRemoteSource>(() => _i96.ReligionRemoteSource());
+    gh.singleton<_i97.IReligionRepository>(
+        () => _i98.ReligionRepository(gh<_i95.IReligionRemoteSource>()));
+    gh.singleton<_i99.ISalaryCountRemoteSource>(
+        () => _i100.SalaryCountRemoteSource());
+    gh.singleton<_i101.ISalaryCountRepository>(
+        () => _i102.SalaryCountRepository(gh<_i99.ISalaryCountRemoteSource>()));
+    gh.singleton<_i103.ISettingsRemoteSource>(
+        () => _i104.SettingsRemoteSource());
+    gh.singleton<_i105.ISettingsRepository>(
+        () => _i106.SettingsRepository(gh<_i103.ISettingsRemoteSource>()));
+    gh.singleton<_i107.IShopSource>(() => _i108.ShopRemoteSource());
+    gh.singleton<_i109.ISplashRemoteSource>(() => _i110.SplashRemoteSource());
+    gh.singleton<_i111.ISplashRepository>(
+        () => _i112.SplashRepository(gh<_i109.ISplashRemoteSource>()));
+    gh.singleton<_i113.ISportsRemoteSource>(() => _i114.SportsRemoteSource());
+    gh.singleton<_i115.ISportsRepository>(
+        () => _i116.SportsRepository(gh<_i113.ISportsRemoteSource>()));
+    gh.singleton<_i117.IUploadRemoteSource>(() => _i118.UploadRemoteSource());
+    gh.singleton<_i119.IUploadRepository>(
+        () => _i120.UploadRepository(gh<_i117.IUploadRemoteSource>()));
+    gh.singleton<_i121.IUserRemoteSource>(() => _i122.UserRemoteSource());
+    gh.singleton<_i123.IUserRepository>(
+        () => _i124.UserRepository(gh<_i121.IUserRemoteSource>()));
+    gh.factory<_i125.InteractUseCase>(
+        () => _i125.InteractUseCase(gh<_i53.IInteractRepository>()));
+    gh.factory<_i126.InviteFriendsUseCase>(
+        () => _i126.InviteFriendsUseCase(gh<_i11.IChallengeRepository>()));
+    gh.factory<_i127.JoinUseCase>(
+        () => _i127.JoinUseCase(gh<_i11.IChallengeRepository>()));
+    gh.singleton<_i128.LifecycleService>(() => _i128.LifecycleService());
+    gh.factory<_i129.LikeActionUseCase>(
+        () => _i129.LikeActionUseCase(gh<_i57.ILikeRepository>()));
+    gh.singleton<_i130.LocalizationProvider>(
+        () => _i130.LocalizationProvider());
+    gh.lazySingleton<_i131.Logger>(() => facebookLoginModule.facebookLogin);
+    gh.factory<_i132.LoginUseCase>(
+        () => _i132.LoginUseCase(gh<_i7.IAccountRepository>()));
+    gh.singleton<_i133.LoginWithGoogleUsecase>(
+        () => _i133.LoginWithGoogleUsecase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i134.LogoutUseCase>(
+        () => _i134.LogoutUseCase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i135.MakeCallNotificationUseCase>(() =>
+        _i135.MakeCallNotificationUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i136.ManualCheckTicketUsecase>(() =>
+        _i136.ManualCheckTicketUsecase(gh<_i19.IEventOrginizerRepository>()));
+    gh.singleton<_i137.MatchStatisticsUsecase>(
+        () => _i137.MatchStatisticsUsecase(gh<_i115.ISportsRepository>()));
+    gh.lazySingleton<_i138.NavigationRoute>(() => _i138.NavigationRoute());
+    gh.singleton<_i139.NavigationService>(() => _i139.NavigationService());
+    gh.singleton<_i140.OpenAppUsecase>(
+        () => _i140.OpenAppUsecase(gh<_i89.IPersonalityRepository>()));
+    gh.factory<_i141.ReadMessagesUseCase>(
+        () => _i141.ReadMessagesUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i142.RegisterUseCase>(
+        () => _i142.RegisterUseCase(gh<_i7.IAccountRepository>()));
+    gh.singleton<_i143.RegisterWithGoogleUsecase>(
+        () => _i143.RegisterWithGoogleUsecase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i144.RejectFriendRequestUseCase>(
+        () => _i144.RejectFriendRequestUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i145.ReportPostUseCase>(
+        () => _i145.ReportPostUseCase(gh<_i73.IMomentRepository>()));
+    gh.singleton<_i146.SaveAnswersUsecase>(
+        () => _i146.SaveAnswersUsecase(gh<_i89.IPersonalityRepository>()));
+    gh.factory<_i147.ScanTicketQrCodeUseCase>(
+        () => _i147.ScanTicketQrCodeUseCase(gh<_i23.IEventRepository>()));
+    gh.factory<_i148.ScanTicketQrCodeUseCase>(() =>
+        _i148.ScanTicketQrCodeUseCase(gh<_i19.IEventOrginizerRepository>()));
+    gh.factory<_i149.SearchMyRunningEventsUseCase>(() =>
+        _i149.SearchMyRunningEventsUseCase(
+            gh<_i19.IEventOrginizerRepository>()));
+    gh.singleton<_i150.SelectAddressUsecase>(
+        () => _i150.SelectAddressUsecase(gh<_i123.IUserRepository>()));
+    gh.factory<_i151.SendFriendRequestUseCase>(
+        () => _i151.SendFriendRequestUseCase(gh<_i31.IFriendRepository>()));
+    gh.singleton<_i152.SendOtpUsecase>(
+        () => _i152.SendOtpUsecase(gh<_i7.IAccountRepository>()));
+    await gh.factoryAsync<_i153.SharedPreferences>(
+      () => sharedPreferencesModule.prefs,
+      preResolve: true,
+    );
+    gh.lazySingleton<_i154.SpotifyHttpClient>(() => _i154.SpotifyHttpClient());
+    gh.lazySingleton<_i155.ThemeConfig>(() => _i155.ThemeConfig());
+    gh.factory<_i156.UnblockFriendUseCase>(
+        () => _i156.UnblockFriendUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i157.UnlikeUseCase>(
+        () => _i157.UnlikeUseCase(gh<_i57.ILikeRepository>()));
+    gh.singleton<_i158.UpdateAddressUseCase>(
+        () => _i158.UpdateAddressUseCase(gh<_i123.IUserRepository>()));
+    gh.factory<_i159.UpdateAppointmentUseCase>(
+        () => _i159.UpdateAppointmentUseCase(gh<_i77.IMylifeRepository>()));
+    gh.singleton<_i160.UpdateCommentsSettingsUsecase>(() =>
+        _i160.UpdateCommentsSettingsUsecase(gh<_i105.ISettingsRepository>()));
+    gh.singleton<_i161.UpdateDailyStepsUsecase>(
+        () => _i161.UpdateDailyStepsUsecase(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i162.UpdateDailyWaterUsecase>(
+        () => _i162.UpdateDailyWaterUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i163.UpdateFirebaseTokenUseCase>(
+        () => _i163.UpdateFirebaseTokenUseCase(gh<_i7.IAccountRepository>()));
+    gh.singleton<_i164.UpdateGoalUsecase>(
+        () => _i164.UpdateGoalUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i165.UpdateGroupUseCase>(
+        () => _i165.UpdateGroupUseCase(gh<_i65.IMessagesRepository>()));
+    gh.singleton<_i166.UpdateHealthProfileUsecase>(
+        () => _i166.UpdateHealthProfileUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i167.UpdateLocationUseCase>(
+        () => _i167.UpdateLocationUseCase(gh<_i7.IAccountRepository>()));
+    gh.singleton<_i168.UpdateMomentsSettingsUsecase>(() =>
+        _i168.UpdateMomentsSettingsUsecase(gh<_i105.ISettingsRepository>()));
+    gh.singleton<_i169.UpdateTimeTableUsecase>(
+        () => _i169.UpdateTimeTableUsecase(gh<_i101.ISalaryCountRepository>()));
+    gh.singleton<_i170.UpdateUserProfileUseCase>(
+        () => _i170.UpdateUserProfileUseCase(gh<_i123.IUserRepository>()));
+    gh.singleton<_i171.UpdateUserSettingsUsecase>(
+        () => _i171.UpdateUserSettingsUsecase(gh<_i105.ISettingsRepository>()));
+    gh.singleton<_i172.UploadFileUseCase>(
+        () => _i172.UploadFileUseCase(gh<_i119.IUploadRepository>()));
+    gh.singleton<_i173.UploadImageUsecase>(
+        () => _i173.UploadImageUsecase(gh<_i77.IMylifeRepository>()));
+    gh.singleton<_i174.UploadImageUsecase>(
+        () => _i174.UploadImageUsecase(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i175.VerifyOTpUseCase>(
+        () => _i175.VerifyOTpUseCase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i176.VerifyUseCase>(
+        () => _i176.VerifyUseCase(gh<_i7.IAccountRepository>()));
+    gh.singleton<_i177.AddAddressUseCase>(
+        () => _i177.AddAddressUseCase(gh<_i123.IUserRepository>()));
+    gh.factory<_i178.AddFriendByQrCodeUseCase>(
+        () => _i178.AddFriendByQrCodeUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i179.AddFriendToGroupUseCase>(
+        () => _i179.AddFriendToGroupUseCase(gh<_i65.IMessagesRepository>()));
+    gh.singleton<_i180.AnswerQuestionUsecase>(
+        () => _i180.AnswerQuestionUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i181.ApproveFriendRequestUseCase>(
+        () => _i181.ApproveFriendRequestUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i182.BlockFriendUseCase>(
+        () => _i182.BlockFriendUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i183.CancelFriendRequestUseCase>(
+        () => _i183.CancelFriendRequestUseCase(gh<_i31.IFriendRepository>()));
+    gh.singleton<_i184.ChangeEmailUseCase>(
+        () => _i184.ChangeEmailUseCase(gh<_i123.IUserRepository>()));
+    gh.factory<_i185.ChangeMuteStatusUsecase>(
+        () => _i185.ChangeMuteStatusUsecase(gh<_i31.IFriendRepository>()));
+    gh.singleton<_i186.ChangePasswordUsecase>(
+        () => _i186.ChangePasswordUsecase(gh<_i123.IUserRepository>()));
+    gh.singleton<_i187.ChangeSelectedTimeTableUsecase>(() =>
+        _i187.ChangeSelectedTimeTableUsecase(
+            gh<_i101.ISalaryCountRepository>()));
+    gh.factory<_i188.ChangeStatusGroupUseCase>(
+        () => _i188.ChangeStatusGroupUseCase(gh<_i65.IMessagesRepository>()));
+    gh.singleton<_i189.ChangeTimeTableOrderUsecase>(() =>
+        _i189.ChangeTimeTableOrderUsecase(gh<_i101.ISalaryCountRepository>()));
+    gh.factory<_i190.CheckAppointmentUseCase>(
+        () => _i190.CheckAppointmentUseCase(gh<_i77.IMylifeRepository>()));
+    gh.singleton<_i191.CheckDeviceIdUsecase>(
+        () => _i191.CheckDeviceIdUsecase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i192.CheckDreamUsecase>(
+        () => _i192.CheckDreamUsecase(gh<_i77.IMylifeRepository>()));
+    gh.singleton<_i193.CheckHasAvatarUsecase>(
+        () => _i193.CheckHasAvatarUsecase(gh<_i89.IPersonalityRepository>()));
+    gh.singleton<_i194.CheckHealthProfileUsecase>(
+        () => _i194.CheckHealthProfileUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i195.CheckIfCanPayUseCase>(
+        () => _i195.CheckIfCanPayUseCase(gh<_i23.IEventRepository>()));
+    gh.singleton<_i196.CheckIfEmailExistUsecase>(
+        () => _i196.CheckIfEmailExistUsecase(gh<_i7.IAccountRepository>()));
+    gh.singleton<_i197.CheckIfPhoneExistUsecase>(
+        () => _i197.CheckIfPhoneExistUsecase(gh<_i7.IAccountRepository>()));
+    gh.singleton<_i198.CheckIfUsernameExistUsecase>(
+        () => _i198.CheckIfUsernameExistUsecase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i199.CheckTaskUseCase>(
+        () => _i199.CheckTaskUseCase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i200.ClaimRewardsUseCase>(
+        () => _i200.ClaimRewardsUseCase(gh<_i11.IChallengeRepository>()));
+    gh.factory<_i201.ClearConversationMessagesUseCase>(() =>
+        _i201.ClearConversationMessagesUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i202.ClearGroupMessagesUseCase>(
+        () => _i202.ClearGroupMessagesUseCase(gh<_i65.IMessagesRepository>()));
+    gh.singleton<_i203.CloseAppUsecase>(
+        () => _i203.CloseAppUsecase(gh<_i89.IPersonalityRepository>()));
+    gh.factory<_i204.CommentUseCase>(
+        () => _i204.CommentUseCase(gh<_i15.ICommentRepository>()));
+    gh.factory<_i205.ConfirmPasswordCodeUseCase>(
+        () => _i205.ConfirmPasswordCodeUseCase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i206.ConfirmPasswordUseCase>(
+        () => _i206.ConfirmPasswordUseCase(gh<_i7.IAccountRepository>()));
+    gh.singleton<_i207.ConfirmPhoneNumberUsecase>(
+        () => _i207.ConfirmPhoneNumberUsecase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i208.CreateAppointmentUseCase>(
+        () => _i208.CreateAppointmentUseCase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i209.CreateBrodCastMessageUseCase>(() =>
+        _i209.CreateBrodCastMessageUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i210.CreateContactUSTicketUseCase>(
+        () => _i210.CreateContactUSTicketUseCase(gh<_i39.IHelpRepository>()));
+    gh.singleton<_i211.CreateDailyDishUsecase>(
+        () => _i211.CreateDailyDishUsecase(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i212.CreateDailySessionUseCase>(
+        () => _i212.CreateDailySessionUseCase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i213.CreateDreamUsecase>(
+        () => _i213.CreateDreamUsecase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i214.CreateEventTicketUseCase>(
+        () => _i214.CreateEventTicketUseCase(gh<_i23.IEventRepository>()));
+    gh.factory<_i215.CreateFavoriteUseCase>(
+        () => _i215.CreateFavoriteUseCase(gh<_i27.IFavoriteRepository>()));
+    gh.factory<_i216.CreateGroupUseCase>(
+        () => _i216.CreateGroupUseCase(gh<_i65.IMessagesRepository>()));
+    gh.singleton<_i217.CreateHealthProfileUsecase>(
+        () => _i217.CreateHealthProfileUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i218.CreateMessageUseCase>(
+        () => _i218.CreateMessageUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i219.CreatePaymentUseCase>(
+        () => _i219.CreatePaymentUseCase(gh<_i23.IEventRepository>()));
+    gh.factory<_i220.CreatePositiveUsecase>(
+        () => _i220.CreatePositiveUsecase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i221.CreatePostUseCase>(
+        () => _i221.CreatePostUseCase(gh<_i73.IMomentRepository>()));
+    gh.factory<_i222.CreateTaskUseCase>(
+        () => _i222.CreateTaskUseCase(gh<_i77.IMylifeRepository>()));
+    gh.singleton<_i223.CreateTimeTableUsecase>(
+        () => _i223.CreateTimeTableUsecase(gh<_i101.ISalaryCountRepository>()));
+    gh.singleton<_i224.CustomizeTimeTable>(
+        () => _i224.CustomizeTimeTable(gh<_i101.ISalaryCountRepository>()));
+    gh.singleton<_i225.DeleteAccountUsecase>(
+        () => _i225.DeleteAccountUsecase(gh<_i123.IUserRepository>()));
+    gh.singleton<_i226.DeleteAddressUsecase>(
+        () => _i226.DeleteAddressUsecase(gh<_i123.IUserRepository>()));
+    gh.factory<_i227.DeleteAllNotificationUsecase>(() =>
+        _i227.DeleteAllNotificationUsecase(gh<_i85.INotificationRepository>()));
+    gh.factory<_i228.DeleteByIdNotificationUsecase>(() =>
+        _i228.DeleteByIdNotificationUsecase(
+            gh<_i85.INotificationRepository>()));
+    gh.factory<_i229.DeleteDreamUsecase>(
+        () => _i229.DeleteDreamUsecase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i230.DeleteFavoriteByRefUseCase>(
+        () => _i230.DeleteFavoriteByRefUseCase(gh<_i27.IFavoriteRepository>()));
+    gh.factory<_i231.DeleteFavoriteUseCase>(
+        () => _i231.DeleteFavoriteUseCase(gh<_i27.IFavoriteRepository>()));
+    gh.factory<_i232.DeleteFriendFromGroupUseCase>(() =>
+        _i232.DeleteFriendFromGroupUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i233.DeleteFriendUseCase>(
+        () => _i233.DeleteFriendUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i234.DeleteGroupUseCase>(
+        () => _i234.DeleteGroupUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i235.DeleteInteractUseCase>(
+        () => _i235.DeleteInteractUseCase(gh<_i53.IInteractRepository>()));
+    gh.factory<_i236.DeleteItemUseCase>(
+        () => _i236.DeleteItemUseCase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i237.DeletePositiveUsecase>(
+        () => _i237.DeletePositiveUsecase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i238.DeletePostUseCase>(
+        () => _i238.DeletePostUseCase(gh<_i73.IMomentRepository>()));
+    gh.singleton<_i239.DeleteTimeTableUsecase>(
+        () => _i239.DeleteTimeTableUsecase(gh<_i101.ISalaryCountRepository>()));
+    gh.factory<_i240.EditPostUseCase>(
+        () => _i240.EditPostUseCase(gh<_i73.IMomentRepository>()));
+    gh.factory<_i241.FindPlaceUseCase>(
+        () => _i241.FindPlaceUseCase(gh<_i73.IMomentRepository>()));
+    gh.factory<_i242.ForgetPasswordUseCase>(
+        () => _i242.ForgetPasswordUseCase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i243.GetAboutUsUseCase>(
+        () => _i243.GetAboutUsUseCase(gh<_i39.IHelpRepository>()));
+    gh.singleton<_i244.GetAllAddressesUseCase>(
+        () => _i244.GetAllAddressesUseCase(gh<_i123.IUserRepository>()));
+    gh.factory<_i245.GetAllBannersUseCase>(
+        () => _i245.GetAllBannersUseCase(gh<_i43.IHomeRepository>()));
+    gh.factory<_i246.GetAllChallengesUsecase>(
+        () => _i246.GetAllChallengesUsecase(gh<_i11.IChallengeRepository>()));
+    gh.singleton<_i247.GetAllCityUseCase>(
+        () => _i247.GetAllCityUseCase(gh<_i123.IUserRepository>()));
+    gh.factory<_i248.GetAllFaqsUseCase>(
+        () => _i248.GetAllFaqsUseCase(gh<_i39.IHelpRepository>()));
+    gh.factory<_i249.GetAllNotificationUsecase>(() =>
+        _i249.GetAllNotificationUsecase(gh<_i85.INotificationRepository>()));
+    gh.factory<_i250.GetAllReasonsUseCase>(
+        () => _i250.GetAllReasonsUseCase(gh<_i39.IHelpRepository>()));
+    gh.singleton<_i251.GetAllSettingsUsecase>(
+        () => _i251.GetAllSettingsUsecase(gh<_i105.ISettingsRepository>()));
+    gh.factory<_i252.GetAppointmentsUseCase>(
+        () => _i252.GetAppointmentsUseCase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i253.GetAzkarByCategoryUsecase>(
+        () => _i253.GetAzkarByCategoryUsecase(gh<_i97.IReligionRepository>()));
+    gh.factory<_i254.GetChallengDetailsUseCase>(
+        () => _i254.GetChallengDetailsUseCase(gh<_i11.IChallengeRepository>()));
+    gh.factory<_i255.GetClientProfileUseCase>(
+        () => _i255.GetClientProfileUseCase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i256.GetClientsUseCase>(
+        () => _i256.GetClientsUseCase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i257.GetClientsUseCase>(
+        () => _i257.GetClientsUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i258.GetClientsWithoutFriendsUseCase>(() =>
+        _i258.GetClientsWithoutFriendsUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i259.GetCommentsUseCase>(
+        () => _i259.GetCommentsUseCase(gh<_i15.ICommentRepository>()));
+    gh.factory<_i260.GetConversationsUseCase>(
+        () => _i260.GetConversationsUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i261.GetCountFriendsAndNotifications>(() =>
+        _i261.GetCountFriendsAndNotifications(gh<_i31.IFriendRepository>()));
+    gh.factory<_i262.GetCreationTimeNewsUsecase>(
+        () => _i262.GetCreationTimeNewsUsecase(gh<_i81.INewsRepository>()));
+    gh.singleton<_i263.GetDailyDishListUsecase>(
+        () => _i263.GetDailyDishListUsecase(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i264.GetDailySessionUsecase>(
+        () => _i264.GetDailySessionUsecase(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i265.GetDishByIdUsecase>(
+        () => _i265.GetDishByIdUsecase(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i266.GetDishedListByCategoryUsecase>(() =>
+        _i266.GetDishedListByCategoryUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i267.GetDreamsUseCase>(
+        () => _i267.GetDreamsUseCase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i268.GetEventCategoriesUseCase>(
+        () => _i268.GetEventCategoriesUseCase(gh<_i23.IEventRepository>()));
+    gh.factory<_i269.GetEventTicketUseCase>(
+        () => _i269.GetEventTicketUseCase(gh<_i23.IEventRepository>()));
+    gh.factory<_i270.GetEventTicketsUseCase>(
+        () => _i270.GetEventTicketsUseCase(gh<_i23.IEventRepository>()));
+    gh.factory<_i271.GetEventTicketssUseCase>(() =>
+        _i271.GetEventTicketssUseCase(gh<_i19.IEventOrginizerRepository>()));
+    gh.factory<_i272.GetEventUseCase>(
+        () => _i272.GetEventUseCase(gh<_i23.IEventRepository>()));
+    gh.factory<_i273.GetEventsUseCase>(
+        () => _i273.GetEventsUseCase(gh<_i23.IEventRepository>()));
+    gh.singleton<_i274.GetExercisesUsecase>(
+        () => _i274.GetExercisesUsecase(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i275.GetFavoriteDishesUseCase>(
+        () => _i275.GetFavoriteDishesUseCase(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i276.GetFavoriteRecipesUseCase>(
+        () => _i276.GetFavoriteRecipesUseCase(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i277.GetFavoriteSessionListUsecase>(() =>
+        _i277.GetFavoriteSessionListUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i278.GetFavoritesUseCase>(
+        () => _i278.GetFavoritesUseCase(gh<_i27.IFavoriteRepository>()));
+    gh.singleton<_i279.GetFoodCategoriesUsecase>(
+        () => _i279.GetFoodCategoriesUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i280.GetFriendRequestsUseCase>(
+        () => _i280.GetFriendRequestsUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i281.GetGroupsUseCase>(
+        () => _i281.GetGroupsUseCase(gh<_i65.IMessagesRepository>()));
+    gh.singleton<_i282.GetHealthDashboardUsecase>(
+        () => _i282.GetHealthDashboardUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i283.GetInteractListUseCase>(
+        () => _i283.GetInteractListUseCase(gh<_i53.IInteractRepository>()));
+    gh.singleton<_i284.GetLiveScoresUsecase>(
+        () => _i284.GetLiveScoresUsecase(gh<_i115.ISportsRepository>()));
+    gh.factory<_i285.GetLocationsLiteUseCase>(
+        () => _i285.GetLocationsLiteUseCase(gh<_i61.ILocationRepository>()));
+    gh.singleton<_i286.GetMatchEventsUsecase>(
+        () => _i286.GetMatchEventsUsecase(gh<_i115.ISportsRepository>()));
+    gh.singleton<_i287.GetMatchLineUpUsecase>(
+        () => _i287.GetMatchLineUpUsecase(gh<_i115.ISportsRepository>()));
+    gh.factory<_i288.GetMessagesUseCase>(
+        () => _i288.GetMessagesUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i289.GetMomentsUseCase>(
+        () => _i289.GetMomentsUseCase(gh<_i73.IMomentRepository>()));
+    gh.singleton<_i290.GetMyAvatarUsecase>(
+        () => _i290.GetMyAvatarUsecase(gh<_i89.IPersonalityRepository>()));
+    gh.singleton<_i291.GetMyFriendMomentsUseCase>(
+        () => _i291.GetMyFriendMomentsUseCase(gh<_i123.IUserRepository>()));
+    gh.factory<_i292.GetMyFriendsToChallengeUseCase>(() =>
+        _i292.GetMyFriendsToChallengeUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i293.GetMyFriendsUseCase>(
+        () => _i293.GetMyFriendsUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i294.GetMyRunningEventsUseCase>(() =>
+        _i294.GetMyRunningEventsUseCase(gh<_i19.IEventOrginizerRepository>()));
+    gh.factory<_i295.GetMyRunningEventsUsecase>(
+        () => _i295.GetMyRunningEventsUsecase(gh<_i23.IEventRepository>()));
+    gh.factory<_i296.GetNearbyClientsUseCase>(
+        () => _i296.GetNearbyClientsUseCase(gh<_i7.IAccountRepository>()));
+    gh.factory<_i297.GetNearbyMosquesUsecase>(
+        () => _i297.GetNearbyMosquesUsecase(gh<_i97.IReligionRepository>()));
+    gh.factory<_i298.GetNewsCategoryUsecase>(
+        () => _i298.GetNewsCategoryUsecase(gh<_i81.INewsRepository>()));
+    gh.factory<_i299.GetNewsOfSingleCategoryUsecase>(
+        () => _i299.GetNewsOfSingleCategoryUsecase(gh<_i81.INewsRepository>()));
+    gh.factory<_i300.GetNewsUseCase>(
+        () => _i300.GetNewsUseCase(gh<_i81.INewsRepository>()));
+    gh.singleton<_i301.GetPersonalityQuestionUsecase>(() =>
+        _i301.GetPersonalityQuestionUsecase(gh<_i89.IPersonalityRepository>()));
+    gh.factory<_i302.GetPointsUseCase>(
+        () => _i302.GetPointsUseCase(gh<_i73.IMomentRepository>()));
+    gh.factory<_i303.GetPositivesUseCase>(
+        () => _i303.GetPositivesUseCase(gh<_i77.IMylifeRepository>()));
+    gh.singleton<_i304.GetPrayerTimesUsecase>(
+        () => _i304.GetPrayerTimesUsecase(gh<_i97.IReligionRepository>()));
+    gh.singleton<_i305.GetQuestionsUsecase>(
+        () => _i305.GetQuestionsUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i306.GetQuoteUseCase>(
+        () => _i306.GetQuoteUseCase(gh<_i77.IMylifeRepository>()));
+    gh.singleton<_i307.GetRecipeListByCategoryUsecase>(() =>
+        _i307.GetRecipeListByCategoryUsecase(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i308.GetRecommendedFood>(
+        () => _i308.GetRecommendedFood(gh<_i35.IHealthRepository>()));
+    gh.singleton<_i309.GetRecommendedSessionUseCase>(
+        () => _i309.GetRecommendedSessionUseCase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i310.GetReverseGeocodingUseCase>(
+        () => _i310.GetReverseGeocodingUseCase(gh<_i93.IPlaceRepository>()));
+    gh.singleton<_i311.GetSessionsUsecase>(
+        () => _i311.GetSessionsUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i312.GetSingleNewsCategoryUsecase>(
+        () => _i312.GetSingleNewsCategoryUsecase(gh<_i81.INewsRepository>()));
+    gh.factory<_i313.GetStatusFriendUseCase>(
+        () => _i313.GetStatusFriendUseCase(gh<_i31.IFriendRepository>()));
+    gh.factory<_i314.GetStatusGroupUseCase>(
+        () => _i314.GetStatusGroupUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i315.GetStoriesUseCase>(
+        () => _i315.GetStoriesUseCase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i316.GetStoryUseCase>(
+        () => _i316.GetStoryUseCase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i317.GetSummeryNewsUsecase>(
+        () => _i317.GetSummeryNewsUsecase(gh<_i81.INewsRepository>()));
+    gh.factory<_i318.GetTasksUseCase>(
+        () => _i318.GetTasksUseCase(gh<_i77.IMylifeRepository>()));
+    gh.factory<_i319.GetTicketDetailsUsecase>(() =>
+        _i319.GetTicketDetailsUsecase(gh<_i19.IEventOrginizerRepository>()));
+    gh.factory<_i320.GetTicketReportUsecase>(() =>
+        _i320.GetTicketReportUsecase(gh<_i19.IEventOrginizerRepository>()));
+    gh.singleton<_i321.GetTimeTableListUsecase>(() =>
+        _i321.GetTimeTableListUsecase(gh<_i101.ISalaryCountRepository>()));
+    gh.factory<_i322.GetTokenRtmUseCase>(
+        () => _i322.GetTokenRtmUseCase(gh<_i65.IMessagesRepository>()));
+    gh.factory<_i323.GetTokenUseCase>(
+        () => _i323.GetTokenUseCase(gh<_i65.IMessagesRepository>()));
+    gh.singleton<_i324.GetUserProfileUseCase>(
+        () => _i324.GetUserProfileUseCase(gh<_i123.IUserRepository>()));
+    gh.singleton<_i325.GetUserResultsUsecase>(
+        () => _i325.GetUserResultsUsecase(gh<_i35.IHealthRepository>()));
+    gh.factory<_i326.GetWeatherUseCase>(
+        () => _i326.GetWeatherUseCase(gh<_i43.IHomeRepository>()));
+    gh.singleton<_i327.IShopRepository>(
+        () => _i328.ShopRepository(gh<_i107.IShopSource>()));
+    gh.singleton<_i329.RemoveFavoriteProductUseCase>(
+        () => _i329.RemoveFavoriteProductUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i330.ReviewProductUsecase>(
+        () => _i330.ReviewProductUsecase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i331.UnFolloWShopUseCase>(
+        () => _i331.UnFolloWShopUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i332.UpdateShippingAddressUseCase>(
+        () => _i332.UpdateShippingAddressUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i333.UploadImagesUsecase>(
+        () => _i333.UploadImagesUsecase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i334.AddFavoriteProductUseCase>(
+        () => _i334.AddFavoriteProductUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i335.CheckCouponUseCase>(
+        () => _i335.CheckCouponUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i336.CheckIfCreateOrderUseCase>(
+        () => _i336.CheckIfCreateOrderUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i337.CreateOrderUseCase>(
+        () => _i337.CreateOrderUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i338.CreateShippingAddressUseCase>(
+        () => _i338.CreateShippingAddressUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i339.DeleteShippingAddressUseCase>(
+        () => _i339.DeleteShippingAddressUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i340.FolloWShopUseCase>(
+        () => _i340.FolloWShopUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i341.GetFavoriteProductsUseCase>(
+        () => _i341.GetFavoriteProductsUseCase(gh<_i327.IShopRepository>()));
+    gh.factory<_i342.GetOrdersDetailsUseCase>(
+        () => _i342.GetOrdersDetailsUseCase(gh<_i327.IShopRepository>()));
+    gh.factory<_i343.GetOrderssUseCase>(
+        () => _i343.GetOrderssUseCase(gh<_i327.IShopRepository>()));
+    gh.factory<_i344.GetProductItemUsecase>(
+        () => _i344.GetProductItemUsecase(gh<_i327.IShopRepository>()));
+    gh.factory<_i345.GetProductsListUseCase>(
+        () => _i345.GetProductsListUseCase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i346.GetShippingAddressesUseCase>(
+        () => _i346.GetShippingAddressesUseCase(gh<_i327.IShopRepository>()));
+    gh.factory<_i347.GetShopsListUsecase>(
+        () => _i347.GetShopsListUsecase(gh<_i327.IShopRepository>()));
+    gh.factory<_i348.GetSingleShopUseCase>(
+        () => _i348.GetSingleShopUseCase(gh<_i327.IShopRepository>()));
+    gh.factory<_i349.GetSliderImagesUsecase>(
+        () => _i349.GetSliderImagesUsecase(gh<_i327.IShopRepository>()));
+    gh.factory<_i350.GetStorecategoryUsecase>(
+        () => _i350.GetStorecategoryUsecase(gh<_i327.IShopRepository>()));
+    gh.singleton<_i351.GetTaxFeeUseCase>(
+        () => _i351.GetTaxFeeUseCase(gh<_i327.IShopRepository>()));
+    gh.factory<_i352.GetTopCategoryUsecase>(
+        () => _i352.GetTopCategoryUsecase(gh<_i327.IShopRepository>()));
+    gh.factory<_i353.GetTopProductsUsecase>(
+        () => _i353.GetTopProductsUsecase(gh<_i327.IShopRepository>()));
+    gh.factory<_i354.GetgetReviewUsecase>(
+        () => _i354.GetgetReviewUsecase(gh<_i327.IShopRepository>()));
+    return get;
+  }
+
 
 class _$FacebookLoginModule extends _i355.FacebookLoginModule {}
 

@@ -15,6 +15,7 @@ import 'package:starter_application/core/ui/error_ui/errors_screens/error_widget
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
 import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
+import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/firebase_otp.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/verify_code_notifier.dart';
@@ -25,9 +26,9 @@ class VerifyCodeScreen extends StatefulWidget {
   static const routeName = "/RegisterScreen3";
   final RegisterRequest registerRequest;
   final bool signUpProcess;
-  final FireBaseOTP phoneAuthCredential;
+  final SendOtpEntity? sendOtpEntity;
   const VerifyCodeScreen(
-      {Key? key, required this.registerRequest, required this.signUpProcess,required this.phoneAuthCredential})
+      {Key? key, required this.registerRequest, required this.signUpProcess, this.sendOtpEntity})
       : super(key: key);
 
   @override
@@ -44,8 +45,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   }
 
   void initState() {
-    print(widget.phoneAuthCredential.countryCode);
-    sn.fireBaseOTP = widget.phoneAuthCredential;
+    sn.sendOtpEntity = widget.sendOtpEntity;
     sn.signUpCode = widget.signUpProcess;
     sn.registerRequest = widget.registerRequest;
     super.initState();
@@ -140,6 +140,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             titleText: isArabic ? "تأكيد":"Verify",
             textColor: AppColors.lightFontColor,
             onPressed: () {
+
               print('aaa');
               sn.onVerifyTap();
             },

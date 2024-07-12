@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:starter_application/core/common/extensions/extensions.dart';
 import 'package:starter_application/core/datasources/shared_preference.dart';
 import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/models/empty_response.dart';
@@ -28,6 +29,7 @@ import 'package:starter_application/features/account/domain/entity/login_entity.
 import 'package:starter_application/features/account/domain/entity/logout_entity.dart';
 import 'package:starter_application/features/account/domain/entity/nearby_clients_entity.dart';
 import 'package:starter_application/features/account/domain/entity/register_entity.dart';
+import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/domain/entity/verify_entity.dart';
 import 'package:starter_application/features/account/domain/usecase/ConfirmPassword_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/check_device_id_usecase.dart';
@@ -272,6 +274,7 @@ class AccountCubit extends Cubit<AccountState> {
     emit(const AccountState.accountLoading());
     final result = await getIt<SendOtpUsecase>()(params);
     print('aassd');
+    result.data!.result.props.toString().logD;
     result.pick(
       onData: (data) => emit(AccountState.phoneNumberConfirmed(data)),
       onError: (error) => emit(
@@ -280,18 +283,18 @@ class AccountCubit extends Cubit<AccountState> {
     );
   }
 
-  verifyOtp(
-      VerifyOtpParams params) async {
-    emit(const AccountState.accountLoading());
-    final result = await getIt<VerifyOTpUseCase>()(params);
-    print('verify otp ');
-    result.pick(
-      onData: (data) => emit(AccountState.phoneNumberConfirmed(data)),
-      onError: (error) => emit(
-        AccountState.accountError(error, () => this.verifyOtp(params)),
-      ),
-    );
-  }
+  // verifyOtp(
+  //     VerifyOtpParams params) async {
+  //   emit(const AccountState.accountLoading());
+  //   final result = await getIt<VerifyOTpUseCase>()(params);
+  //   print('verify otp ');
+  //   result.pick(
+  //     onData: (data) => emit(AccountState.verifyLoaded(data)),
+  //     onError: (error) => emit(
+  //       AccountState.accountError(error, () => this.verifyOtp(params)),
+  //     ),
+  //   );
+  // }
 
   void checkExistPhoneNumber(CheckIfPhoneExistParams params) async {
     emit(const AccountState.checkPhoneNumberExistLoading());
