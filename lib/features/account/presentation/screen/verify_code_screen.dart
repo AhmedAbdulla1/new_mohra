@@ -98,6 +98,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                                 ),
                                 passwordCodeVerified: (s) => sn.onVerifyDone(),
                               );
+                              if(state is PhoneNumberConfirmed){
+                                sn.sendOtpEntity = state.sendOtpEntity;
+                              }
                             },
                             bloc: sn.accountCubit,
                             builder: (context, state) {

@@ -154,9 +154,9 @@ class AccountRepository extends IAccountRepository {
     return remote.result<SendOtpEntity>();
   }
   @override
-  Future<Result<AppErrors, EmptyResponse>> verifyOTP(VerifyOtpParams params) async {
+  Future<Result<AppErrors, VerifyEntity>> verifyOTP(VerifyOtpParams params) async {
     final remote = await iAccountRemoteSource.verifyOTPPhoneNumber(params);
-    return remote.result<EmptyResponse>();
+    return remote.result<VerifyEntity>();
   }
 
   @override

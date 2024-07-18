@@ -55,14 +55,16 @@ class SetUserNameNotifier extends ScreenNotifier {
     userNameController.dispose();
   }
 
-  void register() {
+
+   register() async {
     DateTime defaultBirthDate = DateTime(2000, 1, 1);
     UserSessionDataModel.provider = 'normal';
     if (userNameKey.currentState!.validate()) {
       registerRequest.userName = userNameController.text;
       registerRequest.firstName = userNameController.text;
       registerRequest.lastName = userNameController.text;
-      registerRequest.birthDate = DateFormat('yMd').format(defaultBirthDate);
+      registerRequest.birthDate = DateFormat.yMd('en').format(defaultBirthDate);
+
       accountCubit.register(
         registerRequest,
       );
@@ -88,7 +90,6 @@ class SetUserNameNotifier extends ScreenNotifier {
 
   onRegisterDone() async {
     print('on register done');
-    // Nav.toAndRemoveAll(AppMainScreen.routeName);
     onPhoneNumberConfirmed();
   }
 
@@ -114,10 +115,12 @@ class SetUserNameNotifier extends ScreenNotifier {
       deviceId = iosDeviceInfo.identifierForVendor;
     }
     await getLocation();
+    print('register country code == ${registerRequest.countryCode}');
+    String countryCode = registerRequest.countryCode!.replaceFirst("00", "+");
     accountCubit.login(LoginRequest(
         userNameOrEmailAddressOrPhoneNumber: registerRequest.phoneNumber,
         password: registerRequest.password,
-        countryCode: '00${registerRequest.countryCode}',
+        countryCode: "+$countryCode",
         devicedType: deviceType,
         devicedId: deviceId,
         lat: lat,
@@ -181,7 +184,7 @@ class SetUserNameNotifier extends ScreenNotifier {
         loginEntity.result.countryCode,
         loginEntity.result.avatarMonth);
     await loginHandyMan(userEntity: loginEntity);
-    Nav.toAndRemoveAll(HomeScreen.routeName);
+    Nav.toAndRemoveAll(AppMainScreen.routeName);
   }
 
   Future<bool> loginHandyMan({LoginEntity? userEntity}) async {

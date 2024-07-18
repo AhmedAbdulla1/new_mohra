@@ -283,18 +283,18 @@ class AccountCubit extends Cubit<AccountState> {
     );
   }
 
-  // verifyOtp(
-  //     VerifyOtpParams params) async {
-  //   emit(const AccountState.accountLoading());
-  //   final result = await getIt<VerifyOTpUseCase>()(params);
-  //   print('verify otp ');
-  //   result.pick(
-  //     onData: (data) => emit(AccountState.verifyLoaded(data)),
-  //     onError: (error) => emit(
-  //       AccountState.accountError(error, () => this.verifyOtp(params)),
-  //     ),
-  //   );
-  // }
+  verifyOtp(
+      VerifyOtpParams params) async {
+    emit(const AccountState.accountLoading());
+    final result = await getIt<VerifyOTpUseCase>()(params);
+    print('verify otp ');
+    result.pick(
+      onData: (data) => emit(AccountState.verifyLoaded(data)),
+      onError: (error) => emit(
+        AccountState.accountError(error, () => this.verifyOtp(params)),
+      ),
+    );
+  }
 
   void checkExistPhoneNumber(CheckIfPhoneExistParams params) async {
     emit(const AccountState.checkPhoneNumberExistLoading());

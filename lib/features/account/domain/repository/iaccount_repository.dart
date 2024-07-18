@@ -65,7 +65,7 @@ abstract class IAccountRepository extends Repository {
       CheckIfPhoneExistParams params);
   Future<Result<AppErrors, SendOtpEntity>> sendOTPPhoneNumber(
       CheckIfPhoneExistParams params);
-  Future<Result<AppErrors, EmptyResponse>> verifyOTP(
+  Future<Result<AppErrors, VerifyEntity>> verifyOTP(
       VerifyOtpParams params);
 
   Future<Result<AppErrors, EmptyResponse>> checkIfEmailExist(

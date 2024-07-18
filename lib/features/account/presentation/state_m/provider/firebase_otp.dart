@@ -20,20 +20,22 @@ class FireBaseOTP {
     required Function(String verificationId, int? resendToken) onCodeSent,
   }) async {
     await
-    auth
-        .setSettings(
-        // forceRecaptchaFlow: ,
-        appVerificationDisabledForTesting: true)
-        .then((value) =>
+    // auth
+    //     .setSettings(
+    //     // forceRecaptchaFlow: ,
+    //     appVerificationDisabledForTesting: true)
+    //     .then((value) =>
         auth.verifyPhoneNumber(
               phoneNumber: '+${countryCode}${phoneNumber}',
               verificationCompleted: verificationCompleted,
               verificationFailed: verificationFailed,
               codeSent: onCodeSent,
               codeAutoRetrievalTimeout: (String verificationId) {},
-            )
+            // )
     );
   }
+
+
 
   Future<bool> verifyCode({
     required PhoneAuthCredential phoneAuthCredential,
@@ -56,6 +58,9 @@ class FireBaseOTP {
       return false;
     }
   }
+
+
+
 }
 
 /*

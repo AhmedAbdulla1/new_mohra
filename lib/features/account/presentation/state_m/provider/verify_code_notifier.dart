@@ -9,9 +9,12 @@ import 'package:starter_application/core/common/costum_modules/screen_notifier.d
 import 'package:starter_application/core/navigation/nav.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_error_snackbar.dart';
 import 'package:starter_application/core/ui/snackbars/show_snackbar.dart';
+import 'package:starter_application/features/account/data/model/request/check_exist_phone_params.dart';
+import 'package:starter_application/features/account/data/model/request/confirmPassword_request.dart';
 import 'package:starter_application/features/account/data/model/request/forgetpassword_request.dart';
 import 'package:starter_application/features/account/data/model/request/login_request.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
+import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';
 import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/presentation/screen/confirmPassword_screen.dart';
 import 'package:starter_application/features/account/presentation/screen/set_username_screen.dart';
@@ -72,58 +75,58 @@ class VerifyCodeNotifier extends ScreenNotifier {
               : "Verification code must be 6 numbers");
     } else {
       print('code is right');
-      if (code?.length == 6) {
-        verifyPhoneCode();
-      } else {
-        showErrorSnackBar(
-          message: "The code is not valid",
-        );
-      }
-      // if (signUpCode) {
-      //   if (code?.length == 6) {
-      //     accountCubit.verifyOtp(VerifyOtpParams(
-      //         phoneNumberWithCountryCode:
-      //             registerRequest.countryCode! + registerRequest.phoneNumber!,
-      //         otpCode: code!));
-      //     verifyPhoneCode();
-      //   } else {
-      //     showErrorSnackBar(
-      //       message: "The code is not valid",
-      //     );
-      //   }
+      // if (code?.length == 6) {
+      //   verifyPhoneCode();
       // } else {
-      //   if (registerRequest.phoneNumber != null) {
-      //     countryCode = countryCode
-      //         .toString()
-      //         .split('+')[countryCode.toString().split('+').length - 1];
-      //     if (code?.length == 6) {
-      //       registerRequest.verifyCode = code;
-      //
-      //       verifyForgetPasswordCode();
-      //     } else {
-      //       showErrorSnackBar(
-      //         message: "The code is not valid",
-      //       );
-      //     }
-      //   } else {
-      //     if (code?.length == 6) {
-      //       registerRequest.verifyCode = code;
-      //
-      //       accountCubit.ConfirmPasswordCode(
-      //         ConfirmPasswordRequest(
-      //           userNameOrEmailAddressOrPhoneNumber:
-      //               "${registerRequest.emailAddress}",
-      //           code: registerRequest.verifyCode,
-      //           isFromGooleAccount: false,
-      //         ),
-      //       );
-      //     } else {
-      //       showErrorSnackBar(
-      //         message: "The code is not valid",
-      //       );
-      //     }
-      //   }
+      //   showErrorSnackBar(
+      //     message: "The code is not valid",
+      //   );
       // }
+      if (signUpCode) {
+        if (code?.length == 6) {
+          accountCubit.verifyOtp(VerifyOtpParams(
+              phoneNumberWithCountryCode:
+                  registerRequest.countryCode! + registerRequest.phoneNumber!,
+              otpCode: code!));
+          verifyPhoneCode();
+        } else {
+          showErrorSnackBar(
+            message: "The code is not valid",
+          );
+        }
+      } else {
+        if (registerRequest.phoneNumber != null) {
+          countryCode = countryCode
+              .toString()
+              .split('+')[countryCode.toString().split('+').length - 1];
+          if (code?.length == 6) {
+            registerRequest.verifyCode = code;
+
+            verifyForgetPasswordCode();
+          } else {
+            showErrorSnackBar(
+              message: "The code is not valid",
+            );
+          }
+        } else {
+          if (code?.length == 6) {
+            registerRequest.verifyCode = code;
+
+            accountCubit.ConfirmPasswordCode(
+              ConfirmPasswordRequest(
+                userNameOrEmailAddressOrPhoneNumber:
+                    "${registerRequest.emailAddress}",
+                code: registerRequest.verifyCode,
+                isFromGooleAccount: false,
+              ),
+            );
+          } else {
+            showErrorSnackBar(
+              message: "The code is not valid",
+            );
+          }
+        }
+      }
     }
   }
 
@@ -161,7 +164,6 @@ class VerifyCodeNotifier extends ScreenNotifier {
       changeVerifyStatusToFalse();
     }
     if (result) {
-
       if (registerRequest.register_or_confirm ?? false) {
         Nav.to(SetUserNameScreen.routeName, arguments: registerRequest);
       } else {
@@ -238,7 +240,14 @@ class VerifyCodeNotifier extends ScreenNotifier {
 
   reSendCode() async {
     if (signUpCode) {
-      reSendOTPCodeFromFirebase();
+      if (registerRequest.countryCode == '966') {
+        accountCubit.sendOtp(
+          CheckIfPhoneExistParams(
+              phoneNumber: registerRequest.phoneNumber!,
+              countryCode: registerRequest.countryCode!),
+        );
+      } else
+        reSendOTPCodeFromFirebase();
     } else {
       if (registerRequest.phoneNumber != null) {
         reSendOTPCodeFromFirebase();
@@ -251,36 +260,36 @@ class VerifyCodeNotifier extends ScreenNotifier {
 
   void reSendOTPCodeFromFirebase() async {
     changeSendingCodeStatus();
-    // accountCubit.sendOtp(
-    //   CheckIfPhoneExistParams(phoneNumber: registerRequest.phoneNumber!, countryCode: registerRequest.countryCode!),
-    // );
+    accountCubit.sendOtp(
+      CheckIfPhoneExistParams(phoneNumber: registerRequest.phoneNumber!, countryCode: registerRequest.countryCode!),
+    );
     String codeForFirebase = registerRequest.countryCode!.substring(2);
     fireBaseOTP = FireBaseOTP(
         phoneNumber: registerRequest.phoneNumber!,
         countryCode: registerRequest.countryCode!);
 
-    // fireBaseOTP.sendCode(
-    //   verificationCompleted: (PhoneAuthCredential credential) {
-    //     print('complete');
-    //     changeSendingCodeStatusToFalse();
-    //   },
-    //   verificationFailed: (e) {
-    //     changeSendingCodeStatusToFalse();
-    //     accountCubit.emit(const AccountState.accountInit());
-    //     showErrorSnackBar(
-    //         message: e.message,
-    //         context: context,
-    //         callback: reSendOTPCodeFromFirebase);
-    //   },
-    //   onCodeSent: (verificationId, resendToken) {
-    //     changeSendingCodeStatusToFalse();
-    //     registerRequest.verificationId = verificationId;
-    //     accountCubit.emit(const AccountState.accountInit());
-    //     showSnackbar(isArabic
-    //         ? "لقد ارسلنا رسالة نصية تحوي كود التفعيل إلى الرقم "
-    //         : "We’ve sent a text message with your verification code to");
-    //   },
-    // );
+    fireBaseOTP.sendCode(
+      verificationCompleted: (PhoneAuthCredential credential) {
+        print('complete');
+        changeSendingCodeStatusToFalse();
+      },
+      verificationFailed: (e) {
+        changeSendingCodeStatusToFalse();
+        accountCubit.emit(const AccountState.accountInit());
+        showErrorSnackBar(
+            message: e.message,
+            context: context,
+            callback: reSendOTPCodeFromFirebase);
+      },
+      onCodeSent: (verificationId, resendToken) {
+        changeSendingCodeStatusToFalse();
+        registerRequest.verificationId = verificationId;
+        accountCubit.emit(const AccountState.accountInit());
+        showSnackbar(isArabic
+            ? "لقد ارسلنا رسالة نصية تحوي كود التفعيل إلى الرقم "
+            : "We’ve sent a text message with your verification code to");
+      },
+    );
   }
 
   changeSendingCodeStatusToFalse() {
