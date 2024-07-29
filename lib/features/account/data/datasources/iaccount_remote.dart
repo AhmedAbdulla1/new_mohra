@@ -17,15 +17,14 @@ import 'package:starter_application/features/account/data/model/request/login_re
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_firebase_token_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_location_request.dart';
-import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';
 import 'package:starter_application/features/account/data/model/request/verify_request.dart';
+import 'package:starter_application/features/account/data/model/response/check_phone_exist_model.dart';
 import 'package:starter_application/features/account/data/model/response/client_profile_model.dart';
 import 'package:starter_application/features/account/data/model/response/forgetPassword_model.dart';
 import 'package:starter_application/features/account/data/model/response/login_model.dart';
 import 'package:starter_application/features/account/data/model/response/logout_model.dart';
 import 'package:starter_application/features/account/data/model/response/nearby_clients_model.dart';
 import 'package:starter_application/features/account/data/model/response/register_model.dart';
-import 'package:starter_application/features/account/data/model/response/send_otp_model.dart';
 import 'package:starter_application/features/account/data/model/response/verify_model.dart';
 
 abstract class IAccountRemoteSource extends RemoteDataSource {
@@ -64,10 +63,7 @@ abstract class IAccountRemoteSource extends RemoteDataSource {
 
   Future<Either<AppErrors, EmptyResponse>> checkIfPhoneExist(
       CheckIfPhoneExistParams params);
-  Future<Either<AppErrors, SendOtpModel>> sendOTPPhoneNumber(
-      CheckIfPhoneExistParams params);
-  Future<Either<AppErrors, EmptyResponse>> verifyOTPPhoneNumber(
-      VerifyOtpParams params);
+
 
   Future<Either<AppErrors, EmptyResponse>> checkIfEmailExist(
       CheckIfEmailExistParams params);

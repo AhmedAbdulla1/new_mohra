@@ -43,7 +43,6 @@ class HandManHelp {
     return res;
   }
 
-
   static Future<String> firebaseLogin(BuildContext context,
       {required UserData data}) async {
     try {

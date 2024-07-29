@@ -233,20 +233,21 @@ class _SplashScreenState extends State<SplashScreen> {
     if (session.hasToken)
       Future.delayed(const Duration(milliseconds: 100)).then((value) async {
         if (UserSessionDataModel.userType == UserType.CLIENT) {
-          final prefs = await SpUtil.getInstance();
-          bool? hasAvatar = prefs.getBool(AppConstants.HAS_PERSONALITY_AVATAR);
-          if (hasAvatar != null) {
-            if (UserSessionDataModel.gender == 0) {
-              Nav.toAndRemoveAll(StartPersonalityTest.routeName);
-              isNavigate = true;
-            } else {
-              Nav.off(AppMainScreen.routeName);
-              isNavigate = true;
-            }
-          } else {
-            Nav.toAndRemoveAll(StartPersonalityTest.routeName);
-            isNavigate = true;
-          }
+          Nav.off(AppMainScreen.routeName);
+          // final prefs = await SpUtil.getInstance();
+          // bool? hasAvatar = prefs.getBool(AppConstants.HAS_PERSONALITY_AVATAR);
+          // if (hasAvatar != null) {
+          //   if (UserSessionDataModel.gender == 0) {
+          //     Nav.toAndRemoveAll(StartPersonalityTest.routeName);
+          //     isNavigate = true;
+          //   } else {
+          //
+          //     isNavigate = true;
+          //   }
+          // } else {
+          //   Nav.toAndRemoveAll(StartPersonalityTest.routeName);
+          //   isNavigate = true;
+          // }
         } else {
           Nav.off(EventOrganizerScreen.routeName);
           isNavigate = true;

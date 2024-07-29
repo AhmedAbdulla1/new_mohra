@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
-import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
@@ -15,20 +14,19 @@ import 'package:starter_application/core/ui/error_ui/errors_screens/error_widget
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
 import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
-import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
-import 'package:starter_application/features/account/presentation/state_m/provider/firebase_otp.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/verify_code_notifier.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'package:starter_application/main.dart';
 import 'dart:ui' as ui;
 
 class VerifyCodeScreen extends StatefulWidget {
   static const routeName = "/RegisterScreen3";
-  final RegisterRequest registerRequest;
-  final bool signUpProcess;
-  final SendOtpEntity? sendOtpEntity;
-  const VerifyCodeScreen(
-      {Key? key, required this.registerRequest, required this.signUpProcess, this.sendOtpEntity})
+  RegisterRequest registerRequest;
+  bool signUpProcess;
+
+  VerifyCodeScreen(
+      {Key? key, required this.registerRequest, required this.signUpProcess})
       : super(key: key);
 
   @override
@@ -37,7 +35,7 @@ class VerifyCodeScreen extends StatefulWidget {
 
 class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   VerifyCodeNotifier sn = VerifyCodeNotifier();
-  OtpTimerButtonController controller = OtpTimerButtonController();
+
   @override
   void dispose() {
     sn.closeNotifier();
@@ -45,9 +43,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   }
 
   void initState() {
-    print('ahmed');
-    print(widget.sendOtpEntity);
-    sn.sendOtpEntity = widget.sendOtpEntity;
     sn.signUpCode = widget.signUpProcess;
     sn.registerRequest = widget.registerRequest;
     super.initState();
@@ -63,15 +58,15 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         context.watch<VerifyCodeNotifier>();
         sn.context = context;
         return Directionality(
-          textDirection: isArabic ? ui.TextDirection.rtl :ui.TextDirection.ltr ,
+          textDirection: isArabic ? ui.TextDirection.rtl : ui.TextDirection.ltr,
           child: Scaffold(
-            appBar: buildCustomAppbar(),
+            appBar: buildAppbar(),
             body: Padding(
               padding: AppConstants.screenPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildAppbarTitle(isArabic ? "تأكيد":"Verify"),
+                  buildAppbarTitle(isArabic ? "تأكيد" : "Verify"),
                   Gaps.vGap32,
                   _builDescription(sn.registerRequest.phoneNumber == null
                       ? '${sn.registerRequest.emailAddress}'
@@ -91,16 +86,20 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                             listener: (context, state) {
                               state.mapOrNull(
                                 accountError: (s) => ErrorViewer.showError(
-                                  errorViewerOptions: const ErrVSnackBarOptions(),
+                                  errorViewerOptions:
+                                      const ErrVSnackBarOptions(),
                                   context: context,
                                   error: s.error,
                                   callback: () => sn.onVerifyTap(),
                                 ),
                                 passwordCodeVerified: (s) => sn.onVerifyDone(),
+                                phoneNumberConfirmed: (s)=> sn.onPhoneNumberConfirmed(),
+                                registerLoaded: (s) {
+                                  sn.confirmPhoneNumber();
+                                },
+                                loginLoaded: (s) =>
+                                    sn.onLoginSuccess(s.loginEntity),
                               );
-                              if(state is PhoneNumberConfirmed){
-                                sn.sendOtpEntity = state.sendOtpEntity;
-                              }
                             },
                             bloc: sn.accountCubit,
                             builder: (context, state) {
@@ -109,15 +108,18 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                                 hasAvatarChecked: (s) =>
                                     const ScreenNotImplementedError(),
                                 getAvatar: (s) => _buildVerifyButton(),
-                                forgetpasswordLoaded: (s) => _buildVerifyButton(),
+                                forgetpasswordLoaded: (s) =>
+                                    _buildVerifyButton(),
                                 accountError: (s) => _buildVerifyButton(),
                                 accountInit: (s) => _buildVerifyButton(),
                                 accountLoading: (s) => WaitingWidget(),
                                 loginLoaded: (s) => _buildVerifyButton(),
                                 registerLoaded: (s) => _buildVerifyButton(),
                                 verifyLoaded: (s) => _buildVerifyButton(),
-                                passwordCodeVerified: (s) => _buildVerifyButton(),
-                                phoneNumberConfirmed: (s) => _buildVerifyButton(),
+                                passwordCodeVerified: (s) =>
+                                    _buildVerifyButton(),
+                                phoneNumberConfirmed: (s) =>
+                                    _buildVerifyButton(),
                               );
                             }),
                         Gaps.vGap32,
@@ -142,10 +144,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     return sn.isVerifyPhone
         ? WaitingWidget()
         : CustomMansourButton(
-            titleText: isArabic ? "تأكيد":"Verify",
+            titleText: isArabic ? "تأكيد" : "Verify",
             textColor: AppColors.lightFontColor,
             onPressed: () {
-
               print('aaa');
               sn.onVerifyTap();
             },
@@ -154,7 +155,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
   Widget _builDescription(String fotter) {
     return Text(
-      "${isArabic ?"أدخل رمز التحقق أدناه ، الرمز المرسل إلى" : "enter verification code below, the code sent to"} $fotter",
+      "${isArabic ? "أدخل رمز التحقق أدناه ، الرمز المرسل إلى" : "enter verification code below, the code sent to"} $fotter",
       style: TextStyle(
         color: Colors.black,
         fontSize: 45.sp,
@@ -187,7 +188,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     return Column(
       children: [
         Text(
-          isArabic ?"الم تتلقى الرمز":"Did’nt recieve code",
+          isArabic ? "الم تتلقى الرمز" : "Did’nt recieve code",
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -195,44 +196,22 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           ),
         ),
         Gaps.vGap12,
-        OtpTimerButton(
-          controller: controller,
-          onPressed: () {
-            sn.reSendCode();
-            controller.loading();
-            Future.delayed(const Duration(seconds: 2), () {
-              controller.startTimer();
-            });
-          },
-          buttonType: ButtonType.elevated_button,
-          radius: 5.r,
-          loadingIndicatorColor: AppColors.primaryColorLight,
-          text: Text(
-            "${isArabic ? "اعادة ارسال" : "Resend Code"} ",
-            style: TextStyle(
-              color: AppColors.primaryColorLight,
-              fontSize: 40.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          duration: 30,
-        ),
-        // sn.isSendingCode
-        //     ? WaitingWidget()
-        //     : CustomMansourButton(
-        //         width: 0.6.sw,
-        //         backgroundColor: AppColors.mansourWhiteBackgrounColor,
-        //         titleText: "${isArabic ? "اعادة ارسال" : "Resend Code"} ",
-        //         titleStyle: TextStyle(
-        //           color: AppColors.primaryColorLight,
-        //           fontSize: 40.sp,
-        //           fontWeight: FontWeight.bold,
-        //         ),
-        //         borderRadius: Radius.circular(20.r),
-        //         onPressed: () {
-        //           sn.reSendCode();
-        //         },
-        //       ),
+        sn.isSendingCode
+            ? WaitingWidget()
+            : CustomMansourButton(
+                width: 0.6.sw,
+                backgroundColor: AppColors.mansourWhiteBackgrounColor,
+                titleText: "${isArabic ? "اعادة ارسال" : "Resend Code"} ",
+                titleStyle: TextStyle(
+                  color: AppColors.primaryColorLight,
+                  fontSize: 40.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+                borderRadius: Radius.circular(20.r),
+                onPressed: () {
+                  sn.reSendCode();
+                },
+              ),
       ],
     );
   }

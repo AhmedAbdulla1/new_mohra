@@ -1,16 +1,18 @@
 {
   "flutter": {
     "platforms": {
+      "ios": {
+        "default": {
+          "projectId": "hypnotic-trees-282211",
+          "appId": "1:230280905856:ios:de1932fe37b121873c9265",
+          "fileOutput": "ios/GoogleService-Info.plist"
+        }
+      },
       "android": {
         "default": {
           "projectId": "hypnotic-trees-282211",
           "appId": "1:230280905856:android:af11e7ed1e5b01243c9265",
           "fileOutput": "android/app/google-services.json"
-        },
-        "ios": {
-          "projectId": "hypnotic-trees-282211",
-          "appId": "1:230280905856:ios:de1932fe37b121873c9265",
-          "fileOutput": "ios/Runner/google-services.json"
         }
       },
       "dart": {

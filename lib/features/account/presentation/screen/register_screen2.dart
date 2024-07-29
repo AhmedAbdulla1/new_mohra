@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -9,23 +8,30 @@ import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
 import 'package:starter_application/core/common/utils.dart';
+import 'package:starter_application/core/common/validators.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
 import 'package:starter_application/core/navigation/animations/animated_route.dart';
 import 'package:starter_application/core/ui/appbar/appbar.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_snackbar_based_error_type.dart';
+import 'package:starter_application/core/ui/error_ui/errors_screens/error_widget.dart';
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
 import 'package:starter_application/core/ui/widgets/custom_text_field.dart';
 import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/register_screen_2_notifier.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'dart:ui' as ui;
+import 'package:intl_phone_field/countries.dart';
 import '../../../../main.dart';
+
 class RegisterScreen2 extends StatefulWidget {
   static const routeName = "/RegisterScreen2";
+
   // RegisterRequest registerRequest;
 
-  RegisterScreen2({Key? key,
+  RegisterScreen2({
+    Key? key,
 
     // required this.registerRequest
   }) : super(key: key);
@@ -39,7 +45,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   @override
   void initState() {
-    sn.registerRequest = RegisterRequest();
+    // sn.registerRequest = widget.registerRequest;
     super.initState();
   }
 
@@ -49,19 +55,19 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
     super.dispose();
   }
 
-  // getCakeOrBasboosh() {
-  //   if (sn.registerRequest.cake == 1) {
-  //     return ' ' +
-  //         (isArabic ? "الكيكة" : "Cake") +
-  //         ' ' +
-  //         String.fromCharCode(0x1F36F);
-  //   } else {
-  //     return ' ' +
-  //         (isArabic ? "البسبوسة" : "Basboosh") +
-  //         ' ' +
-  //         String.fromCharCode(0x1F95E);
-  //   }
-  // }
+  getCakeOrBasboosh() {
+    if (sn.registerRequest.cake == 1) {
+      return ' ' +
+          (isArabic ? "الكيكة" : "Cake") +
+          ' ' +
+          String.fromCharCode(0x1F36F);
+    } else {
+      return ' ' +
+          (isArabic ? "البسبوسة" : "Basboosh") +
+          ' ' +
+          String.fromCharCode(0x1F95E);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +77,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
         context.watch<RegisterScreen2Notifier>();
         sn.context = context;
         return Directionality(
-          textDirection: isArabic ? ui.TextDirection.rtl :ui.TextDirection.ltr ,
+          textDirection: isArabic ? ui.TextDirection.rtl : ui.TextDirection.ltr,
           child: Scaffold(
             appBar: buildAppbar(),
             body: Form(
@@ -79,7 +85,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildAppbarTitle( isArabic ? "تسجيل حساب":"Register"),
+                  buildAppbarTitle(isArabic ? "تسجيل حساب" : "Register"),
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
@@ -113,7 +119,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                 child: Text(
                                   sn.emailError,
                                   style: TextStyle(
-                                      color: AppColors.redColor, fontSize: 40.sp),
+                                      color: AppColors.redColor,
+                                      fontSize: 40.sp),
                                 ),
                               ),
                             ),
@@ -139,7 +146,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                 child: Text(
                                   sn.phoneError,
                                   style: TextStyle(
-                                      color: AppColors.redColor, fontSize: 40.sp),
+                                      color: AppColors.redColor,
+                                      fontSize: 40.sp),
                                 ),
                               ),
                             ),
@@ -164,7 +172,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                 child: Text(
                                   sn.passwordError,
                                   style: TextStyle(
-                                      color: AppColors.redColor, fontSize: 40.sp),
+                                      color: AppColors.redColor,
+                                      fontSize: 40.sp),
                                 ),
                               ),
                             ),
@@ -189,7 +198,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                 child: Text(
                                   sn.passwordConfirmError,
                                   style: TextStyle(
-                                      color: AppColors.redColor, fontSize: 40.sp),
+                                      color: AppColors.redColor,
+                                      fontSize: 40.sp),
                                 ),
                               ),
                             ),
@@ -212,60 +222,64 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
   _buildNextButtonConsumer() {
     return BlocConsumer<AccountCubit, AccountState>(
         listener: (context, state) {
-          if(state is CheckPhoneNumberExistDone){
-            print('check phone number is done');
+          if (state is CheckPhoneNumberExistDone) {
             sn.onValidPhoneNumber();
           }
-          if(state is CheckPhoneNumberExistError){
-            print('check phone number error');
-
-            showSnakBarBasedErrorType(context, state.error, (){}, retryWhenNotAuthorized: false);
+          if (state is CheckPhoneNumberExistError) {
+            showSnakBarBasedErrorType(context, state.error, () {},
+                retryWhenNotAuthorized: false);
           }
-          if(state is CheckEmailExistDone){
+          if (state is CheckEmailExistDone) {
             sn.onValidEmail();
           }
-          if(state is CheckEmailExistError){
-            showSnakBarBasedErrorType(context, state.error, (){}, retryWhenNotAuthorized: false);
+          if (state is CheckEmailExistError) {
+            showSnakBarBasedErrorType(context, state.error, () {},
+                retryWhenNotAuthorized: false);
           }
-          if(state is CheckEmailExistLoading){
+          if (state is CheckEmailExistLoading) {
             sn.notifyListeners();
-          }
-          if(state is PhoneNumberConfirmed  ){
-            sn.onPhoneVerifiedFromTaqniat(state.sendOtpEntity);
           }
         },
         bloc: sn.accountCubit,
         builder: (context, state) {
           return state.maybeMap(
-              orElse: () => _buildNextButtonWidget(),
-              accountError: (s) => _buildNextButtonWidget(),
-              accountInit: (s) => _buildNextButtonWidget(),
-              accountLoading: (s) => WaitingWidget(),
-              loginLoaded: (s) => Container(),
-              registerLoaded: (s) => Container(),
-              verifyLoaded: (s) => Container(),
-              checkPhoneNumberExistLoading: (s) => TextWaitingWidget( isArabic ? "جاري التحقق من رقم الهاتف" :"Check If Phone Number Valid"),
-              checkEmailExistLoading:  (s) => TextWaitingWidget(isArabic ? "جاري التحقق من البريد الالكتروني" : "Check If Email is Valid"),
-              checkEmailExistDone: (s) => _buildNextButtonWidget(),
-              checkPhoneNumberExistDone: (s) => _buildNextButtonWidget(),
+            orElse: () => _buildNextButtonWidget(),
+            accountError: (s) => _buildNextButtonWidget(),
+            accountInit: (s) => _buildNextButtonWidget(),
+            accountLoading: (s) => WaitingWidget(),
+            loginLoaded: (s) => Container(),
+            registerLoaded: (s) => Container(),
+            verifyLoaded: (s) => Container(),
+            checkPhoneNumberExistLoading: (s) => TextWaitingWidget(isArabic
+                ? "جاري التحقق من رقم الهاتف"
+                : "Check If Phone Number Valid"),
+            checkEmailExistLoading: (s) => TextWaitingWidget(isArabic
+                ? "جاري التحقق من البريد الالكتروني"
+                : "Check If Email is Valid"),
+            checkEmailExistDone: (s) => _buildNextButtonWidget(),
+            checkPhoneNumberExistDone: (s) => _buildNextButtonWidget(),
           );
         });
   }
 
-  _buildNextButtonWidget(){
+  _buildNextButtonWidget() {
     return Column(
       children: [
         SlidingAnimated(
           initialOffset: 5,
           intervalStart: 0.4,
           intervalEnd: 0.5,
-          child: sn.isSendingCode ? TextWaitingWidget(isArabic ? "يتم إرسال كود التحقق" : "Sending a confirmation code")  : CustomMansourButton(
-            titleText: isArabic?"التالي":"Next",
-            textColor: AppColors.lightFontColor,
-            onPressed: () {
-              sn.onNextTap();
-            },
-          ),
+          child: sn.isSendingCode
+              ? TextWaitingWidget(isArabic
+                  ? "يتم إرسال كود التحقق"
+                  : "Sending a confirmation code")
+              : CustomMansourButton(
+                  titleText: isArabic ? "التالي" : "Next",
+                  textColor: AppColors.lightFontColor,
+                  onPressed: () {
+                    sn.onNextTap();
+                  },
+                ),
         ),
         /*Gaps.vGap128,
                                           Center(
@@ -304,12 +318,12 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
     );
   }
 
-
   Widget _builDescription() {
     return Text(
-      (isArabic ? "هلا" : "Welcome ") +
-          '\n' +
-          (isArabic?" ممكن تعبي معلوماتك هنا " : "Please Fill your Information here"),
+      (isArabic ? "مرحبا " : "Welcome ") +
+          (isArabic
+              ? " ممكن تعبي معلوماتك هنا "
+              : " , Please Fill your Information here"),
       style: TextStyle(
         color: Colors.black,
         fontSize: 45.sp,
@@ -325,7 +339,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.emailAddress,
       focusNode: sn.myFocusNodeEmail,
-      hintText: isArabic ? "البريد الإلكتروني":"Email",
+      hintText: isArabic ? "البريد الإلكتروني" : "Email",
       horizontalMargin: 100.w,
       prefixIconConstraints: BoxConstraints(
         minWidth: 0,
@@ -335,7 +349,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       ),
       validator: (value) {
         sn.validateEmail(value);
-        return null;
       },
       onFieldSubmitted: (term) {
         fieldFocusChange(context, sn.myFocusNodeEmail, sn.myFocusNodePhone);
@@ -375,7 +388,9 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
               ),
             ),
           ),
-          Gaps.hGap64,
+          SizedBox(
+            width: 40.w,
+          ),
           Expanded(flex: 6, child: _buildEmailField()),
         ],
       ),
@@ -395,11 +410,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       child: Transform.translate(
         offset: const Offset(0, 10),
         child: IntlPhoneField(
+          style: const TextStyle(fontSize: 16),
           disableLengthCheck: false,
           flagsButtonMargin: EdgeInsets.zero,
           dropdownTextStyle: const TextStyle(),
           onCountryChanged: (value) {
-            print(value.dialCode);
             sn.countryCode = "+${value.dialCode}";
             sn.country = value;
             sn.notifyListeners();
@@ -412,7 +427,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
             new FilteringTextInputFormatter.allow((RegExp("[0-9]"))),
           ],
 
-          searchText: isArabic  ? "البحث عن بلد" : "Search country",
+          searchText: isArabic ? "البحث عن بلد" : "Search country",
           textAlign: isArabic ? TextAlign.right : TextAlign.left,
           decoration: InputDecoration(
             hintStyle: const TextStyle(fontSize: 14),
@@ -420,13 +435,12 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
             hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
             enabled: true,
             alignLabelWithHint: true,
-            hintText: (isArabic ? "مثال" :"Example") + ' : ' + '5xxxxxxxx',
+            hintText: (isArabic ? "مثال" : "Example") + ' : ' + '5xxxxxxxx',
             border: InputBorder.none,
           ),
           initialCountryCode: 'SA',
           validator: (phone) {
-            sn.validatePhoneNumber(phone?.number,sn.country.maxLength);
-            return null;
+            sn.validatePhoneNumber(phone?.number, sn.country.maxLength);
           },
           onSubmitted: (term) {
             fieldFocusChange(
@@ -436,7 +450,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
             );
           },
           onChanged: (value) {
-              // sn.phoneKey.currentState!.validate();
+            // sn.phoneKey.currentState!.validate();
           },
         ),
       ),
@@ -471,7 +485,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                 ),
               ),
             ),
-            Gaps.hGap64,
+            SizedBox(width: 45.w),
             Expanded(flex: 6, child: _buildPasswordField()),
             IconButton(
               onPressed: () {
@@ -499,7 +513,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.visiblePassword,
       focusNode: sn.myFocusNodePassword,
-      hintText: isArabic ? "كلمة المرور" :"Password",
+      hintText: isArabic ? "كلمة المرور" : "Password",
       obscureText: sn.obscureTextpssword,
       horizontalMargin: 110.w,
       errorMaxLines: 4,
@@ -511,7 +525,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       ),
       validator: (value) {
         sn.validatePassword(value);
-        return null;
       },
       onFieldSubmitted: (term) {
         fieldFocusChange(
@@ -551,7 +564,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                 ),
               ),
             ),
-            Gaps.hGap64,
+            SizedBox(width: 45.w),
             Expanded(flex: 6, child: _buildconfirmPasswordField()),
             IconButton(
               onPressed: () {
@@ -591,7 +604,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       ),
       validator: (value) {
         sn.validateConfirmPassword(value);
-        return null;
       },
       onFieldSubmitted: (term) {
         sn.myFocusNodeConfirmPassword.unfocus();

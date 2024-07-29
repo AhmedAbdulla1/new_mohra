@@ -105,7 +105,7 @@ class RemoteDataSource {
         createModelInterceptor.toString(),
         createModelInterceptor,
       );
-
+    print('base url $baseUrl');
     print('url for request $url');
     print('queryParameters for request $queryParameters');
     /// Send the request.

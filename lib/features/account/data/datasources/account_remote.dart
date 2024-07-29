@@ -1,14 +1,11 @@
-import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-import 'package:gallery_saver/files.dart';
 import 'package:injectable/injectable.dart';
-import 'package:starter_application/core/common/extensions/extensions.dart';
 import 'package:starter_application/core/constants/enums/http_method.dart';
 import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/models/empty_response.dart';
 import 'package:starter_application/core/net/api_url.dart';
+import 'package:starter_application/core/net/create_model_interceptor/all_data_create_model_inteceptor.dart';
+import 'package:starter_application/core/net/create_model_interceptor/default_create_model_inteceptor.dart';
 import 'package:starter_application/core/net/create_model_interceptor/null_response_model_interceptor.dart';
 import 'package:starter_application/core/net/response_validators/default_response_validator.dart';
 import 'package:starter_application/core/net/response_validators/prayer_times_response_validator.dart';
@@ -27,15 +24,14 @@ import 'package:starter_application/features/account/data/model/request/login_re
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_firebase_token_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_location_request.dart';
-import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';
 import 'package:starter_application/features/account/data/model/request/verify_request.dart';
+import 'package:starter_application/features/account/data/model/response/check_phone_exist_model.dart';
 import 'package:starter_application/features/account/data/model/response/client_profile_model.dart';
 import 'package:starter_application/features/account/data/model/response/forgetPassword_model.dart';
 import 'package:starter_application/features/account/data/model/response/login_model.dart';
 import 'package:starter_application/features/account/data/model/response/logout_model.dart';
 import 'package:starter_application/features/account/data/model/response/nearby_clients_model.dart';
 import 'package:starter_application/features/account/data/model/response/register_model.dart';
-import 'package:starter_application/features/account/data/model/response/send_otp_model.dart';
 import 'package:starter_application/features/account/data/model/response/verify_model.dart';
 
 import 'iaccount_remote.dart';
@@ -44,7 +40,6 @@ import 'iaccount_remote.dart';
 class AccountRemoteSource extends IAccountRemoteSource {
   @override
   Future<Either<AppErrors, RegisterModel>> register(RegisterRequest params) {
-    params.toMap().toString().logD;
     return request(
       converter: (json) {
         return RegisterModel.fromMap(json);
@@ -62,7 +57,7 @@ class AccountRemoteSource extends IAccountRemoteSource {
 
   @override
   Future<Either<AppErrors, LoginModel>> login(LoginRequest loginRequest) {
-    print('in remote $loginRequest');
+    print(loginRequest);
     return request(
       converter: (json) {
         return LoginModel.fromMap(json);
@@ -73,6 +68,7 @@ class AccountRemoteSource extends IAccountRemoteSource {
       method: HttpMethod.POST,
       url: APIUrls.Login,
       body: loginRequest.toMap(),
+
     );
   }
 
@@ -202,9 +198,7 @@ class AccountRemoteSource extends IAccountRemoteSource {
   }
 
   @override
-  Future<Either<AppErrors, LoginModel>> loginWithGoogle(
-      GoogleLoginParams loginRequest) {
-    print(loginRequest.toMap());
+  Future<Either<AppErrors, LoginModel>> loginWithGoogle(GoogleLoginParams loginRequest) {
     return request(
       converter: (json) {
         return LoginModel.fromMap(json);
@@ -219,8 +213,7 @@ class AccountRemoteSource extends IAccountRemoteSource {
   }
 
   @override
-  Future<Either<AppErrors, LoginModel>> registerWithGoogle(
-      GoogleRegisterParams loginRequest) {
+  Future<Either<AppErrors, LoginModel>> registerWithGoogle(GoogleRegisterParams loginRequest) {
     return request(
       converter: (json) {
         return LoginModel.fromMap(json);
@@ -235,8 +228,7 @@ class AccountRemoteSource extends IAccountRemoteSource {
   }
 
   @override
-  Future<Either<AppErrors, EmptyResponse>> confirmPhoneNumber(
-      ConfirmPhoneNumberParams params) {
+  Future<Either<AppErrors, EmptyResponse>> confirmPhoneNumber(ConfirmPhoneNumberParams params) {
     return request(
       converter: (json) {
         return EmptyResponse.fromMap(json);
@@ -247,13 +239,11 @@ class AccountRemoteSource extends IAccountRemoteSource {
       createModelInterceptor: const NullResponseModelInterceptor(),
       responseValidator: DefaultResponseValidator(),
     );
-
   }
 
   @override
-  Future<Either<AppErrors, EmptyResponse>> checkIfPhoneExist(
-      CheckIfPhoneExistParams params) {
-    print('on remote');
+  Future<Either<AppErrors, EmptyResponse>> checkIfPhoneExist(CheckIfPhoneExistParams params) {
+    print('12312');
     print(params);
     return request(
       converter: (json) {
@@ -262,76 +252,13 @@ class AccountRemoteSource extends IAccountRemoteSource {
       method: HttpMethod.POST,
       url: APIUrls.checkPhoneNumberIfExist,
       body: params.toMap(),
-      createModelInterceptor: const NullResponseModelInterceptor(),
+      createModelInterceptor: NullResponseModelInterceptor(),
+
     );
   }
 
   @override
-  Future<Either<AppErrors, SendOtpModel>> sendOTPPhoneNumber(
-      CheckIfPhoneExistParams params) async {
-    print('on remote to send otp ');
-    print(params);
-
-    // try {
-      var data = FormData.fromMap({
-        'phoneNumber': params.phoneNumber,
-        'countryCode': '966'
-      });
-
-      var dio = Dio();
-      var response = await dio.request(
-        'https://shayal.herova.net/sms-mohar/send.php',
-        options: Options(
-          method: 'POST',
-        ),
-        data: data,
-      );
-      print(response.statusCode);
-      if (response.statusCode == 200) {
-        response.data;
-        print(response.data);
-        return Right(SendOtpModel.fromMap(response.data));
-      } else if (response.statusCode == 400) {
-        return const Left(AppErrors.badRequestError());
-      }else{
-        return const Left(AppErrors.internalServerError());
-      }
-    // } catch (e) {
-    //   return Left(CustomError(message: e.toString()));
-    // }
-
-    return request(
-      converter: (json) {
-        // return   json["otp"]
-        return SendOtpModel.fromMap(json);
-      },
-      method: HttpMethod.POST,
-      // todo: change url for send otp in future
-      url: '/sms-mohar/send.php',
-      baseUrl: 'https://shayal.herova.net',
-      body: params.toMap(),
-      createModelInterceptor: const NullResponseModelInterceptor(),
-    );
-  }
-
-  @override
-  Future<Either<AppErrors, EmptyResponse>> verifyOTPPhoneNumber(
-      VerifyOtpParams params) {
-    print('on remote to verify otp ');
-    return request(
-      converter: (json) {
-        return EmptyResponse.fromMap(json);
-      },
-      method: HttpMethod.POST,
-      url: APIUrls.verifyOTPPhoneNumber,
-      body: params.toMap(),
-      createModelInterceptor: const NullResponseModelInterceptor(),
-    );
-  }
-
-  @override
-  Future<Either<AppErrors, EmptyResponse>> checkIfEmailExist(
-      CheckIfEmailExistParams params) {
+  Future<Either<AppErrors, EmptyResponse>> checkIfEmailExist(CheckIfEmailExistParams params) {
     return request(
       converter: (json) {
         return EmptyResponse.fromMap(json);
@@ -339,13 +266,13 @@ class AccountRemoteSource extends IAccountRemoteSource {
       method: HttpMethod.POST,
       url: APIUrls.checkEmailIfExist,
       body: params.toMap(),
-      createModelInterceptor: const NullResponseModelInterceptor(),
+      createModelInterceptor: NullResponseModelInterceptor(),
+
     );
   }
 
   @override
-  Future<Either<AppErrors, EmptyResponse>> checkIfUsernameExist(
-      CheckIfUsernameExistParams params) {
+  Future<Either<AppErrors, EmptyResponse>> checkIfUsernameExist(CheckIfUsernameExistParams params) {
     return request(
       converter: (json) {
         return EmptyResponse.fromMap(json);
@@ -353,13 +280,12 @@ class AccountRemoteSource extends IAccountRemoteSource {
       method: HttpMethod.POST,
       url: APIUrls.checkUsernameIfExist,
       body: params.toMap(),
-      createModelInterceptor: const NullResponseModelInterceptor(),
+      createModelInterceptor: NullResponseModelInterceptor(),
     );
   }
 
   @override
-  Future<Either<AppErrors, EmptyResponse>> checkDeviceId(
-      CheckDeviceIdParams params) {
+  Future<Either<AppErrors, EmptyResponse>> checkDeviceId(CheckDeviceIdParams params) {
     return request(
       converter: (json) {
         return EmptyResponse.fromMap(json);
@@ -367,7 +293,7 @@ class AccountRemoteSource extends IAccountRemoteSource {
       method: HttpMethod.POST,
       url: APIUrls.checkDeviceId,
       queryParameters: params.toMap(),
-      createModelInterceptor: const NullResponseModelInterceptor(),
+      createModelInterceptor: NullResponseModelInterceptor(),
     );
   }
 }

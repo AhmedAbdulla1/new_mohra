@@ -2,6 +2,7 @@
 //
 //     final checkExistUserModel = checkExistUserModelFromJson(jsonString);
 
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import 'package:starter_application/core/models/base_model.dart';

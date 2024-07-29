@@ -6,6 +6,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -53,6 +54,7 @@ import 'package:starter_application/features/shop/domain/usecase/get_taxfee_usec
 import 'package:starter_application/features/user/data/model/request/get_city_params.dart';
 import 'package:starter_application/features/user/domain/usecase/get_all_city_usecase.dart';
 import 'package:starter_application/features/user/presentation/screen/view_profile_screen.dart';
+import 'package:starter_application/generated/assets.dart';
 import 'package:starter_application/generated/l10n.dart';
 import 'package:starter_application/main.dart';
 
@@ -189,11 +191,13 @@ class _AppMainScreenState extends State<AppMainScreen>
     AppConfig().getHandyManService();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       sn = Provider.of<AppMainScreenNotifier>(context, listen: false);
+
       sn.getMyAvatar();
-      if(!sn.isInitShop){
+      if (!sn.isInitShop) {
         sn.initShopModel();
       }
       // sn.setController(PageController());
+
       checkAndNavigationCallingPage();
       if (sn.lat == null) {
         sn.getLocation();
@@ -318,7 +322,6 @@ class _AppMainScreenState extends State<AppMainScreen>
             ),
           ),
         ],
-
         child: Scaffold(
           body: PageView(
             controller: sn.controller,
@@ -512,7 +515,6 @@ class _AppMainScreenState extends State<AppMainScreen>
               ),
               // for nave to personality screen
 
-
               // todo avatar here
               BlocBuilder<PersonalityCubit, PersonalityState>(
                 bloc: sn.personalityCubit,
@@ -520,11 +522,26 @@ class _AppMainScreenState extends State<AppMainScreen>
                   personalityInitState: (s) => WaitingWidget(),
                   personalityErrorState: (s) => WaitingWidget(),
                   personalityLoadingState: (s) => WaitingWidget(),
-                  hasAvatarChecked: (s) => WaitingWidget(),
+                  hasAvatarChecked: (s) => GestureDetector(
+                    onTap: () {
+                      // value.avatarListEntity.myAvatar?.avatarUrl =null;
+                      Nav.toAndRemoveAll(StartPersonalityTest.routeName);
+                    },
+                    child: Center(
+                      child: Text(
+                        isArabic?
+                        'اضغط للحصول\n علي افتارك':'Tap to get\n your avatar',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 30.sp),
+                      ),
+                    ),
+                  ),
                   avatarLoaded: (value) => GestureDetector(
                     onTap: () {
                       // value.avatarListEntity.myAvatar?.avatarUrl =null;
-                      if(value.avatarListEntity.myAvatar?.avatarUrl == null || value.avatarListEntity.myAvatar!.avatarUrl!.isEmpty){
+                      if (value.avatarListEntity.myAvatar?.avatarUrl == null ||
+                          value.avatarListEntity.myAvatar!.avatarUrl!.isEmpty) {
                         Nav.toAndRemoveAll(StartPersonalityTest.routeName);
                       }
                       Nav.to(PersonalityDetailsScreen.routeName,
@@ -670,7 +687,8 @@ class _AppMainScreenState extends State<AppMainScreen>
                                   padding: const EdgeInsets.all(8),
                                   child: Text(
                                     "${state.numberNotificaions! > 99 ? "+99" : state.numberNotificaions}",
-                                    style: const TextStyle(color: AppColors.white),
+                                    style:
+                                        const TextStyle(color: AppColors.white),
                                   ),
                                 ),
                               ),

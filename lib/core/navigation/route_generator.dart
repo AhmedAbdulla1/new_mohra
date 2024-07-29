@@ -21,7 +21,7 @@ import 'package:starter_application/core/params/screen_params/visit_user_profile
 import 'package:starter_application/core/ui/mansour/onboarding_screen.dart';
 import 'package:starter_application/di/service_locator.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
-import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
+// import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/presentation/screen/confirmPassword_screen.dart';
 import 'package:starter_application/features/account/presentation/screen/forgetPassword_screen.dart';
 import 'package:starter_application/features/account/presentation/screen/login_screen.dart';
@@ -358,7 +358,7 @@ class NavigationRoute {
               page: VerifyCodeScreen(
                 registerRequest: args[0],
                 signUpProcess: args[1],
-                sendOtpEntity: args[2],
+                // sendOtpEntity: args[2],
               ),
               settings: settings);
         return errorRoute();

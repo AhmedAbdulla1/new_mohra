@@ -28,10 +28,10 @@ class CustomButton extends StatelessWidget {
       pressedOpacity: 0.7,
       child: Text(
         text,
-        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+        style: Theme.of(context).textTheme.button!.copyWith(
               color: textColor,
               fontSize:
-                  fontSize ?? Theme.of(context).textTheme.labelLarge!.fontSize,
+                  fontSize ?? Theme.of(context).textTheme.button!.fontSize,
             ),
       ),
       onPressed: onPressed,

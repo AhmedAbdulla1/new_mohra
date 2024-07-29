@@ -19,19 +19,18 @@ import 'package:starter_application/features/account/data/model/request/login_re
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_firebase_token_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_location_request.dart';
-import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';
 import 'package:starter_application/features/account/data/model/request/verify_request.dart';
 import 'package:starter_application/features/account/data/model/response/forgetPassword_model.dart';
 import 'package:starter_application/features/account/data/model/response/login_model.dart';
 import 'package:starter_application/features/account/data/model/response/register_model.dart';
 import 'package:starter_application/features/account/data/model/response/verify_model.dart';
+import 'package:starter_application/features/account/domain/entity/check_exist_phone_entity.dart';
 import 'package:starter_application/features/account/domain/entity/client_profile_entity.dart';
 import 'package:starter_application/features/account/domain/entity/forgetPassword_entity.dart';
 import 'package:starter_application/features/account/domain/entity/login_entity.dart';
 import 'package:starter_application/features/account/domain/entity/logout_entity.dart';
 import 'package:starter_application/features/account/domain/entity/nearby_clients_entity.dart';
 import 'package:starter_application/features/account/domain/entity/register_entity.dart';
-import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/domain/entity/verify_entity.dart';
 import 'package:starter_application/features/account/domain/repository/iaccount_repository.dart';
 
@@ -146,17 +145,6 @@ class AccountRepository extends IAccountRepository {
   Future<Result<AppErrors, EmptyResponse>> checkIfPhoneExist(CheckIfPhoneExistParams params) async {
     final remote = await iAccountRemoteSource.checkIfPhoneExist(params);
     return remote.result<EmptyResponse>();
-  }
-  @override
-  Future<Result<AppErrors, SendOtpEntity>> sendOTPPhoneNumber(CheckIfPhoneExistParams params) async {
-    final remote = await iAccountRemoteSource.sendOTPPhoneNumber(params);
-    print(remote);
-    return remote.result<SendOtpEntity>();
-  }
-  @override
-  Future<Result<AppErrors, VerifyEntity>> verifyOTP(VerifyOtpParams params) async {
-    final remote = await iAccountRemoteSource.verifyOTPPhoneNumber(params);
-    return remote.result<VerifyEntity>();
   }
 
   @override

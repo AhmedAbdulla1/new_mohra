@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:device_info/device_info.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/costum_modules/screen_notifier.dart';
 import 'package:starter_application/core/common/provider/session_data.dart';
@@ -13,18 +13,19 @@ import 'package:starter_application/core/constants/enums/user_type.dart';
 import 'package:starter_application/core/datasources/shared_preference.dart';
 import 'package:starter_application/core/models/user_session_data_model.dart';
 import 'package:starter_application/core/navigation/nav.dart';
+import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_error_snackbar.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/toast/errv_toast_options.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/toast/show_error_toast.dart';
 import 'package:starter_application/core/ui/snackbars/show_snackbar.dart';
-import 'package:starter_application/features/account/data/model/request/check_exist_phone_params.dart';
 import 'package:starter_application/features/account/data/model/request/check_exist_userName_params.dart';
+import 'package:starter_application/features/account/data/model/request/confirm_phone_number_params.dart';
 import 'package:starter_application/features/account/data/model/request/login_request.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
-import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';
 import 'package:starter_application/features/account/domain/entity/login_entity.dart';
+import 'package:starter_application/features/account/presentation/screen/start_personality_test.dart';
+import 'package:starter_application/features/account/presentation/screen/verify_code_screen.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
-import 'package:starter_application/features/home/presentation/screen/app_main_screen.dart';
-import 'package:starter_application/features/home/presentation/screen/home_screen/home_screen.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'package:starter_application/main.dart';
 
 import '../../../../../core/common/utils.dart';
@@ -55,16 +56,13 @@ class SetUserNameNotifier extends ScreenNotifier {
     userNameController.dispose();
   }
 
+  // Methods to create new account and login
+  // on onCheckingDone call checkUserNameIfExist
 
-   register() async {
-    DateTime defaultBirthDate = DateTime(2000, 1, 1);
+  void register() {
     UserSessionDataModel.provider = 'normal';
     if (userNameKey.currentState!.validate()) {
       registerRequest.userName = userNameController.text;
-      registerRequest.firstName = userNameController.text;
-      registerRequest.lastName = userNameController.text;
-      registerRequest.birthDate = DateFormat.yMd('en').format(defaultBirthDate);
-
       accountCubit.register(
         registerRequest,
       );
@@ -89,17 +87,12 @@ class SetUserNameNotifier extends ScreenNotifier {
   }
 
   onRegisterDone() async {
-    print('on register done');
-    onPhoneNumberConfirmed();
+    confirmPhoneNumber();
   }
 
   confirmPhoneNumber() {
-    accountCubit.sendOtp(
-        CheckIfPhoneExistParams(phoneNumber: registerRequest.phoneNumber!,countryCode: registerRequest.countryCode??'+966'));
-  }
-  verifyOtp() {
-    // accountCubit.verifyOtp(
-    //     VerifyOtpParams(phoneNumberWithCountryCode: registerRequest.phoneNumber!,otpCode: ''));
+    accountCubit.confirmPhoneNumber(
+        ConfirmPhoneNumberParams(phoneNumbr: registerRequest.phoneNumber!));
   }
 
   onPhoneNumberConfirmed() async {
@@ -115,12 +108,10 @@ class SetUserNameNotifier extends ScreenNotifier {
       deviceId = iosDeviceInfo.identifierForVendor;
     }
     await getLocation();
-    print('register country code == ${registerRequest.countryCode}');
-    String countryCode = registerRequest.countryCode!.replaceFirst("00", "+");
     accountCubit.login(LoginRequest(
         userNameOrEmailAddressOrPhoneNumber: registerRequest.phoneNumber,
         password: registerRequest.password,
-        countryCode: "+$countryCode",
+        countryCode: '00${registerRequest.countryCode}',
         devicedType: deviceType,
         devicedId: deviceId,
         lat: lat,
@@ -184,7 +175,8 @@ class SetUserNameNotifier extends ScreenNotifier {
         loginEntity.result.countryCode,
         loginEntity.result.avatarMonth);
     await loginHandyMan(userEntity: loginEntity);
-    Nav.toAndRemoveAll(AppMainScreen.routeName);
+
+    Nav.toAndRemoveAll(StartPersonalityTest.routeName);
   }
 
   Future<bool> loginHandyMan({LoginEntity? userEntity}) async {

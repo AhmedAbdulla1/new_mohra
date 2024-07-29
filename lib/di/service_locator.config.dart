@@ -65,14 +65,14 @@ import 'package:starter_application/features/account/domain/usecase/register_use
     as _i142;
 import 'package:starter_application/features/account/domain/usecase/register_with_google_usecase.dart'
     as _i143;
-import 'package:starter_application/features/account/domain/usecase/send_otp_usecase.dart'
-    as _i152;
+// import 'package:starter_application/features/account/domain/usecase/send_otp_usecase.dart'
+//     as _i152;
 import 'package:starter_application/features/account/domain/usecase/update_firebase_token_usecase.dart'
     as _i163;
 import 'package:starter_application/features/account/domain/usecase/update_location_usecase.dart'
     as _i167;
-import 'package:starter_application/features/account/domain/usecase/verify_otp_usecase.dart'
-    as _i175;
+// import 'package:starter_application/features/account/domain/usecase/verify_otp_usecase.dart'
+//     as _i175;
 import 'package:starter_application/features/account/domain/usecase/verify_usecase.dart'
     as _i176;
 import 'package:starter_application/features/booking/data/datasource/home_services_remote.dart'
@@ -875,8 +875,8 @@ Future<_i1.GetIt> $initGetIt(
         () => _i150.SelectAddressUsecase(gh<_i123.IUserRepository>()));
     gh.factory<_i151.SendFriendRequestUseCase>(
         () => _i151.SendFriendRequestUseCase(gh<_i31.IFriendRepository>()));
-    gh.singleton<_i152.SendOtpUsecase>(
-        () => _i152.SendOtpUsecase(gh<_i7.IAccountRepository>()));
+    // gh.singleton<_i152.SendOtpUsecase>(
+    //     () => _i152.SendOtpUsecase(gh<_i7.IAccountRepository>()));
     await gh.factoryAsync<_i153.SharedPreferences>(
       () => sharedPreferencesModule.prefs,
       preResolve: true,
@@ -921,8 +921,8 @@ Future<_i1.GetIt> $initGetIt(
         () => _i173.UploadImageUsecase(gh<_i77.IMylifeRepository>()));
     gh.singleton<_i174.UploadImageUsecase>(
         () => _i174.UploadImageUsecase(gh<_i35.IHealthRepository>()));
-    gh.singleton<_i175.VerifyOTpUseCase>(
-        () => _i175.VerifyOTpUseCase(gh<_i7.IAccountRepository>()));
+    // gh.singleton<_i175.VerifyOTpUseCase>(
+    //     () => _i175.VerifyOTpUseCase(gh<_i7.IAccountRepository>()));
     gh.factory<_i176.VerifyUseCase>(
         () => _i176.VerifyUseCase(gh<_i7.IAccountRepository>()));
     gh.singleton<_i177.AddAddressUseCase>(

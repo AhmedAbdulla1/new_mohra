@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:starter_application/core/common/extensions/extensions.dart';
-import 'package:starter_application/core/datasources/shared_preference.dart';
+import 'package:meta/meta.dart';
 import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/models/empty_response.dart';
 import 'package:starter_application/core/params/no_params.dart';
@@ -12,6 +11,7 @@ import 'package:starter_application/features/account/data/model/request/check_ex
 import 'package:starter_application/features/account/data/model/request/check_exist_phone_params.dart';
 import 'package:starter_application/features/account/data/model/request/check_exist_userName_params.dart';
 import 'package:starter_application/features/account/data/model/request/confirmPassword_request.dart';
+import 'package:starter_application/features/account/data/model/request/confirm_phone_number_params.dart';
 import 'package:starter_application/features/account/data/model/request/forgetpassword_request.dart';
 import 'package:starter_application/features/account/data/model/request/get_client_profile_request.dart';
 import 'package:starter_application/features/account/data/model/request/get_nearby_clients_request.dart';
@@ -21,15 +21,14 @@ import 'package:starter_application/features/account/data/model/request/login_re
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_firebase_token_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_location_request.dart';
-import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';
 import 'package:starter_application/features/account/data/model/request/verify_request.dart';
+import 'package:starter_application/features/account/domain/entity/check_exist_phone_entity.dart';
 import 'package:starter_application/features/account/domain/entity/client_profile_entity.dart';
 import 'package:starter_application/features/account/domain/entity/forgetPassword_entity.dart';
 import 'package:starter_application/features/account/domain/entity/login_entity.dart';
 import 'package:starter_application/features/account/domain/entity/logout_entity.dart';
 import 'package:starter_application/features/account/domain/entity/nearby_clients_entity.dart';
 import 'package:starter_application/features/account/domain/entity/register_entity.dart';
-import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/domain/entity/verify_entity.dart';
 import 'package:starter_application/features/account/domain/usecase/ConfirmPassword_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/check_device_id_usecase.dart';
@@ -37,6 +36,7 @@ import 'package:starter_application/features/account/domain/usecase/check_exist_
 import 'package:starter_application/features/account/domain/usecase/check_exist_phone_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/check_exist_username_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/confirm_password_code_usecase.dart';
+import 'package:starter_application/features/account/domain/usecase/confirm_phone_number_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/forgetPassword_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/get_client_profile_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/get_nearby_clients_usecase.dart';
@@ -45,13 +45,9 @@ import 'package:starter_application/features/account/domain/usecase/login_with_g
 import 'package:starter_application/features/account/domain/usecase/logout_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/register_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/register_with_google_usecase.dart';
-import 'package:starter_application/features/account/domain/usecase/send_otp_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/update_firebase_token_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/update_location_usecase.dart';
-import 'package:starter_application/features/account/domain/usecase/verify_otp_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/verify_usecase.dart';
-
-// import 'package:starter_application/features/moment/data/model/response/points_model.dart';
 import 'package:starter_application/features/personality/domain/entity/has_avatar_entity.dart';
 import 'package:starter_application/features/personality/domain/usecase/check_has_avatar_usecase.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -59,16 +55,13 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../../../../main.dart';
 
 part 'account_cubit.freezed.dart';
-
 part 'account_state.dart';
 
 class AccountCubit extends Cubit<AccountState> {
-  String authData = "AuthData";
-
-  AccountCubit() : super(const AccountState.accountInit());
+  AccountCubit() : super(AccountState.accountInit());
 
   void login(LoginRequest body) async {
-    emit(const AccountState.accountLoading());
+    emit(AccountState.accountLoading());
 
     final result = await getIt<LoginUseCase>()(body);
 
@@ -86,15 +79,13 @@ class AccountCubit extends Cubit<AccountState> {
   }
 
   void logout(LogoutRequest body) async {
-    emit(const AccountState.accountLoading());
+    emit(AccountState.accountLoading());
 
     final result = await getIt<LogoutUseCase>()(body);
 
     result.pick(
       onData: (data) async {
         emit(AccountState.logoutLoaded(data));
-        final sp = await SpUtil.instance;
-        sp.remove(authData);
       },
       onError: (error) {
         emit(AccountState.accountError(error, () => this.logout(body)));
@@ -119,7 +110,7 @@ class AccountCubit extends Cubit<AccountState> {
   }
 
   void register(RegisterRequest body) async {
-    emit(const AccountState.accountLoading());
+    emit(AccountState.accountLoading());
 
     final result = await getIt<RegisterUseCase>()(body);
 
@@ -130,8 +121,6 @@ class AccountCubit extends Cubit<AccountState> {
               "af_complete_registration", {"af_registration_method": "email"});
         } catch (e) {}
         emit(AccountState.registerLoaded(result.data!));
-        final sp = await SpUtil.instance;
-        sp.putString(authData, body.toJson());
       },
       onError: (error) {
         emit(AccountState.accountError(error, () => this.register(body)));
@@ -140,7 +129,7 @@ class AccountCubit extends Cubit<AccountState> {
   }
 
   void verify(VerifyRequest body) async {
-    emit(const AccountState.accountLoading());
+    emit(AccountState.accountLoading());
 
     final result = await getIt<VerifyUseCase>()(body);
 
@@ -192,7 +181,7 @@ class AccountCubit extends Cubit<AccountState> {
 
     result.pick(
       onData: (data) {
-        emit(const AccountState.passwordCodeVerified());
+        emit(AccountState.passwordCodeVerified());
       },
       onError: (error) {
         emit(AccountState.accountError(error, () => this.ConfirmPasswordCode));
@@ -203,6 +192,7 @@ class AccountCubit extends Cubit<AccountState> {
   void checkHasAvatar(NoParams params) async {
     emit(const AccountState.getAvatar());
     final result = await getIt<CheckHasAvatarUsecase>()(params);
+    print('aassd');
     result.pick(
       onData: (data) => emit(AccountState.hasAvatarChecked(data)),
       onError: (error) => emit(
@@ -270,28 +260,14 @@ class AccountCubit extends Cubit<AccountState> {
     );
   }
 
-  void sendOtp(CheckIfPhoneExistParams params) async {
+  void confirmPhoneNumber(ConfirmPhoneNumberParams params) async {
     emit(const AccountState.accountLoading());
-    final result = await getIt<SendOtpUsecase>()(params);
+    final result = await getIt<ConfirmPhoneNumberUsecase>()(params);
     print('aassd');
-    result.data!.result.props.toString().logD;
     result.pick(
       onData: (data) => emit(AccountState.phoneNumberConfirmed(data)),
       onError: (error) => emit(
-        AccountState.accountError(error, () => this.sendOtp(params)),
-      ),
-    );
-  }
-
-  verifyOtp(
-      VerifyOtpParams params) async {
-    emit(const AccountState.accountLoading());
-    final result = await getIt<VerifyOTpUseCase>()(params);
-    print('verify otp ');
-    result.pick(
-      onData: (data) => emit(AccountState.verifyLoaded(data)),
-      onError: (error) => emit(
-        AccountState.accountError(error, () => this.verifyOtp(params)),
+        AccountState.accountError(error, () => this.confirmPhoneNumber(params)),
       ),
     );
   }
@@ -299,7 +275,7 @@ class AccountCubit extends Cubit<AccountState> {
   void checkExistPhoneNumber(CheckIfPhoneExistParams params) async {
     emit(const AccountState.checkPhoneNumberExistLoading());
     final result = await getIt<CheckIfPhoneExistUsecase>()(params);
-    print('check phone ');
+    print('aassd');
     result.pick(
       onData: (data) => emit(AccountState.checkPhoneNumberExistDone(data)),
       onError: (error) => emit(
@@ -346,18 +322,20 @@ class AccountCubit extends Cubit<AccountState> {
           onError: (error) {
             error.maybeMap(
                 unauthorizedError: (e) {},
-                unknownError: (e) {},
-                forbiddenError: (e) {},
-                timeoutError: (e) {
+                unknownError: (e){},
+                forbiddenError: (e){},
+                timeoutError: (e){
                   checkDeviceId(params);
                 },
-                cancelError: (e) {
+                cancelError: (e){
                   checkDeviceId(params);
                 },
-                netError: (e) {
+                netError: (e){
                   checkDeviceId(params);
                 },
-                orElse: () {});
+                orElse: () {
+
+                });
             emit(
               AccountState.accountError(
                   error, () => this.checkDeviceId(params)),

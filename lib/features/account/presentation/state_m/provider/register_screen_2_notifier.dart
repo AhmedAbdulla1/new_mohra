@@ -1,42 +1,31 @@
 import 'package:country_list_pick/country_list_pick.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:starter_application/core/common/costum_modules/screen_notifier.dart';
 import 'package:starter_application/core/common/validators.dart';
-import 'package:starter_application/core/models/empty_response.dart';
 import 'package:starter_application/core/navigation/nav.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_error_snackbar.dart';
 import 'package:starter_application/features/account/data/model/request/check_exist_email_params.dart';
 import 'package:starter_application/features/account/data/model/request/check_exist_phone_params.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
-import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/presentation/screen/register_with_google_screen.dart';
 import 'package:starter_application/features/account/presentation/screen/verify_code_screen.dart';
+import 'package:starter_application/features/account/presentation/screen/set_username_screen.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
-import 'package:starter_application/core/common/extensions/extensions.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'package:starter_application/main.dart';
 
 import 'firebase_otp.dart';
 import 'package:intl_phone_field/countries.dart';
-
 class RegisterScreen2Notifier extends ScreenNotifier {
   late BuildContext context;
-  late RegisterRequest registerRequest;
-  late PhoneAuthCredential phoneAuthCredentials;
+  RegisterRequest registerRequest = RegisterRequest();
   bool obscureTextpssword = false;
   bool obscureTextconfirmPssword = false;
   String? firstname;
   String? lastname;
   String? date;
-  Country country = const Country(
-      name: 'Saudi Arabia',
-      flag: '🇸🇦',
-      code: 'SA',
-      dialCode: '966',
-      maxLength: 9,
-      minLength: 9,
-      nameTranslations: {});
+  Country country =  Country(name: 'Saudi Arabia',flag: '🇸🇦',code: 'SA',dialCode: '966',maxLength: 9,minLength: 9, nameTranslations: {});
   String countryCode = '+966';
   final String _initialCountryCode = "+966";
   final accountCubit = AccountCubit();
@@ -85,99 +74,71 @@ class RegisterScreen2Notifier extends ScreenNotifier {
     countryCode = countryCode
         .toString()
         .split('+')[countryCode.toString().split('+').length - 1];
-    String phone = phoneController.text.startsWith('0')
-        ? '${phoneController.text.replaceFirst('0', '')}'
-        : '${phoneController.text}';
-    print(phone);
+    String phone = phoneController.text.startsWith('0') ? '${phoneController.text.replaceFirst('0', '')}' :'${phoneController.text}';
+
     if (checkIfCanPressButton()) {
       registerRequest.phoneNumber = phone;
       registerRequest.emailAddress = emailController.text;
-      registerRequest.countryCode = countryCode;
+      registerRequest.countryCode = "${countryCode}";
       registerRequest.password = PasswordController.text;
-      checkValidPhoneNumber();
+     checkValidPhoneNumber();
     }
   }
 
-  checkValidPhoneNumber() {
-    accountCubit.checkExistPhoneNumber(CheckIfPhoneExistParams(
-        phoneNumber: registerRequest.phoneNumber!,
-        countryCode: registerRequest.countryCode!));
+
+  checkValidPhoneNumber(){
+    accountCubit.checkExistPhoneNumber(CheckIfPhoneExistParams(phoneNumber: registerRequest.phoneNumber! , countryCode:'+'+ registerRequest.countryCode!));
   }
 
-  onValidPhoneNumber() {
+  onValidPhoneNumber(){
     notifyListeners();
     checkValidEmail();
     notifyListeners();
   }
 
-  checkValidEmail() {
-    accountCubit.checkExistEmail(
-        CheckIfEmailExistParams(email: registerRequest.emailAddress!));
+  checkValidEmail(){
+    accountCubit.checkExistEmail(CheckIfEmailExistParams(email: registerRequest.emailAddress!));
     notifyListeners();
   }
 
-  onValidEmail() async {
+  onValidEmail()async{
     print('sendingCode');
     //await Future.delayed(Duration(seconds: 20));
     verifyPhone();
     notifyListeners();
   }
 
-  onPhoneVerifiedFromTaqniat(SendOtpEntity sendOtpEntity) {
-   print('onPhoneVerifiedFromTaqniat');
-   print(sendOtpEntity.result.otp);
-   registerRequest.register_or_confirm =true;
-    Nav.to(VerifyCodeScreen.routeName,
-        arguments: [registerRequest, true, sendOtpEntity]);
-  }
 
   verifyPhone() async {
     changeSendingCodeStatus();
+    String phone = phoneController.text.startsWith('0') ? '${phoneController.text.replaceFirst('0', '')}' :'${phoneController.text}';
 
-    /// todo send otp to phone
-    registerRequest.countryCode!.logD;
-    if (registerRequest.countryCode == '966') {
-      accountCubit.sendOtp(
-        CheckIfPhoneExistParams(
-            phoneNumber: registerRequest.phoneNumber!, countryCode: "966"),
-      );
-    } else {
-      String phone = phoneController.text.startsWith('0')
-          ? '${phoneController.text.replaceFirst('0', '')}'
-          : '${phoneController.text}';
-
-      fireBaseOTP = FireBaseOTP(phoneNumber: phone, countryCode: countryCode);
-      fireBaseOTP.sendCode(
-        verificationCompleted: (phoneAuthCredentials) {
-          changeSendingCodeStatusToFalse();
-          accountCubit.emit(const AccountState.accountInit());
-          fireBaseOTP.phoneAuthCredential = phoneAuthCredentials;
-        },
-        verificationFailed: (e) {
-          changeSendingCodeStatusToFalse();
-          accountCubit.emit(const AccountState.accountInit());
-          if (e.code == 'invalid-phone-number')
-            showErrorSnackBar(
-                message: isArabic
-                    ? "رقم الهاتف غير صالح"
-                    : "Phone Number is invalid",
-                context: context,
-                callback: verifyPhone);
-          else {
-            showErrorSnackBar(
-                message: e.code, context: context, callback: verifyPhone);
-          }
-        },
-        onCodeSent: (verificationId, resendToken) {
-          changeSendingCodeStatusToFalse();
-          registerRequest.verificationId = verificationId;
-          accountCubit.emit(const AccountState.accountInit());
-          registerRequest.register_or_confirm = true;
-          Nav.to(VerifyCodeScreen.routeName,
-              arguments: [registerRequest, true, null]);
-        },
-      );
-    }
+    fireBaseOTP = FireBaseOTP(phoneNumber: phone, countryCode: countryCode);
+    fireBaseOTP.sendCode(
+      verificationCompleted: (phoneAuthCredentials){
+        changeSendingCodeStatusToFalse();
+        accountCubit.emit(AccountState.accountInit());
+      },
+      verificationFailed: (e){
+        changeSendingCodeStatusToFalse();
+        accountCubit.emit(AccountState.accountInit());
+        print('aaaaaaaa');
+        print(e.message);
+        print(e.code);
+        if(e.code == 'invalid-phone-number')
+            showErrorSnackBar(message: isArabic ?"رقم الهاتف غير صالح" : "Phone Number is invalid", context: context,callback: verifyPhone);
+        else{
+          showErrorSnackBar(message: e.code , context: context,callback: verifyPhone);
+        }
+      },
+      onCodeSent: (verificationId , resendToken){
+        changeSendingCodeStatusToFalse();
+        registerRequest.verificationId = verificationId;
+        accountCubit.emit(AccountState.accountInit());
+        registerRequest.register_or_confirm = true;
+        Nav.to(VerifyCodeScreen.routeName, arguments: [registerRequest, true]);
+      },
+    );
   }
 
   changeSendingCodeStatus() {
@@ -190,28 +151,32 @@ class RegisterScreen2Notifier extends ScreenNotifier {
     notifyListeners();
   }
 
-  bool checkIfCanPressButton() {
-    String phone = phoneController.text.startsWith('0')
-        ? '${phoneController.text.replaceFirst('0', '')}'
-        : '${phoneController.text}';
+  bool checkIfCanPressButton(){
+    String phone = phoneController.text.startsWith('0') ? '${phoneController.text.replaceFirst('0', '')}' :'${phoneController.text}';
 
     validateEmail(emailController.text);
-    validatePhoneNumber(phone, country.maxLength);
+    validatePhoneNumber(phone,country.maxLength);
     validatePassword(PasswordController.text);
     validateConfirmPassword(confirmPasswordController.text);
-    if (emailError != '') {
-      showErrorSnackBar(message: emailError);
-      return false;
-    } else if (phoneError != '') {
+     if(emailError != ''){
+    showErrorSnackBar(message: emailError);
+    return false;
+    }
+    else if(phoneError != ''){
       showErrorSnackBar(message: phoneError);
       return false;
-    } else if (passwordError != '') {
+    }
+
+    else if(passwordError != ''){
       showErrorSnackBar(message: passwordError);
       return false;
-    } else if (passwordConfirmError != '') {
+    }
+    else if(passwordConfirmError != ''){
       showErrorSnackBar(message: passwordConfirmError);
       return false;
-    } else {
+    }
+
+    else {
       return true;
     }
   }
@@ -229,6 +194,7 @@ class RegisterScreen2Notifier extends ScreenNotifier {
     emailController.dispose();
     phoneController.dispose();
   }
+
 
   /// UI Controls
 
@@ -258,7 +224,7 @@ class RegisterScreen2Notifier extends ScreenNotifier {
         isDownIcon: false,
         showEnglishName: true,
         lastPickText: isArabic ? "اخر اختيار" : "LAST PICK",
-        searchHintText: (isArabic ? "البحث" : "Search") + "...🏳️",
+        searchHintText: (isArabic ? "البحث" : "Search") +"...🏳️",
         searchText: (isArabic ? "البحث" : "Search"),
       ),
       onChanged: (v) {
@@ -269,15 +235,14 @@ class RegisterScreen2Notifier extends ScreenNotifier {
     );
   }
 
-  validatePhoneNumber(String? phone, int? phoneLength) {
-    if ((phone == null || (phone.trim().isEmpty))) {
-      phoneError = isArabic
-          ? "لا يمكن لهذا الحقل أن يكون فارغا"
-          : "This field mustn't be empty";
+  validatePhoneNumber(String? phone,int? phoneLength) {
+    if ((phone == null || (phone.trim().isEmpty))){
+      phoneError = isArabic ?"لا يمكن لهذا الحقل أن يكون فارغا" : "This field mustn't be empty";
     }
     if (phone!.length < (phoneLength ?? 9)) {
-      phoneError = isArabic ? "رقم الهاتف المحمول غير صالح" : "Phone not valid";
-    } else
+      phoneError =isArabic ? "رقم الهاتف المحمول غير صالح":"Phone not valid";
+    }
+    else
       phoneError = '';
 
     notifyListeners();
@@ -285,9 +250,7 @@ class RegisterScreen2Notifier extends ScreenNotifier {
 
   validatePassword(String? value) {
     if ((value == null || (value.trim().isEmpty)))
-      passwordError = isArabic
-          ? "لا يمكن لهذا الحقل أن يكون فارغا"
-          : "This field mustn't be empty";
+      passwordError = isArabic ?"لا يمكن لهذا الحقل أن يكون فارغا" : "This field mustn't be empty";
     passwordError = Validators.isValidPassword(value!) ?? '';
 
     notifyListeners();
@@ -295,15 +258,11 @@ class RegisterScreen2Notifier extends ScreenNotifier {
 
   validateConfirmPassword(String? value) {
     if (value == null || (value.trim().isEmpty))
-      passwordConfirmError = isArabic
-          ? "لا يمكن لهذا الحقل أن يكون فارغا"
-          : "This field mustn't be empty";
-    else if (!Validators.isValidConfirmPassword(
-        PasswordController.text, value)) {
-      passwordConfirmError = isArabic
-          ? "كلمة السر وتأكيد كلمة السر غير متطابقتين"
-          : "Password and confirm password doesn't match";
-    } else
+      passwordConfirmError = isArabic ?"لا يمكن لهذا الحقل أن يكون فارغا" : "This field mustn't be empty";
+    else if (!Validators.isValidConfirmPassword(PasswordController.text, value)){
+      passwordConfirmError = isArabic ? "كلمة السر وتأكيد كلمة السر غير متطابقتين" : "Password and confirm password doesn't match";
+    }
+    else
       passwordConfirmError = Validators.isValidPassword(value) ?? '';
 
     notifyListeners();
@@ -311,11 +270,9 @@ class RegisterScreen2Notifier extends ScreenNotifier {
 
   validateEmail(String? value) {
     if (value == null || (value.trim().isEmpty))
-      emailError = isArabic
-          ? "لا يمكن لهذا الحقل أن يكون فارغا"
-          : "This field mustn't be empty";
+      emailError = isArabic ?"لا يمكن لهذا الحقل أن يكون فارغا" : "This field mustn't be empty";
     if (!Validators.isValidEmail(value!))
-      emailError = isArabic ? "الايميل غير صالح" : "Email not valid";
+      emailError = isArabic ?"الايميل غير صالح" : "Email not valid";
     else
       emailError = '';
 
