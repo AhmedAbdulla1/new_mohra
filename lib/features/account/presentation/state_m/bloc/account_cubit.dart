@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
+import 'package:starter_application/core/common/extensions/extensions.dart';
 import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/models/empty_response.dart';
 import 'package:starter_application/core/params/no_params.dart';
@@ -21,6 +22,7 @@ import 'package:starter_application/features/account/data/model/request/login_re
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_firebase_token_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_location_request.dart';
+import 'package:starter_application/features/account/data/model/request/verify_otp_request.dart';
 import 'package:starter_application/features/account/data/model/request/verify_request.dart';
 import 'package:starter_application/features/account/domain/entity/check_exist_phone_entity.dart';
 import 'package:starter_application/features/account/domain/entity/client_profile_entity.dart';
@@ -29,6 +31,7 @@ import 'package:starter_application/features/account/domain/entity/login_entity.
 import 'package:starter_application/features/account/domain/entity/logout_entity.dart';
 import 'package:starter_application/features/account/domain/entity/nearby_clients_entity.dart';
 import 'package:starter_application/features/account/domain/entity/register_entity.dart';
+import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/domain/entity/verify_entity.dart';
 import 'package:starter_application/features/account/domain/usecase/ConfirmPassword_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/check_device_id_usecase.dart';
@@ -45,8 +48,10 @@ import 'package:starter_application/features/account/domain/usecase/login_with_g
 import 'package:starter_application/features/account/domain/usecase/logout_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/register_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/register_with_google_usecase.dart';
+import 'package:starter_application/features/account/domain/usecase/send_otp_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/update_firebase_token_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/update_location_usecase.dart';
+import 'package:starter_application/features/account/domain/usecase/verify_otp_usecase.dart';
 import 'package:starter_application/features/account/domain/usecase/verify_usecase.dart';
 import 'package:starter_application/features/personality/domain/entity/has_avatar_entity.dart';
 import 'package:starter_application/features/personality/domain/usecase/check_has_avatar_usecase.dart';
@@ -55,6 +60,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../../../../main.dart';
 
 part 'account_cubit.freezed.dart';
+
 part 'account_state.dart';
 
 class AccountCubit extends Cubit<AccountState> {
@@ -106,6 +112,43 @@ class AccountCubit extends Cubit<AccountState> {
         emit(AccountState.accountError(
             error, () => this.getClientProfile(params)));
       },
+    );
+  }
+
+  // send otp from taqniat
+  Future<SendOtpEntity> sendOtp(CheckIfPhoneExistParams params) async {
+    emit(const AccountState.accountLoading());
+    final result = await getIt<SendOtpUsecase>()(params);
+    print('aassd');
+    result.data!.result.props.toString().logD;
+    result.pick(
+      onData: (data) {
+        emit(
+          AccountState.phoneNumberConfirmed(
+            EmptyResponse(
+              message: data.result.message!,
+              succeed: data.result.status == "true" ? true : false,
+            ),
+          ),
+
+        );
+      },
+      onError: (error) => emit(
+        AccountState.accountError(error, () => this.sendOtp(params)),
+      ),
+    );
+    return(result.data!);
+  }
+
+  verifyOtp(VerifyOtpParams params) async {
+    emit(const AccountState.accountLoading());
+    final result = await getIt<VerifyOTpUseCase>()(params);
+    print('verify otp ');
+    result.pick(
+      onData: (data) => emit(AccountState.verifyLoaded(data)),
+      onError: (error) => emit(
+        AccountState.accountError(error, () => this.verifyOtp(params)),
+      ),
     );
   }
 
@@ -322,20 +365,18 @@ class AccountCubit extends Cubit<AccountState> {
           onError: (error) {
             error.maybeMap(
                 unauthorizedError: (e) {},
-                unknownError: (e){},
-                forbiddenError: (e){},
-                timeoutError: (e){
+                unknownError: (e) {},
+                forbiddenError: (e) {},
+                timeoutError: (e) {
                   checkDeviceId(params);
                 },
-                cancelError: (e){
+                cancelError: (e) {
                   checkDeviceId(params);
                 },
-                netError: (e){
+                netError: (e) {
                   checkDeviceId(params);
                 },
-                orElse: () {
-
-                });
+                orElse: () {});
             emit(
               AccountState.accountError(
                   error, () => this.checkDeviceId(params)),

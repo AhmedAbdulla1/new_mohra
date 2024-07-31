@@ -17,6 +17,7 @@ import 'package:starter_application/features/account/data/model/request/login_re
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_firebase_token_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_location_request.dart';
+import 'package:starter_application/features/account/data/model/request/verify_otp_request.dart';
 import 'package:starter_application/features/account/data/model/request/verify_request.dart';
 import 'package:starter_application/features/account/domain/entity/check_exist_phone_entity.dart';
 import 'package:starter_application/features/account/domain/entity/client_profile_entity.dart';
@@ -25,6 +26,7 @@ import 'package:starter_application/features/account/domain/entity/login_entity.
 import 'package:starter_application/features/account/domain/entity/logout_entity.dart';
 import 'package:starter_application/features/account/domain/entity/nearby_clients_entity.dart';
 import 'package:starter_application/features/account/domain/entity/register_entity.dart';
+import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/domain/entity/verify_entity.dart';
 
 abstract class IAccountRepository extends Repository {
@@ -54,12 +56,25 @@ abstract class IAccountRepository extends Repository {
 
   Future<Result<AppErrors, NearbyClientsEntity>> getNearbyClients(
       GetNearbyClientsParams params);
+
   Future<Result<AppErrors, EmptyResponse>> updateFirebaseToken(
       UpdateFirebaseTokenParams params);
 
-  Future<Result<AppErrors, LoginEntity>> loginWithGoogle(GoogleLoginParams loginRequest);
-  Future<Result<AppErrors, LoginEntity>> registerWithGoogle(GoogleRegisterParams loginRequest);
-  Future<Result<AppErrors, EmptyResponse>> confirmPhoneNumber(ConfirmPhoneNumberParams params);
+  Future<Result<AppErrors, LoginEntity>> loginWithGoogle(
+      GoogleLoginParams loginRequest);
+
+  Future<Result<AppErrors, LoginEntity>> registerWithGoogle(
+      GoogleRegisterParams loginRequest);
+
+  Future<Result<AppErrors, SendOtpEntity>> sendOTPPhoneNumber(
+      CheckIfPhoneExistParams params);
+
+  Future<Result<AppErrors, VerifyEntity>> verifyOTP(
+      VerifyOtpParams params);
+
+  Future<Result<AppErrors, EmptyResponse>> confirmPhoneNumber(
+      ConfirmPhoneNumberParams params);
+
   Future<Result<AppErrors, EmptyResponse>> checkIfPhoneExist(
       CheckIfPhoneExistParams params);
 
@@ -71,5 +86,4 @@ abstract class IAccountRepository extends Repository {
 
   Future<Result<AppErrors, EmptyResponse>> checkDeviceId(
       CheckDeviceIdParams params);
-
 }

@@ -1,11 +1,11 @@
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:starter_application/core/constants/enums/http_method.dart';
 import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/models/empty_response.dart';
 import 'package:starter_application/core/net/api_url.dart';
-import 'package:starter_application/core/net/create_model_interceptor/all_data_create_model_inteceptor.dart';
-import 'package:starter_application/core/net/create_model_interceptor/default_create_model_inteceptor.dart';
 import 'package:starter_application/core/net/create_model_interceptor/null_response_model_interceptor.dart';
 import 'package:starter_application/core/net/response_validators/default_response_validator.dart';
 import 'package:starter_application/core/net/response_validators/prayer_times_response_validator.dart';
@@ -24,6 +24,7 @@ import 'package:starter_application/features/account/data/model/request/login_re
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_firebase_token_request.dart';
 import 'package:starter_application/features/account/data/model/request/update_location_request.dart';
+import 'package:starter_application/features/account/data/model/request/verify_otp_request.dart';
 import 'package:starter_application/features/account/data/model/request/verify_request.dart';
 import 'package:starter_application/features/account/data/model/response/check_phone_exist_model.dart';
 import 'package:starter_application/features/account/data/model/response/client_profile_model.dart';
@@ -32,6 +33,7 @@ import 'package:starter_application/features/account/data/model/response/login_m
 import 'package:starter_application/features/account/data/model/response/logout_model.dart';
 import 'package:starter_application/features/account/data/model/response/nearby_clients_model.dart';
 import 'package:starter_application/features/account/data/model/response/register_model.dart';
+import 'package:starter_application/features/account/data/model/response/send_otp_model.dart';
 import 'package:starter_application/features/account/data/model/response/verify_model.dart';
 
 import 'iaccount_remote.dart';
@@ -54,7 +56,52 @@ class AccountRemoteSource extends IAccountRemoteSource {
       responseValidator: PrayerTimesResponseValidator(),
     );
   }
+  @override
+  Future<Either<AppErrors, SendOtpModel>> sendOTPPhoneNumber(
+      CheckIfPhoneExistParams params) async {
+    print('on remote to send otp ');
+    print(params);
 
+    // try {
+    var data = FormData.fromMap({
+      'phoneNumber': params.phoneNumber,
+      'countryCode': '966'
+    });
+
+    var dio = Dio();
+    var response = await dio.request(
+      'https://shayal.herova.net/sms-mohar/send.php',
+      options: Options(
+        method: 'POST',
+      ),
+      data: data,
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      response.data;
+      print(response.data);
+      return Right(SendOtpModel.fromMap(response.data));
+    } else if (response.statusCode == 400) {
+      return const Left(AppErrors.badRequestError());
+    }else{
+      return const Left(AppErrors.internalServerError());
+    }
+  }
+
+  @override
+  Future<Either<AppErrors, EmptyResponse>> verifyOTPPhoneNumber(
+      VerifyOtpParams params) {
+    print('on remote to verify otp ');
+    return request(
+      converter: (json) {
+        return EmptyResponse.fromMap(json);
+      },
+      method: HttpMethod.POST,
+      url: APIUrls.verifyOTPPhoneNumber,
+      body: params.toMap(),
+      createModelInterceptor: const NullResponseModelInterceptor(),
+    );
+  }
   @override
   Future<Either<AppErrors, LoginModel>> login(LoginRequest loginRequest) {
     print(loginRequest);
