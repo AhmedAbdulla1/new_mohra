@@ -45,7 +45,7 @@ class MomentCurveImage extends StatelessWidget {
                 child: CachedNetworkImage(
                   width: 0.25.sw,
                   height: 0.25.sw,
-                  imageUrl: 'https://consumer-tkbdownload.huawei.com/ctkbfm/applet/simulator/en-us15787623/img/945.png',
+                  imageUrl: imgPath!,
                   // todo fix image error
                   fit: BoxFit.contain,
                   errorWidget: (context, url, error) => Container(

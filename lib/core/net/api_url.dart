@@ -6,6 +6,9 @@ class APIUrls {
   /// Live Url
   static const BASE_URL = "https://mohraapp.com:9090";
   // static const BASE_URL = "https://mohraapp.com:8081";
+  // new staging url todo change it when production
+  // static const BASE_URL = "https://newstaging.mohraapp.com";
+
   // static const BASE_URL = "https://staging-api.mohraapps.com";
   static const PRAYER_TIME_URL = "http://api.aladhan.com/v1/timings";
   static const NEARBY_SEARCH_URL =

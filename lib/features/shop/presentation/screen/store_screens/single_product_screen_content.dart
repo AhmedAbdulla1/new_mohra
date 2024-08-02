@@ -519,7 +519,7 @@ class _SingleProductScreenContentState
                                 fontWeight: FontWeight.bold, fontSize: 40.sp),
                           ),
                           Text(
-                              "${Numeral(sn.productItem!.shop!.followersCount ?? 0).format(fractionDigits: 0)} ${Translation.of(context).Followers}",
+                              "${Numeral(sn.productItem!.shop!.followersCount ?? 0).beautiful} ${Translation.of(context).Followers}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w300,
                                   fontSize: 40.sp,

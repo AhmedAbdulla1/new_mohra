@@ -120,9 +120,10 @@ class _HealthMainScreenState extends State<HealthMainScreen> {
                 );
               },
             ),
-            extendBody: true,
+            extendBody: false,
           );
-        });
+        }
+        );
   }
 
   Widget _buildBottomNavigationbar() {

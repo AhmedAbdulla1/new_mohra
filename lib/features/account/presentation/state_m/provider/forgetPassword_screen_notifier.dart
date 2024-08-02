@@ -1,4 +1,5 @@
 import 'package:country_list_pick/country_list_pick.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:starter_application/core/common/costum_modules/screen_notifier.dart';
@@ -9,6 +10,8 @@ import 'package:starter_application/features/account/data/model/request/forgetpa
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/presentation/screen/verify_code_screen.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
+import 'package:starter_application/features/home/presentation/screen/app_main_screen.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'package:starter_application/main.dart';
 
 import 'firebase_otp.dart';
@@ -136,17 +139,17 @@ class ForgetPasswordScreenNotifier extends ScreenNotifier {
     print(countryCode);
     print(phoneController.text);
     changeSendingCodeStatus();
-    accountCubit.emit(const AccountState.accountLoading());
+    accountCubit.emit(AccountState.accountLoading());
 
     fireBaseOTP = FireBaseOTP(phoneNumber: phoneController.text, countryCode: countryCode);
     fireBaseOTP.sendCode(
       verificationCompleted: (phoneAuthCredentials){
         changeSendingCodeStatusToFalse();
-        accountCubit.emit(const AccountState.accountInit());
+        accountCubit.emit(AccountState.accountInit());
       },
       verificationFailed: (e){
         changeSendingCodeStatusToFalse();
-        accountCubit.emit(const AccountState.accountInit());
+        accountCubit.emit(AccountState.accountInit());
         print('Data retreived from firebase is ');
         print(e.code);
         print(e.message);
@@ -155,7 +158,7 @@ class ForgetPasswordScreenNotifier extends ScreenNotifier {
       onCodeSent: (verificationId , resendToken){
         changeSendingCodeStatusToFalse();
         registerRequest.verificationId = verificationId;
-        accountCubit.emit(const AccountState.accountInit());
+        accountCubit.emit(AccountState.accountInit());
         Nav.to(VerifyCodeScreen.routeName , arguments: [registerRequest,false]);
       },
     );

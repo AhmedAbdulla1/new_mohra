@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:starter_application/core/entities/base_entity.dart';
 

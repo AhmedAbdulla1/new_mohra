@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
-import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
@@ -17,15 +16,16 @@ import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/verify_code_notifier.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'package:starter_application/main.dart';
 import 'dart:ui' as ui;
 
 class VerifyCodeScreen extends StatefulWidget {
   static const routeName = "/RegisterScreen3";
-  final RegisterRequest registerRequest;
-  final bool signUpProcess;
+  RegisterRequest registerRequest;
+  bool signUpProcess;
 
-  const VerifyCodeScreen(
+  VerifyCodeScreen(
       {Key? key, required this.registerRequest, required this.signUpProcess})
       : super(key: key);
 
@@ -35,7 +35,7 @@ class VerifyCodeScreen extends StatefulWidget {
 
 class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   VerifyCodeNotifier sn = VerifyCodeNotifier();
-  OtpTimerButtonController controller = OtpTimerButtonController();
+
   @override
   void dispose() {
     sn.closeNotifier();
@@ -60,7 +60,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         return Directionality(
           textDirection: isArabic ? ui.TextDirection.rtl : ui.TextDirection.ltr,
           child: Scaffold(
-            appBar: buildCustomAppbar(),
+            appBar: buildAppbar(),
             body: Padding(
               padding: AppConstants.screenPadding,
               child: Column(
@@ -93,6 +93,12 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                                   callback: () => sn.onVerifyTap(),
                                 ),
                                 passwordCodeVerified: (s) => sn.onVerifyDone(),
+                                phoneNumberConfirmed: (s)=> sn.onPhoneNumberConfirmed(),
+                                registerLoaded: (s) {
+                                  sn.confirmPhoneNumber();
+                                },
+                                loginLoaded: (s) =>
+                                    sn.onLoginSuccess(s.loginEntity),
                               );
                             },
                             bloc: sn.accountCubit,
@@ -106,10 +112,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                                     _buildVerifyButton(),
                                 accountError: (s) => _buildVerifyButton(),
                                 accountInit: (s) => _buildVerifyButton(),
-
-                                // todo change state
                                 accountLoading: (s) => WaitingWidget(),
-                                // accountLoading: (s) => _buildVerifyButton(),
                                 loginLoaded: (s) => _buildVerifyButton(),
                                 registerLoaded: (s) => _buildVerifyButton(),
                                 verifyLoaded: (s) => _buildVerifyButton(),
@@ -144,6 +147,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             titleText: isArabic ? "تأكيد" : "Verify",
             textColor: AppColors.lightFontColor,
             onPressed: () {
+              print('aaa');
               sn.onVerifyTap();
             },
           );
@@ -178,8 +182,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         ),
       ),
     );
-
   }
+
   Widget _buildCodeNotRecivedColumn() {
     return Column(
       children: [
@@ -192,44 +196,22 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           ),
         ),
         Gaps.vGap12,
-        OtpTimerButton(
-          controller: controller,
-          onPressed: () {
-            sn.reSendCode();
-            controller.loading();
-            Future.delayed(Duration(seconds: 2), () {
-              controller.startTimer();
-            });
-          },
-          buttonType: ButtonType.elevated_button,
-          radius: 5.r,
-          loadingIndicatorColor: AppColors.primaryColorLight,
-          text: Text(
-            "${isArabic ? "اعادة ارسال" : "Resend Code"} ",
-            style: TextStyle(
-              color: AppColors.primaryColorLight,
-              fontSize: 40.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          duration: 30,
-        ),
-        // sn.isSendingCode
-        //     ? WaitingWidget()
-        //     : CustomMansourButton(
-        //         width: 0.6.sw,
-        //         backgroundColor: AppColors.mansourWhiteBackgrounColor,
-        //         titleText: "${isArabic ? "اعادة ارسال" : "Resend Code"} ",
-        //         titleStyle: TextStyle(
-        //           color: AppColors.primaryColorLight,
-        //           fontSize: 40.sp,
-        //           fontWeight: FontWeight.bold,
-        //         ),
-        //         borderRadius: Radius.circular(20.r),
-        //         onPressed: () {
-        //           sn.reSendCode();
-        //         },
-        //       ),
+        sn.isSendingCode
+            ? WaitingWidget()
+            : CustomMansourButton(
+                width: 0.6.sw,
+                backgroundColor: AppColors.mansourWhiteBackgrounColor,
+                titleText: "${isArabic ? "اعادة ارسال" : "Resend Code"} ",
+                titleStyle: TextStyle(
+                  color: AppColors.primaryColorLight,
+                  fontSize: 40.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+                borderRadius: Radius.circular(20.r),
+                onPressed: () {
+                  sn.reSendCode();
+                },
+              ),
       ],
     );
   }

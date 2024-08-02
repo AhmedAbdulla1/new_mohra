@@ -106,7 +106,7 @@ class RegisterScreen1Notifier extends ScreenNotifier {
     if (Platform.isAndroid) {
       final selectedDate = await showCustomDatePicker(
         context: context,
-        locale:  isArabic ? const Locale("ar") : const Locale("en"),
+        locale:  isArabic ? Locale("ar") : Locale("en"),
         initialDate: date ?? DateTime.now(),
         firstDate: DateTime(1980),
         lastDate: DateTime.now(),

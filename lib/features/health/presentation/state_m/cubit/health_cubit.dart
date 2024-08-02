@@ -4,7 +4,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:starter_application/core/common/extensions/extensions.dart';
 import 'package:starter_application/core/common/extensions/logger_extension.dart';
 import 'package:starter_application/core/params/no_params.dart';
-import 'package:starter_application/core/results/result.dart';
 import 'package:starter_application/di/service_locator.dart';
 import 'package:starter_application/features/health/data/model/request/all_sessions_params.dart';
 import 'package:starter_application/features/health/data/model/request/answer_params.dart';

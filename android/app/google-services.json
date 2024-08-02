@@ -80,6 +80,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230280905856:android:af239da810319a0a3c9265",
+        "android_client_info": {
+          "package_name": "com.mohra.service.provider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230280905856-o0bebs2v5gcd1jb9i2cqde1iqrvlq60g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE9ELTJBlu6YektTNx8uEOM4RedB_RvN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230280905856-o0bebs2v5gcd1jb9i2cqde1iqrvlq60g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "230280905856-h1dd85ekkpr63m4pd0ja6rj19uf2ik4i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mohra.app.ios"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

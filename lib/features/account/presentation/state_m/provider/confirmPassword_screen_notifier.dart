@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:starter_application/core/common/costum_modules/screen_notifier.dart';
 import 'package:starter_application/core/navigation/nav.dart';
+import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_error_snackbar.dart';
 import 'package:starter_application/core/ui/snackbars/show_snackbar.dart';
 import 'package:starter_application/features/account/data/model/request/confirmPassword_request.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/presentation/screen/login_screen.dart';
+import 'package:starter_application/features/account/presentation/screen/verify_code_screen.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 
 class ConfirmPasswordScreenNotifier extends ScreenNotifier {

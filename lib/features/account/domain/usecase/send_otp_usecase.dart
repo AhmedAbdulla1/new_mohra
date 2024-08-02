@@ -4,16 +4,17 @@ import 'package:starter_application/core/models/empty_response.dart';
 import 'package:starter_application/core/results/result.dart';
 import 'package:starter_application/core/usecases/usecase.dart';
 import 'package:starter_application/features/account/data/model/request/check_exist_phone_params.dart';
+import 'package:starter_application/features/account/domain/entity/send_otp_entity.dart';
 import 'package:starter_application/features/account/domain/repository/iaccount_repository.dart';
 
 @singleton
-class SendOtpUsecase extends UseCase<EmptyResponse, CheckIfPhoneExistParams> {
+class SendOtpUsecase extends UseCase<SendOtpEntity, CheckIfPhoneExistParams> {
   final IAccountRepository iAccountRepository ;
 
   SendOtpUsecase(this.iAccountRepository);
 
   @override
-  Future<Result<AppErrors, EmptyResponse>> call(CheckIfPhoneExistParams param) {
+  Future<Result<AppErrors, SendOtpEntity>> call(CheckIfPhoneExistParams param) {
     return iAccountRepository.sendOTPPhoneNumber(param);
   }
 }

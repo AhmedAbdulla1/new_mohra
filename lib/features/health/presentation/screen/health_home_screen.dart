@@ -75,7 +75,12 @@ class _HealthHomeScreenState extends State<HealthHomeScreen> {
             Expanded(
               child: HealthHomeScreenContent(),
             ),
+            SizedBox(
+              height:30,
+            )
           ],
+
+
         ),
       ),
     );

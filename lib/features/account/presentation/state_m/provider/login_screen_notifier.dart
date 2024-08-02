@@ -1,14 +1,17 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:device_info/device_info.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/src/provider.dart';
 import 'package:starter_application/core/common/costum_modules/screen_notifier.dart';
 import 'package:starter_application/core/common/provider/session_data.dart';
@@ -16,6 +19,7 @@ import 'package:starter_application/core/common/validators.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
 import 'package:starter_application/core/constants/enums/user_type.dart';
 import 'package:starter_application/core/datasources/shared_preference.dart';
+import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/models/user_session_data_model.dart';
 import 'package:starter_application/core/navigation/nav.dart';
 import 'package:starter_application/core/params/no_params.dart';
@@ -33,6 +37,7 @@ import 'package:starter_application/features/account/presentation/screen/registe
 import 'package:starter_application/features/account/presentation/screen/start_personality_test.dart';
 import 'package:starter_application/features/account/presentation/screen/verify_code_screen.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
+import 'package:starter_application/features/event/presentation/screen/my_running_events_screen.dart';
 import 'package:starter_application/features/home/presentation/screen/app_main_screen.dart';
 import 'package:starter_application/features/messages/presentation/state_m/provider/global_messages_notifier.dart';
 import 'package:starter_application/features/personality/domain/entity/has_avatar_entity.dart';
@@ -43,8 +48,10 @@ import '../../../../../core/bloc/global/glogal_cubit.dart';
 import '../../../../../core/common/app_config.dart';
 import '../../../../../core/common/utils.dart';
 import '../../../../../core/localization/localization_provider.dart';
+import '../../../../../core/localization/restart_widget.dart';
 import '../../../../../main.dart';
 import '../../../../event_orginizer/presentation/screen/event_organizer_screen.dart';
+import '../../../data/model/response/handman_login_model.dart';
 import 'firebase_otp.dart';
 import 'package:intl_phone_field/countries.dart';
 
@@ -55,7 +62,7 @@ class LoginScreenNotifier extends ScreenNotifier {
   late BuildContext context;
   bool obscureText = false;
   String countryCode = '+966';
-  Country country = const Country(
+  Country country = Country(
       name: 'Saudi Arabia',
       flag: '🇸🇦',
       code: 'SA',
@@ -129,7 +136,7 @@ class LoginScreenNotifier extends ScreenNotifier {
       // await getLocation();
       LoginRequest loginRequest = LoginRequest(
           password: passwordController.text,
-          countryCode: _initialCountryCode,
+          countryCode: '00$countryCode',
           userNameOrEmailAddressOrPhoneNumber: phone,
           devicedType: deviceType,
           devicedId: deviceId,
@@ -137,7 +144,6 @@ class LoginScreenNotifier extends ScreenNotifier {
           long: lon);
       print(loginRequest);
       accountCubit.login(loginRequest);
-      print('login successfully');
     }
   }
 
@@ -193,11 +199,11 @@ class LoginScreenNotifier extends ScreenNotifier {
     fireBaseOTP.sendCode(
       verificationCompleted: (phoneAuthCredentials) {
         changeSendingCodeStatusToFalse();
-        accountCubit.emit(const AccountState.accountInit());
+        accountCubit.emit(AccountState.accountInit());
       },
       verificationFailed: (e) {
         changeSendingCodeStatusToFalse();
-        accountCubit.emit(const AccountState.accountInit());
+        accountCubit.emit(AccountState.accountInit());
 
         showErrorSnackBar(
             message: e.message, context: context, callback: verifyPhone);
@@ -205,7 +211,7 @@ class LoginScreenNotifier extends ScreenNotifier {
       onCodeSent: (verificationId, resendToken) {
         changeSendingCodeStatusToFalse();
         registerRequest.verificationId = verificationId;
-        accountCubit.emit(const AccountState.accountInit());
+        accountCubit.emit(AccountState.accountInit());
         registerRequest.register_or_confirm == false;
         Nav.to(VerifyCodeScreen.routeName, arguments: [registerRequest, true]);
       },
@@ -252,8 +258,6 @@ class LoginScreenNotifier extends ScreenNotifier {
       loginEntity.result.countryCode,
       loginEntity.result.avatarMonth,
     );
-
-
     BlocProvider.of<GlogalCubit>(AppConfig().appContext, listen: false)
         .getAuth();
     if (userType == UserType.CLIENT) {
@@ -261,7 +265,6 @@ class LoginScreenNotifier extends ScreenNotifier {
       Provider.of<GlobalMessagesNotifier>(context, listen: false).init();
       getAvatar();
       await loginHandyMan(userEntity: loginEntity);
-      print('login successfully');
       //Nav.toAndRemoveAll(AppMainScreen.routeName);
     }
     if (userType == UserType.EventOrganizer)
@@ -269,9 +272,6 @@ class LoginScreenNotifier extends ScreenNotifier {
 
     AppConfig().getHandyManService();
   }
-
- // 504622249
-
 
   forgetpassword() {
     Nav.to(ForgetPasswordScreen.routeName);
@@ -357,10 +357,10 @@ class LoginScreenNotifier extends ScreenNotifier {
     if (hasAvatarEntity.hasAvatar) {
       final prefs = await SpUtil.getInstance();
       prefs.putBool(AppConstants.HAS_PERSONALITY_AVATAR, true);
-      Nav.toAndRemoveAll(AppMainScreen.routeName);
-    } else {
-      Nav.toAndRemoveAll(StartPersonalityTest.routeName);
+      // Nav.toAndRemoveAll(AppMainScreen.routeName);
     }
+
+    Nav.toAndRemoveAll(AppMainScreen.routeName);
   }
 
   showCountryCode2() {

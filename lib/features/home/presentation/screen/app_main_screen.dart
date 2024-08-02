@@ -6,6 +6,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -33,6 +34,7 @@ import 'package:starter_application/core/ui/mansour/custom_list_tile.dart';
 import 'package:starter_application/core/ui/widgets/system/double_tap_back_exit_app.dart';
 import 'package:starter_application/di/service_locator.dart';
 import 'package:starter_application/features/account/domain/entity/city_entity.dart';
+import 'package:starter_application/features/account/presentation/screen/start_personality_test.dart';
 import 'package:starter_application/features/health/presentation/widget/profile/circled_profile_pic.dart';
 import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
 import 'package:starter_application/features/help/presentation/screen/help_screen.dart';
@@ -52,6 +54,7 @@ import 'package:starter_application/features/shop/domain/usecase/get_taxfee_usec
 import 'package:starter_application/features/user/data/model/request/get_city_params.dart';
 import 'package:starter_application/features/user/domain/usecase/get_all_city_usecase.dart';
 import 'package:starter_application/features/user/presentation/screen/view_profile_screen.dart';
+import 'package:starter_application/generated/assets.dart';
 import 'package:starter_application/generated/l10n.dart';
 import 'package:starter_application/main.dart';
 
@@ -188,11 +191,13 @@ class _AppMainScreenState extends State<AppMainScreen>
     AppConfig().getHandyManService();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       sn = Provider.of<AppMainScreenNotifier>(context, listen: false);
+
       sn.getMyAvatar();
-      if(!sn.isInitShop){
+      if (!sn.isInitShop) {
         sn.initShopModel();
       }
       // sn.setController(PageController());
+
       checkAndNavigationCallingPage();
       if (sn.lat == null) {
         sn.getLocation();
@@ -317,7 +322,6 @@ class _AppMainScreenState extends State<AppMainScreen>
             ),
           ),
         ],
-
         child: Scaffold(
           body: PageView(
             controller: sn.controller,
@@ -444,7 +448,7 @@ class _AppMainScreenState extends State<AppMainScreen>
     return Container(
       height: 0.27.sh,
       padding: EdgeInsets.symmetric(
-        horizontal: 50.w,
+        horizontal: 35.w,
       ),
       color: AppColors.primaryColorLight,
       child: Column(
@@ -475,7 +479,9 @@ class _AppMainScreenState extends State<AppMainScreen>
             height: 80.h,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // for nave to profile screen with user image
               InkWell(
                 onTap: () {
                   Nav.to(ViewProfileScreen.routeName)
@@ -484,12 +490,12 @@ class _AppMainScreenState extends State<AppMainScreen>
                 child: Row(
                   children: [
                     ProfilePic(
-                      width: 150.h,
-                      height: 150.h,
+                      width: 140.h,
+                      height: 140.h,
                       imageUrl: UserSessionDataModel.imageUrl,
                     ),
                     Container(
-                      width: 0.3.sw,
+                      width: 0.28.sw,
                       child: Padding(
                         padding: EdgeInsetsDirectional.only(start: 30.w),
                         child: Text(
@@ -507,14 +513,37 @@ class _AppMainScreenState extends State<AppMainScreen>
                   ],
                 ),
               ),
+              // for nave to personality screen
+
+              // todo avatar here
               BlocBuilder<PersonalityCubit, PersonalityState>(
                 bloc: sn.personalityCubit,
                 builder: (context, state) => state.maybeMap(
                   personalityInitState: (s) => WaitingWidget(),
                   personalityErrorState: (s) => WaitingWidget(),
                   personalityLoadingState: (s) => WaitingWidget(),
+                  hasAvatarChecked: (s) => GestureDetector(
+                    onTap: () {
+                      // value.avatarListEntity.myAvatar?.avatarUrl =null;
+                      Nav.toAndRemoveAll(StartPersonalityTest.routeName);
+                    },
+                    child: Center(
+                      child: Text(
+                        isArabic?
+                        'اضغط للحصول\n علي افتارك':'Tap to get\n your avatar',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 30.sp),
+                      ),
+                    ),
+                  ),
                   avatarLoaded: (value) => GestureDetector(
                     onTap: () {
+                      // value.avatarListEntity.myAvatar?.avatarUrl =null;
+                      if (value.avatarListEntity.myAvatar?.avatarUrl == null ||
+                          value.avatarListEntity.myAvatar!.avatarUrl!.isEmpty) {
+                        Nav.toAndRemoveAll(StartPersonalityTest.routeName);
+                      }
                       Nav.to(PersonalityDetailsScreen.routeName,
                           arguments: PersonalityResultScreenParams(
                             birthDay: UserSessionDataModel.birthday != ''
@@ -602,6 +631,7 @@ class _AppMainScreenState extends State<AppMainScreen>
               color: AppColors.primaryColorLight,
               size: 25,
             ),
+            // todo change lang problem fix
             title: Row(
               children: [
                 FlutterSwitch(
@@ -657,7 +687,8 @@ class _AppMainScreenState extends State<AppMainScreen>
                                   padding: const EdgeInsets.all(8),
                                   child: Text(
                                     "${state.numberNotificaions! > 99 ? "+99" : state.numberNotificaions}",
-                                    style: const TextStyle(color: AppColors.white),
+                                    style:
+                                        const TextStyle(color: AppColors.white),
                                   ),
                                 ),
                               ),

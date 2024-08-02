@@ -1,18 +1,24 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
 import 'package:starter_application/core/common/utils.dart';
+import 'package:starter_application/core/common/validators.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
+import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/navigation/animations/animated_route.dart';
 import 'package:starter_application/core/navigation/nav.dart';
 import 'package:starter_application/core/ui/appbar/appbar.dart';
+import 'package:starter_application/core/ui/error_ui/error_viewer/error_viewer.dart';
+import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/errv_snack_bar_options.dart';
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
 import 'package:starter_application/core/ui/widgets/custom_text_field.dart';
 import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
@@ -20,12 +26,14 @@ import 'package:starter_application/features/account/presentation/screen/registe
 import 'package:starter_application/features/account/presentation/screen/register_screen2.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/login_screen_notifier.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'dart:ui' as ui;
 
 import '../../../../core/bloc/global/glogal_cubit.dart';
 import '../../../../core/common/app_config.dart';
 import '../../../../main.dart';
 import '../../../home/presentation/screen/app_main_screen.dart';
+import '../state_m/provider/handman_help.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = "/LoginScreen";
@@ -203,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             isArabic
                                 ? "هل نسيت كلمة المرور ؟"
                                 : "Forget Password?",
-                            style: const TextStyle(color: Colors.grey),
+                            style: TextStyle(color: Colors.grey),
                           ),
                         ),
                       ),
@@ -246,7 +254,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: AppConstants.screenPadding,
                         child: GestureDetector(
                           onTap: () {
-                            Nav.off(RegisterScreen2.routeName);
+                            Nav.to(RegisterScreen2.routeName);
                           },
                           child: Text(
                             isArabic
@@ -384,7 +392,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            Gaps.hGap64,
+            SizedBox(
+              width: 35.w,
+            ),
             Expanded(
               flex: 6,
               child: _buildPasswordField(),
@@ -430,7 +440,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       validator: (value) {
         sn.validatePassword(value);
-        return null;
       },
       onFieldSubmitted: (term) {
         sn.myFocusNodePassord.unfocus();
@@ -440,123 +449,66 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
   }
+
   _buildPhoneField() {
     return Container(
-      width: 0.92.sw,
+      height: 150.h,
+      width: double.infinity,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
           border: Border.all(
               color: AppColors.mansourLightGreyColor_5,
               style: BorderStyle.solid)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsetsDirectional.only(
-              start: AppConstants.screenPadding.left /2 ,
-            ),
-            child: Row(
-              children: [
-                SizedBox(
-                  height: 60.h,
-                  width: 60.h,
-                  child: Image.asset(
-                    AppConstants.IMAGE_FLAG,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(start :8.0),
-                  child: Text('+966', style: TextStyle(fontSize: 40.sp)),
-                ),
-              ],
-            ),
+      child: Transform.translate(
+        offset: Offset(0, 10),
+        child: IntlPhoneField(
+          style: TextStyle(fontSize: 16),
+          key: const Key('telephoneNumberNational'),
+          focusNode: sn.myFocusNodePhone,
+          disableLengthCheck: false,
+          textInputAction: TextInputAction.next,
+          flagsButtonMargin: EdgeInsets.zero,
+          dropdownTextStyle: TextStyle(),
+          onCountryChanged: (value) {
+            sn.countryCode = "+${value.dialCode}";
+            sn.country = value;
+            sn.notifyListeners();
+          },
+          // countries: ["SY"],
+          controller: sn.phoneController,
+          initialValue: '0',
+          autovalidateMode: AutovalidateMode.disabled,
+          inputFormatters: [
+            new FilteringTextInputFormatter.allow((RegExp("[0-9]"))),
+          ],
+          searchText: isArabic ? "البحث عن بلد" : "Search country",
+          textAlign: isArabic ? TextAlign.right : TextAlign.left,
+          decoration: InputDecoration(
+            hintStyle: TextStyle(fontSize: 14),
+            hintMaxLines: 1,
+            hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+            enabled: true,
+            alignLabelWithHint: true,
+            hintText: (isArabic ? "مثال" : "Example") + ' : ' + '5xxxxxxxx',
+            border: InputBorder.none,
           ),
-          // Gaps.hGap10,
-          Expanded(
-              child: CustomTextField(
-                primaryFieldColor: AppColors.regularFontColor,
-                textKey: sn.phoneKey,
-                controller: sn.phoneController,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.phone,
-                focusNode: sn.myFocusNodePhone,
-                hintText: (isArabic ? "مثال" : "Example") + ' : ' + '5xxxxxxxx',
-                horizontalMargin: 80.w,
-                errorMaxLines: 4,
-                prefixIconConstraints: BoxConstraints(
-                  minWidth: 0,
-                  minHeight: 0,
-                  maxHeight: 80.h,
-                  maxWidth: 100.h,
-                ),
-                validator: (value) {
-                  sn.validatePhoneNumber(value,9);
-                  return null;
-                },
-                onFieldSubmitted: (term) {
-                  fieldFocusChange(context, sn.myFocusNodePhone,
-                      sn.myFocusNodePassord);
-                },
-                onChanged: (value) {
-                  sn.phoneKey.currentState!.validate();
-                },
-              )),
-        ],
+          initialCountryCode: 'SA',
+          validator: (phone) {
+            sn.validatePhoneNumber(phone?.number, sn.country.maxLength);
+          },
+          onSubmitted: (term) {
+            fieldFocusChange(
+              context,
+              sn.myFocusNodePhone,
+              sn.myFocusNodePassord,
+            );
+          },
+          onChanged: (value) {
+            // sn.phoneKey.currentState!.validate();
+          },
+        ),
       ),
     );
-
-    // Container(
-    //   height: 150.h,
-    //   width: double.infinity,
-    //   alignment: Alignment.center,
-    //   decoration: BoxDecoration(
-    //       borderRadius: BorderRadius.circular(4),
-    //       border: Border.all(
-    //           color: AppColors.mansourLightGreyColor_5,
-    //           style: BorderStyle.solid)),
-    //   child: Transform.translate(
-    //     offset: const Offset(0, 10),
-    //     child: IntlPhoneField(
-    //       disableLengthCheck: false,
-    //       flagsButtonMargin: EdgeInsets.zero,
-    //       dropdownTextStyle: const TextStyle(),
-    //       onCountryChanged: (value) {
-    //         sn.countryCode = "+${value.dialCode}";
-    //         sn.country = value;
-    //         sn.notifyListeners();
-    //       },
-    //       // countries: ["SY"],
-    //       controller: sn.phoneController,
-    //       initialValue: '0',
-    //       autovalidateMode: AutovalidateMode.disabled,
-    //       inputFormatters: [
-    //         new FilteringTextInputFormatter.allow((RegExp("[0-9]"))),
-    //       ],
-    //
-    //       searchText: isArabic ? "البحث عن بلد" : "Search country",
-    //       textAlign: isArabic ? TextAlign.right : TextAlign.left,
-    //       decoration: InputDecoration(
-    //         hintStyle: const TextStyle(fontSize: 14),
-    //         hintMaxLines: 1,
-    //         hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
-    //         enabled: true,
-    //         alignLabelWithHint: true,
-    //         hintText: (isArabic ? "مثال" : "Example") + ' : ' + '5xxxxxxxx',
-    //         border: InputBorder.none,
-    //       ),
-    //       initialCountryCode: 'SA',
-    //       validator: (phone) {
-    //         sn.validatePhoneNumber(phone?.number, sn.country.maxLength);
-    //         return null;
-    //       },
-    //       onSubmitted: (term) {
-    //       },
-    //       onChanged: (value) {
-    //         // sn.phoneKey.currentState!.validate();
-    //       },
-    //     ),
-    //   ),
-    // );
   }
 }

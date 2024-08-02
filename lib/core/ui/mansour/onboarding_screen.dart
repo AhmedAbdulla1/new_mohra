@@ -6,7 +6,6 @@ import 'package:starter_application/core/constants/app/app_constants.dart';
 import 'package:starter_application/core/navigation/nav.dart';
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
 import 'package:starter_application/features/account/presentation/screen/login_screen.dart';
-import 'package:starter_application/features/account/presentation/screen/register_screen1.dart';
 import 'package:starter_application/features/account/presentation/screen/register_screen2.dart';
 
 import '../../../features/home/presentation/screen/app_main_screen.dart';

@@ -29,7 +29,7 @@ class CustomNetworkImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return imgPath != null ?  CachedNetworkImage(
+    return imgPath != null && imgPath!.isNotEmpty ?  CachedNetworkImage(
       imageUrl: imgPath!,
       imageBuilder: withChild
           ? (context, imageProvider) => Container(

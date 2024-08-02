@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:starter_application/core/common/type_validators.dart';
 import 'package:starter_application/core/models/base_model.dart';
 import 'package:starter_application/features/account/domain/entity/forgetPassword_entity.dart';
+import 'package:starter_application/features/account/domain/entity/verify_entity.dart';
 
 ForgetPasswordModel verifyModelFromMap(String str) =>
     ForgetPasswordModel.fromMap(json.decode(str));

@@ -6,8 +6,6 @@ import 'package:starter_application/features/home/data/model/request/get_weather
 import 'package:starter_application/features/home/domain/entity/weather_entity.dart';
 import 'package:starter_application/features/home/domain/repository/ihome_repository.dart';
 
-import '../../../../core/params/no_params.dart';
-import '../entity/banners_entity.dart';
 @injectable
 class GetWeatherUseCase extends UseCase<WeatherEntity, GetWeatherParams> {
   final IHomeRepository repository;

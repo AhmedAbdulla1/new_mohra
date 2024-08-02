@@ -14,9 +14,7 @@ import 'package:starter_application/core/common/style/dimens.dart';
 import 'package:starter_application/core/models/health_profile_model.dart';
 import 'package:starter_application/core/navigation/nav.dart';
 import 'package:starter_application/core/params/no_params.dart';
-// import 'package:starter_application/core/params/no_params.dart';
 import 'package:starter_application/core/ui/dialogs/show_dialog.dart';
-// import 'package:starter_application/features/health/data/model/request/all_sessions_params.dart';
 import 'package:starter_application/features/health/data/model/request/date_params.dart';
 import 'package:starter_application/features/health/data/model/request/update_daily_steps_request_model.dart';
 import 'package:starter_application/features/health/data/model/request/update_daily_water.dart';
@@ -28,6 +26,7 @@ import 'package:starter_application/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/common/costum_modules/screen_notifier.dart';
+
 class HealthHomeScreenNotifier extends ScreenNotifier {
   /// Fields
   late BuildContext context;
@@ -43,22 +42,20 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
 
   /// Getters and Setters
   int get completedCupNum => this._completedCupNum;
+
   set completedCupNum(int value) => this._completedCupNum = value;
   late Timer timer;
 
-  HealthHomeScreenNotifier(){
+  HealthHomeScreenNotifier() {
     authorize();
   }
 
-  HealthFactory health = HealthFactory();
+  final Health health = Health();
   var types = [
     HealthDataType.STEPS,
   ];
 
-
   /// Methods
-
-
 
   void onPedestrianStatusError(error) {
     /// Handle the error
@@ -71,124 +68,87 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
   Future<void> initPlatformState() async {
     /// Init streams
 
-
     /// Listen to streams and handle errors
-
-
-
   }
 
-
-  askForPermission()async{
-
+  askForPermission() async {
     PermissionStatus status = await requestStepPermission();
     print('status : $status');
-    if(status.isGranted){
-      print('aaa');
-      try{
-        var result = await AppCheck.checkAvailability('com.google.android.apps.fitness');
-        if(result != null)
-        {
+    if (status.isGranted) {
+      print('Permission granted');
+      try {
+        var result =
+            await AppCheck.checkAvailability('com.google.android.apps.fitness');
+        if (result != null) {
           timer = Timer.periodic(const Duration(seconds: 15), (timer) {
             getSteps();
           });
-
+        } else {
+          print('App not available');
         }
-
-        else{
-
-          print('not allowed heere');
-        }
-      } on PlatformException catch(e){
-        if(e.code == '400'){
+      } on PlatformException catch (e) {
+        if (e.code == '400') {
           showGoogleFitNotInstalledDialog();
         }
       }
     }
   }
+
   List<HealthDataPoint> _healthDataList = [];
-  final permissions = [HealthDataType.STEPS].map((e) => HealthDataAccess.READ_WRITE).toList();
-  getSteps()async{
+  final permissions = [HealthDataAccess.READ_WRITE];
+
+  getSteps() async {
     DateTime now = DateTime.now();
-    // bool requested = await health.requestAuthorization(types);
-    if(true){
-      var midnight = DateTime(now.year, now.month, now.day);
+    var midnight = DateTime(now.year, now.month, now.day);
+    bool? requested = await health.requestAuthorization(types);
+    if (requested) {
       int? steps = await health.getTotalStepsInInterval(midnight, now);
-      if(steps != null){
+      if (steps != null) {
         walkingSteps = steps;
         updateStepsInServer();
       }
-
       notifyListeners();
     }
   }
 
-  askForIosPermission()async{
+  askForIosPermission() async {
     DateTime now = DateTime.now();
     initPlatformState();
   }
 
-
   Future authorize() async {
-    // If we are trying to read Step Count, Workout, Sleep or other data that requires
-    // the ACTIVITY_RECOGNITION permission, we need to request the permission first.
-    // This requires a special request authorization call.
-    //
-    // The location permission is requested for Workouts using the Distance information.
     await Permission.activityRecognition.request();
     await Permission.location.request();
 
-    // Check if we have permission
     bool? hasPermissions =
-    await health.hasPermissions(types, permissions: permissions);
+        await health.hasPermissions(types, permissions: permissions);
 
-    // hasPermissions = false because the hasPermission cannot disclose if WRITE access exists.
-    // Hence, we have to request with WRITE as well.
-    hasPermissions = false;
-
-    bool authorized = false;
-    if (!hasPermissions) {
-      // requesting access to the data types before reading them
-      // try {
-      //   authorized =
-      //   await health.requestAuthorization(types, permissions: permissions);
-      //   if(authorized){
-          getSteps();
-        // }
-      // } catch (error) {
-      //   print("Exception in authorize: $error");
-      // }
+    if (hasPermissions == false) {
+      bool authorized =
+          await health.requestAuthorization(types, permissions: permissions);
+      if (authorized) {
+        getSteps();
+      }
     }
   }
 
-  /// Fetch data points from the health plugin and show them in the app.
   Future fetchData() async {
-    // get data within the last 24 hours
     final now = DateTime.now();
     final yesterday = now.subtract(const Duration(hours: 24));
 
-    // Clear old data points
     _healthDataList.clear();
 
     try {
-      // fetch health data
-      List<HealthDataPoint> healthData =
-      await health.getHealthDataFromTypes(yesterday, now, types);
-      // save all the new data points (only the first 100)
-      _healthDataList.addAll(
-          (healthData.length < 100) ? healthData : healthData.sublist(0, 100));
+      List<HealthDataPoint> healthData = await health.getHealthDataFromTypes(
+          startTime: yesterday, endTime: now, types: types);
+      _healthDataList.addAll(healthData.take(100));
     } catch (error) {
       print("Exception in getHealthDataFromTypes: $error");
     }
 
-    // filter out duplicates
-    _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
-
-    // print the results
+    _healthDataList = Health().removeDuplicates(_healthDataList);
     _healthDataList.forEach((x) => print(x));
-
   }
-
 
   void showGoogleFitNotInstalledDialog() {
     ShowDialog().showElasticDialog(
@@ -196,7 +156,7 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape:  const RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(Dimens.dp15),
             ),
@@ -227,7 +187,6 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
                         Translation.of(context).ok,
                       ),
                       onPressed: () {
-                        // Navigator.of(context).pop();
                         Nav.pop();
                       },
                     ),
@@ -242,13 +201,13 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
                         Translation.of(context).confirm,
                         style: const TextStyle(color: Colors.white),
                       ),
-                      onPressed: ()async{
-                        if(Platform.isIOS){
-
-                        }else{
-                          launch('https://play.google.com/store/apps/details?id=com.google.android.apps.fitness').then((value) {
-                            Nav.pop();
-                          });
+                      onPressed: () async {
+                        if (Platform.isIOS) {
+                          // Handle iOS specific logic
+                        } else {
+                          await launch(
+                              'https://play.google.com/store/apps/details?id=com.google.android.apps.fitness');
+                          Nav.pop();
                         }
                       },
                       textColor: Theme.of(context).primaryColor,
@@ -263,14 +222,12 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
     );
   }
 
-
-  updateStepsInServer(){
+  updateStepsInServer() {
     healthCubit.updateDailyStep(UpdateDailyStepsParams(
       day: DateTime.now(),
       stepsToWalk: walkingSteps,
     ));
   }
-
 
   @override
   void closeNotifier() {
@@ -279,7 +236,6 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
 
   void onAddWaterTap() {
     if (_completedCupNum != totalCupNum) {
-      print('dadfdsfs');
       UpdateDailyWaterParams params = UpdateDailyWaterParams(
           date: DateFormat("yyyy-MM-dd", 'en').format(DateTime.now()),
           increase: true);
@@ -317,17 +273,15 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
     goalValue = tempGoalValue;
     notifyListeners();
   }
+
   void getHealthResults() async {
     healthCubit.getHealthResults(NoParams());
   }
+
   void getHealthDashboard() async {
     DateParams dateParams =
         DateParams(date: DateFormat("yyyy-MM-dd", 'en').format(DateTime.now()));
-    // healthDashboardEntity =
     healthCubit.getHealthDashboard(dateParams);
-    // healthResultResponseEntity =  await healthCubit.getHealthResults(NoParams());
-
-
   }
 
   onHealthDashboardLoaded(HealthDashboardEntity healthDashboardEntity) {
@@ -336,11 +290,10 @@ class HealthHomeScreenNotifier extends ScreenNotifier {
     goalValue = HealthProfileStaticModel.WEIGHT_GOAL;
     notifyListeners();
   }
+
   onHealthResultsLoaded(HealthResultResponseEntity healthResultResponseEntity) {
     this.healthResultResponseEntity = healthResultResponseEntity;
     getHealthDashboard();
-    // _completedCupNum = healthDashboardEntity.totalCupsOfWater;
-    // goalValue = HealthProfileStaticModel.WEIGHT_GOAL;
     notifyListeners();
   }
 }

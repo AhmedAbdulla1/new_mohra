@@ -3,6 +3,7 @@ class Assets {
   Assets._();
 
   static const String assetsIcAppLogo = 'booking_system_flutter/assets/ic_app_logo.png';
+  static const String assetsIconsSaudiArabia96 = 'assets/icons/saudi-arabia-96.png';
   static const String authAuthUserServices = 'booking_system_flutter/lib/screens/auth/auth_user_services.dart';
   static const String authChangePasswordScreen = 'booking_system_flutter/lib/screens/auth/change_password_screen.dart';
   static const String authEditProfileScreen = 'booking_system_flutter/lib/screens/auth/edit_profile_screen.dart';
@@ -278,8 +279,7 @@ class Assets {
   static const String iconsIcVerified = 'booking_system_flutter/assets/icons/ic_verified.png';
   static const String iconsIcWhatsapp = 'booking_system_flutter/assets/icons/ic_whatsapp.png';
   static const String iconsIcYoutube = 'booking_system_flutter/assets/icons/ic_youtube.png';
-  static const String iconsIcons8SaudiArabia48 = 'assets/icons/saudi-arabia-48.png';
-  static const String iconsIcons8SaudiArabia96 = 'assets/icons/saudi-arabia-96.png';
+  static const String iconsIcons8SaudiArabia48 = 'assets/icons/icons8-saudi-arabia-48.png';
   static const String iconsInfo1 = 'assets/icons/info1.png';
   static const String iconsInfo2 = 'assets/icons/info2.png';
   static const String iconsInfo3 = 'assets/icons/info3.png';
@@ -291,6 +291,7 @@ class Assets {
   static const String iconsProgress = 'assets/icons/progress.png';
   static const String iconsProgress2 = 'assets/icons/progress2.png';
   static const String iconsRazorpayLogo = 'booking_system_flutter/assets/icons/razorpay_logo.png';
+  static const String iconsSaudiArabia96 = 'assets/icons/saudi-arabia-96.png';
   static const String iconsSearchIcon = 'assets/icons/search_icon.png';
   static const String iconsSettings = 'assets/icons/settings.png';
   static const String iconsSideBarIcon = 'assets/icons/side_bar_icon.png';
@@ -784,6 +785,7 @@ class Assets {
   static const String svgFolderRemoveFill = 'assets/images/svg/folder-remove-fill.svg';
   static const String svgFollowingTag = 'assets/images/svg/followingTag.svg';
   static const String svgFood = 'assets/images/svg/food.svg';
+  static const String svgFoodMenu = 'assets/images/svg/Food Menu.svg';
   static const String svgFootprint = 'assets/images/svg/footprint.svg';
   static const String svgFormat = 'assets/images/svg/format.svg';
   static const String svgFriendsIconMsg = 'assets/images/svg/friendsIconMsg.svg';
@@ -859,6 +861,7 @@ class Assets {
   static const String svgLogOut1 = 'assets/images/svg/log-out-1.svg';
   static const String svgLove = 'assets/images/svg/love.svg';
   static const String svgLunch = 'assets/images/svg/lunch.svg';
+  static const String svgMYCV = 'assets/images/svg/MY CV.svg';
   static const String svgManFashion = 'assets/images/svg/manFashion.svg';
   static const String svgManIcon = 'assets/images/svg/man_icon.svg';
   static const String svgMap = 'assets/images/svg/map.svg';

@@ -24,6 +24,7 @@ import 'package:starter_application/features/friend/domain/entity/get_frined_sta
 import 'package:starter_application/features/home/presentation/screen/home_screen/qrCode_screen.dart';
 import 'package:starter_application/features/messages/presentation/state_m/provider/global_messages_notifier.dart';
 import 'package:starter_application/features/personality/data/model/request/get_avatar_params.dart';
+import 'package:starter_application/features/personality/domain/entity/has_avatar_entity.dart';
 import 'package:starter_application/features/personality/presentation/state_m/cubit/personality_cubit.dart';
 import 'package:starter_application/features/salary_count/domain/entity/time_table_list_entity.dart';
 import 'package:starter_application/features/shop/presentation/screen/shop_main_screen.dart';
@@ -51,6 +52,7 @@ class AppMainScreenNotifier extends ScreenNotifier {
   bool? isFriendBlocked = null;
   bool isMute = false;
   bool isVisitUserInChat = false;
+  bool hasPersonalityAvatar = false;
   int availableSeats = 0;
   int myTotalSeats = 0;
   PersonalityCubit personalityCubit = PersonalityCubit();
@@ -202,12 +204,25 @@ class AppMainScreenNotifier extends ScreenNotifier {
     }
   }
 
-  getMyAvatar() {
+  getMyAvatar() async {
     int? gender = UserSessionDataModel.gender!;
+    final prefs = await SpUtil.getInstance();
+    hasPersonalityAvatar =
+        prefs.getBool(AppConstants.HAS_PERSONALITY_AVATAR) ?? false;
     // DateTime? date =
     //     DateTimeHelper.getDateInEnglish(UserSessionDataModel.birthday);
-    personalityCubit.getMyAvatar(GetAvatarParams(
-        gender: gender, month: UserSessionDataModel.avatarMonth));
+    if (hasPersonalityAvatar)
+      personalityCubit.getMyAvatar(GetAvatarParams(
+          gender: gender, month: UserSessionDataModel.avatarMonth));
+    else {
+      personalityCubit.emit(
+        PersonalityState.hasAvatarChecked(
+          HasAvatarEntity(
+            hasAvatar: hasPersonalityAvatar,
+          ),
+        ),
+      );
+    }
   }
 
   restartAppForOneTime() {

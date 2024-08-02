@@ -42,13 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     if(BlocProvider.of<GlogalCubit>(AppConfig().appContext, listen: false)
         .isAuth){
+      getLocation();
       DynamicLinkService dynamicLinkService = DynamicLinkService();
       dynamicLinkService.fetchLinkData(onHandle: (id) {});
       provider.getCategories();
       provider.getAllBanners();
       provider.getAllChallenges();
       releaseMutex();
-      getLocation();
       provider.getAllTimeTable();
       provider.getCallData();
       provider.userDashboard();

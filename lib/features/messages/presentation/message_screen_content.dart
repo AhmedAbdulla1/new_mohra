@@ -388,23 +388,26 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
               automaticIndicatorColorAdjustment: true,
               indicatorSize: TabBarIndicatorSize.label,
               indicatorPadding: EdgeInsets.symmetric(vertical: 10.h),
+              dividerHeight: 0,
               labelPadding:
                   EdgeInsets.only(bottom: 40.h, right: 30.w, left: 90.w),
-              isScrollable: true,
+              // isScrollable: true,
               onTap: (i) {
                 setState(() {});
               },
               tabs: [
                 Container(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
                         Translation.current.chat,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 40.sp,
                             fontFamily: isArabic ? 'Tajawal' : 'Inter-Regular'),
                       ),
+                      if (sn.numberOfNotRead != 0)
                       Gaps.hGap32,
                       if (sn.numberOfNotRead != 0)
                         Container(
@@ -415,6 +418,7 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                           child: Center(
                             child: Text(
                               sn.numberOfNotRead.toString(),
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 35.sp,
                                   color: AppColors.primaryColorLight),
@@ -426,15 +430,16 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                 ),
                 Container(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         Translation.current.groups,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 40.sp,
                             fontFamily: isArabic ? 'Tajawal' : 'Inter-Regular'),
                       ),
-                      Gaps.hGap32,
+                      // Gaps.hGap32,
                       /* Container(
                         width: 55.h,
                         height: 55.h,
@@ -459,6 +464,7 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                             badges.Badge(
                               badgeContent: Text(
                                 "${MessagesNotifier.friendReceivedOnly.value}",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: AppColors.white,
                                     fontFamily:
@@ -467,7 +473,7 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                               child: Container(
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       Translation.current.friends,
@@ -477,7 +483,7 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                                               ? 'Tajawal'
                                               : 'Inter-Regular'),
                                     ),
-                                    Gaps.hGap32,
+                                    // Gaps.hGap32,
                                     /*Container(
                             width: 55.h,
                             height: 55.h,
@@ -500,16 +506,17 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                       )
                     : Container(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               Translation.current.friends,
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 45.sp,
                                   fontFamily:
                                       isArabic ? 'Tajawal' : 'Inter-Regular'),
                             ),
-                            Gaps.hGap32,
+                            // Gaps.hGap32,
                             /*Container(
                             width: 55.h,
                             height: 55.h,
@@ -591,9 +598,9 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
               child: CustomNetworkImageWidget(
                 height: 150.w,
                 width: 150.w,
-                  imgPath:  clientEntity.imageUrl == ""
-                      ? (clientEntity.avatarEntity?.avatarUrl ?? "")
-                      : (clientEntity.imageUrl ?? ""),
+                imgPath: clientEntity.imageUrl == ""
+                    ? (clientEntity.avatarEntity?.avatarUrl ?? "")
+                    : (clientEntity.imageUrl ?? ""),
               ),
             ),
             const Spacer(),
@@ -701,8 +708,8 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                                 decoration: BoxDecoration(
                                     color: AppColors.mansourBackArrowColor2
                                         .withOpacity(0.3),
-                                    borderRadius:
-                                        const BorderRadius.all(Radius.circular(8))),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8))),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -717,7 +724,8 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                                     Gaps.vGap4,
                                     Text(
                                       Translation.current.Send_a_message,
-                                      style: const TextStyle(color: AppColors.white),
+                                      style: const TextStyle(
+                                          color: AppColors.white),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(32),
@@ -729,8 +737,8 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                                         title: Text(
                                           Translation.current
                                               .Start_chatting_with_my_friends,
-                                          style:
-                                              const TextStyle(color: AppColors.white),
+                                          style: const TextStyle(
+                                              color: AppColors.white),
                                         ),
                                       ),
                                     )
@@ -742,8 +750,8 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                         )
                   : Padding(
                       padding: EdgeInsets.only(top: 0.3.sh),
-                      child:
-                          const Center(child: CircularProgressIndicator.adaptive()),
+                      child: const Center(
+                          child: CircularProgressIndicator.adaptive()),
                     ),
             ],
           ),
@@ -871,6 +879,7 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                 itemCount:
                     Provider.of<GlobalMessagesNotifier>(context).groups.length,
                 itemBuilder: (BuildContext context, int index) {
+                  print('group items ?? '+index.toString());
                   RoomEntity room = Provider.of<GlobalMessagesNotifier>(context)
                       .groups
                       .elementAt(index);
@@ -908,7 +917,8 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                       decoration: BoxDecoration(
                           color:
                               AppColors.mansourBackArrowColor2.withOpacity(0.3),
-                          borderRadius: const BorderRadius.all(Radius.circular(8))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8))),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -1138,10 +1148,10 @@ class _MessagesScreenContentState extends State<MessagesScreenContent>
                 ],
               ),
               Gaps.vGap12,
-              const SizedBox(
-                height: 1,
-                child: Divider(),
-              ),
+              // const SizedBox(
+              //   height: 1,
+              //   child: Divider(),
+              // ),
             ],
           ),
         ),

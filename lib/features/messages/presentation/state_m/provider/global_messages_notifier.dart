@@ -76,6 +76,7 @@ class GlobalMessagesNotifier extends ScreenNotifier {
   List<LocationInfo> locations = [];
 
   Future<void> getRtmToken() async {
+    //todo importance
     await messagesCubit
         .getRtmToken(GetRtmTokenParams(uid: '${UserSessionDataModel.userId}'));
   }

@@ -16,6 +16,7 @@ import 'package:starter_application/generated/l10n.dart';
 class EventFilterDialogue extends StatefulWidget {
   final Function(LocationLiteEntity? locationLiteEntity) search;
   final LocationLiteEntity? locationLiteEntity;
+
   const EventFilterDialogue(
       {Key? key, required this.search, required this.locationLiteEntity})
       : super(key: key);
@@ -27,6 +28,7 @@ class EventFilterDialogue extends StatefulWidget {
 class _EventFilterDialogueState extends State<EventFilterDialogue> {
   LocationLiteEntity? _locationLiteEntity;
   LocationCubit _locationCubit = LocationCubit();
+
   @override
   void initState() {
     super.initState();
@@ -52,15 +54,15 @@ class _EventFilterDialogueState extends State<EventFilterDialogue> {
             child: BlocBuilder<LocationCubit, LocationState>(
               bloc: _locationCubit,
               builder: (context, state) => state.maybeMap(
-                  locationInitState: (value) => WaitingWidget(),
-                  locationLoadingState: (value) => WaitingWidget(),
-                  locationErrorState: (value) => ErrorScreenWidget(
-                        callback: value.callback,
-                        error: value.error,
-                      ),
-                  locationsLoadedState: (value) =>
-                      _buildWidget(value.locationsLiteEntity),
-                  orElse: SizedBox.shrink,
+                locationInitState: (value) => WaitingWidget(),
+                locationLoadingState: (value) => WaitingWidget(),
+                locationErrorState: (value) => ErrorScreenWidget(
+                  callback: value.callback,
+                  error: value.error,
+                ),
+                locationsLoadedState: (value) =>
+                    _buildWidget(value.locationsLiteEntity),
+                orElse: SizedBox.shrink,
               ),
             ),
           )
@@ -77,10 +79,12 @@ class _EventFilterDialogueState extends State<EventFilterDialogue> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(Translation.current.city , style: TextStyle(
-            fontSize: 38.sp,
-
-          ),),
+          Text(
+            Translation.current.city,
+            style: TextStyle(
+              fontSize: 38.sp,
+            ),
+          ),
           SizedBox(
             height: 30.h,
           ),
@@ -97,7 +101,7 @@ class _EventFilterDialogueState extends State<EventFilterDialogue> {
                       spreadRadius: 4,
                     ),
                   ]),
-              padding:const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               constraints: BoxConstraints(
                 maxHeight: 60,
                 maxWidth: .55.sw,
@@ -107,49 +111,48 @@ class _EventFilterDialogueState extends State<EventFilterDialogue> {
               child: Center(
                 child: DropdownSearch<LocationLiteEntity>(
                   dropdownButtonProps: const IconButtonProps(
-                    icon: Icon(Icons.arrow_drop_down, color: AppColors.mansourDarkOrange,size: 30,),
-
+                    icon: Icon(
+                      Icons.arrow_drop_down,
+                      color: AppColors.mansourDarkOrange,
+                      size: 30,
+                    ),
                   ),
-                  itemAsString: (c){
+                  itemAsString: (c) {
                     return c!.text;
                   },
-                  filterFn: (city, text){
-                    return city == null ? true : applyFilter(city , text);
+                  filterFn: (city, text) {
+                    return city == null ? true : applyFilter(city, text);
                   },
-                  searchFieldProps:  const TextFieldProps(
+                  searchFieldProps: const TextFieldProps(
                       cursorColor: AppColors.mansourDarkOrange,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderSide: BorderSide(
-                                width: 1,
-                                color: AppColors.mansourDarkOrange,
-                                style: BorderStyle.solid,
-                              )),
+                            width: 1,
+                            color: AppColors.mansourDarkOrange,
+                            style: BorderStyle.solid,
+                          )),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                width: 1,
-                                color: AppColors.mansourDarkOrange,
-                                style: BorderStyle.solid,
-                              )),
+                            width: 1,
+                            color: AppColors.mansourDarkOrange,
+                            style: BorderStyle.solid,
+                          )),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                width: 1,
-                                color: AppColors.mansourDarkOrange,
-                                style: BorderStyle.solid,
-                              )))),
-                  dropdownSearchBaseStyle: const TextStyle(
-
-                  ),
+                            width: 1,
+                            color: AppColors.mansourDarkOrange,
+                            style: BorderStyle.solid,
+                          )))),
+                  dropdownSearchBaseStyle: const TextStyle(),
                   searchDelay: Duration.zero,
                   showSearchBox: true,
                   maxHeight: 0.5.sh,
-                  dropdownSearchTextAlignVertical:
-                  TextAlignVertical.center,
+                  dropdownSearchTextAlignVertical: TextAlignVertical.center,
                   mode: Mode.BOTTOM_SHEET,
-                  items:locationsLiteEntity.items,
-                  onChanged: (c){
-                    if(c!.value != "0")
-                    chooseLocation(c);
+                  items: locationsLiteEntity.items,
+                  onChanged: (c) {
+                    if (c!.value != "0") chooseLocation(c);
                   },
                   showSelectedItems: false,
                   dropdownSearchDecoration: InputDecoration.collapsed(
@@ -164,7 +167,7 @@ class _EventFilterDialogueState extends State<EventFilterDialogue> {
               ),
             ),
           ),
-        /*  DropdownButton<LocationLiteEntity>(
+          /*  DropdownButton<LocationLiteEntity>(
             value: _locationLiteEntity,
             items: locationsLiteEntity.items
                 .map(
@@ -204,12 +207,12 @@ class _EventFilterDialogueState extends State<EventFilterDialogue> {
   }
 
   search() {
-    if(_locationLiteEntity != null) {
+    if (_locationLiteEntity != null) {
       if (_locationLiteEntity!.value != '0')
         widget.search(_locationLiteEntity);
       else
         widget.search(null);
-    }else
+    } else
       widget.search(null);
     Nav.pop();
   }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:device_info/device_info.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/costum_modules/screen_notifier.dart';
@@ -12,18 +13,19 @@ import 'package:starter_application/core/constants/enums/user_type.dart';
 import 'package:starter_application/core/datasources/shared_preference.dart';
 import 'package:starter_application/core/models/user_session_data_model.dart';
 import 'package:starter_application/core/navigation/nav.dart';
+import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_error_snackbar.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/toast/errv_toast_options.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/toast/show_error_toast.dart';
 import 'package:starter_application/core/ui/snackbars/show_snackbar.dart';
-import 'package:starter_application/features/account/data/model/request/check_exist_phone_params.dart';
 import 'package:starter_application/features/account/data/model/request/check_exist_userName_params.dart';
 import 'package:starter_application/features/account/data/model/request/confirm_phone_number_params.dart';
 import 'package:starter_application/features/account/data/model/request/login_request.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
-import 'package:starter_application/features/account/data/model/request/verify_opt_prames.dart';
 import 'package:starter_application/features/account/domain/entity/login_entity.dart';
 import 'package:starter_application/features/account/presentation/screen/start_personality_test.dart';
+import 'package:starter_application/features/account/presentation/screen/verify_code_screen.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'package:starter_application/main.dart';
 
 import '../../../../../core/common/utils.dart';
@@ -53,6 +55,9 @@ class SetUserNameNotifier extends ScreenNotifier {
     userNameFocusNode.dispose();
     userNameController.dispose();
   }
+
+  // Methods to create new account and login
+  // on onCheckingDone call checkUserNameIfExist
 
   void register() {
     UserSessionDataModel.provider = 'normal';
@@ -86,12 +91,8 @@ class SetUserNameNotifier extends ScreenNotifier {
   }
 
   confirmPhoneNumber() {
-    accountCubit.sendOtp(
-        CheckIfPhoneExistParams(phoneNumber: registerRequest.phoneNumber!,countryCode: registerRequest.countryCode??'+966'));
-  }
-  verifyOtp() {
-    accountCubit.verifyOtp(
-        VerifyOtpParams(phoneNumberWithCountryCode: registerRequest.phoneNumber!,otpCode: ''));
+    accountCubit.confirmPhoneNumber(
+        ConfirmPhoneNumberParams(phoneNumbr: registerRequest.phoneNumber!));
   }
 
   onPhoneNumberConfirmed() async {

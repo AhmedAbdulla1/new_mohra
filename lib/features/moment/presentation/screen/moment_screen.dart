@@ -45,7 +45,7 @@ class _MomentScreenState extends State<MomentScreen> with SingleTickerProviderSt
 
   refreshPage({bool isBuild = false}){
     if(!isBuild) {
-      _animationController = AnimationController(
+        _animationController = AnimationController(
         vsync: this,
         duration: const Duration(milliseconds: 300),
         upperBound: 0.5,

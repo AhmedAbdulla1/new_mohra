@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
@@ -8,8 +9,8 @@ import 'package:starter_application/core/constants/app/app_constants.dart';
 import 'package:starter_application/core/navigation/nav.dart';
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
 import 'package:starter_application/core/ui/mansour/custom_list_tile.dart';
-import 'package:starter_application/core/ui/widgets/custom_network_image_widget.dart';
 import 'package:starter_application/features/challenge/domain/entity/challange_entity.dart';
+import 'package:starter_application/features/challenge/presentation/screen/view.dart';
 import 'package:starter_application/features/challenge/presentation/state_m/provider/challenge_screen_notifier.dart';
 import 'package:starter_application/features/challenge/presentation/widget/challenge_header.dart';
 import 'package:starter_application/features/challenge/presentation/widget/complete_challenge_stepper.dart';
@@ -18,6 +19,7 @@ import 'package:starter_application/generated/l10n.dart';
 
 class ChallengeScreenContent extends StatefulWidget {
   ChallangeItemEntity item;
+
   ChallengeScreenContent({Key? key, required this.item}) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class _ChallengeScreenContentState extends State<ChallengeScreenContent> {
     height: 100.h,
     thickness: 1,
   );
+
   @override
   Widget build(BuildContext context) {
     sn = Provider.of<ChallengeScreenNotifier>(context);
@@ -87,7 +90,8 @@ class _ChallengeScreenContentState extends State<ChallengeScreenContent> {
             children: [
               CustomMansourButton(
                 onPressed: () {
-                  if (sn.itemEntity.currentStep == 1) sn.onFriendsTap(sn.itemEntity.id);
+                  if (sn.itemEntity.currentStep == 1)
+                    sn.onFriendsTap(sn.itemEntity.id);
                 },
                 titleText: "${Translation.current.invite_friends}",
                 titleFontWeight: FontWeight.bold,
@@ -179,7 +183,6 @@ class _ChallengeScreenContentState extends State<ChallengeScreenContent> {
         //   ),
         // ]
       ),
-
     );
   }
 
@@ -189,9 +192,15 @@ class _ChallengeScreenContentState extends State<ChallengeScreenContent> {
         _buildInfoItem(
           sn.itemEntity.organizer!,
           Translation.current.challenge_organizer,
-            CustomNetworkImageWidget(
-              imgPath: sn.itemEntity.imageUrlOfCreator,
-            ),
+          sn.itemEntity.imageUrlOfCreator != null &&
+                  sn.itemEntity.imageUrlOfCreator!.isNotEmpty
+              ? Image.network(sn.itemEntity.imageUrlOfCreator!)
+              : Container(
+                  color: AppColors.mansourLightGreyColor_3,
+                  child: const Center(child: Icon(Icons.broken_image))),
+          // CustomNetworkImageWidget(
+          //   imgPath: sn.itemEntity.imageUrlOfCreator,
+          // ),
         ),
         Gaps.vGap32,
         _buildInfoItem(
@@ -227,29 +236,46 @@ class _ChallengeScreenContentState extends State<ChallengeScreenContent> {
         // ),
         Gaps.vGap32,
         _buildInfoItem(
-          sn.itemEntity.firstLocationLocationName ?? 'aassad',
-          "${sn.targetLocationAddress}",
-          Center(
-            child: SizedBox(
-              height: 70.h,
-              width: 70.h,
-              child: SvgPicture.asset(
-                AppConstants.SVG_PIN,
-                color: AppColors.primaryColorLight,
+            sn.itemEntity.firstLocationLocationName ?? 'aassad',
+            "${sn.targetLocationAddress}",
+            Center(
+              child: SizedBox(
+                height: 70.h,
+                width: 70.h,
+                child: SvgPicture.asset(
+                  AppConstants.SVG_PIN,
+                  color: AppColors.primaryColorLight,
+                ),
               ),
+            ), onTap: () {
+          print('to map screen');
+          Nav.to(
+            MapLocationScreen.routeName,
+            arguments: LatLng(
+              sn.itemEntity.firstLocationLatitude!,
+              sn.itemEntity.firstLocationLongitude!,
             ),
-          ),
-        ),
+          ).then((value) {
+            if (value != null && value is List) {
+              sn.itemEntity.firstLocationLatitude = value.first.latitude;
+              sn.itemEntity.firstLocationLongitude = value.first.longitude;
+              sn.getLocationDetails();
+              // sn.targetLocationAddress = value;
+            }
+          });
+        }),
       ],
     );
   }
 
   Widget _buildInfoItem(
-      String title,
-      String subTitle,
-      Widget trailing,
-      ) {
+    String title,
+    String subTitle,
+    Widget trailing, {
+    Function()? onTap,
+  }) {
     return CustomListTile(
+      onTap: onTap,
       leading: Container(
         height: 150.h,
         width: 150.h,
@@ -317,7 +343,7 @@ class _ChallengeScreenContentState extends State<ChallengeScreenContent> {
 
   Widget _buildCompleteChallengeStepper(id) {
     return CompleteChallengeStepper(
-      minNumberOfInvitation: sn.itemEntity.minNumOfInvitee?? 0,
+      minNumberOfInvitation: sn.itemEntity.minNumOfInvitee ?? 0,
       currentStep: sn.itemEntity.currentStep!,
       onJoinTap: () {
         sn.currentStep = 1;

@@ -96,7 +96,7 @@ class HomeScreenNotifier extends ScreenNotifier {
   List<NewsCategoryItemEntity>? newsCategories = [];
   List<NewsItemOfCategoryEntity>? categoryNews = [];
   LatLng latLng = const LatLng(0, 0);
-  WeatherEntity? weatherData ;
+  WeatherEntity? weatherData;
 
   // final List<String> topPicksFilters = ["All", "News", "Sports", "Horoscope"];
   HomeScreenNotifier() {
@@ -228,10 +228,12 @@ class HomeScreenNotifier extends ScreenNotifier {
   }
 
   void getWeather() async {
-    weatherData = await homeCubit.getWeather(GetWeatherParams(
-      lat: latLng.latitude.toString(),
-      lon: latLng.longitude.toString(),
-    ));
+    weatherData = await homeCubit.getWeather(
+      GetWeatherParams(
+        lat: latLng.latitude.toString(),
+        lon: latLng.longitude.toString(),
+      ),
+    );
     notifyListeners();
   }
 
@@ -560,3 +562,13 @@ class HomeScreenNotifier extends ScreenNotifier {
     return completer.future;
   }
 }
+
+// enum HttpMethodType {
+//   GET,
+//   POST,
+//   PUT,
+//   DELETE,
+//   PATCH,
+//   HEAD,
+//   OPTIONS,
+// }

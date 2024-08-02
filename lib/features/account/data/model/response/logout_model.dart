@@ -1,4 +1,5 @@
 import 'package:starter_application/core/models/base_model.dart';
+import 'package:starter_application/features/account/domain/entity/login_entity.dart';
 import 'package:starter_application/features/account/domain/entity/logout_entity.dart';
 
 class LogoutModel extends BaseModel<LogoutEntity> {

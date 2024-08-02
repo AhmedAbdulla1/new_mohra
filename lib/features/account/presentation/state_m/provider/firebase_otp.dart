@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:starter_application/generated/l10n.dart';
 
+import '../../../../../core/navigation/nav.dart';
 import '../../../../../core/ui/error_ui/error_viewer/snack_bar/show_error_snackbar.dart';
+import '../../screen/verify_code_screen.dart';
 
 class FireBaseOTP {
   final String countryCode; /// 00966

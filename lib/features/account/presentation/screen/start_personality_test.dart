@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:starter_application/core/common/provider/session_data.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
 import 'package:starter_application/core/models/user_session_data_model.dart';
 import 'package:starter_application/core/ui/appbar/appbar.dart';
 import 'package:starter_application/core/ui/mansour/section_intro.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/start_personality_test_notifier.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'package:starter_application/main.dart';
 import 'dart:ui' as ui;
 class StartPersonalityTest extends StatefulWidget {

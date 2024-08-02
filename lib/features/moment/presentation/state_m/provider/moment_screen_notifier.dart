@@ -7,15 +7,18 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/app_config.dart';
 import 'package:starter_application/core/common/costum_modules/screen_notifier.dart';
+import 'package:starter_application/core/common/dynamic_links.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
 import 'package:starter_application/core/datasources/shared_preference.dart';
 import 'package:starter_application/core/errors/app_errors.dart';
 import 'package:starter_application/core/models/user_session_data_model.dart';
 import 'package:starter_application/core/navigation/nav.dart';
 import 'package:starter_application/core/params/screen_params/challenge_details_screen_params.dart';
+import 'package:starter_application/core/params/screen_params/visit_user_profile_screen_params.dart';
 import 'package:starter_application/core/results/result.dart';
 import 'package:starter_application/di/service_locator.dart';
 import 'package:starter_application/features/challenge/data/model/request/claim_rewards_request.dart';
@@ -41,6 +44,7 @@ import 'package:starter_application/features/moment/presentation/widget/create_p
 import 'package:starter_application/features/moment/presentation/widget/post_option_widget.dart';
 import 'package:starter_application/features/user/data/model/request/get_address_params.dart';
 import 'package:starter_application/features/user/domain/entity/addresses_entity.dart';
+import 'package:starter_application/features/user/presentation/screen/visit_user_profile_screen.dart';
 import 'package:starter_application/features/user/presentation/state_m/cubit/user_cubit.dart';
 import 'package:starter_application/generated/l10n.dart';
 
@@ -103,6 +107,32 @@ class MomentScreenNotifier extends ScreenNotifier {
   double opacity = 0;
   int uploadType = 0;
   String avatarImage = '';
+
+
+
+
+
+  shareMyProfile() async {
+    String arMessage = '''أهلاً 👋🏼!
+حملت "مهرة" 🦄وانضممت إلى عالم متكامل من التسوق والتواصل..
+حمل التطبيق وشارك معي لحظاتك 😏.
+
+للتحميل من هنا🔗
+''';
+    DynamicLinkService dynamicLinkService = DynamicLinkService();
+    Uri uri = await dynamicLinkService.createDynamicLink(queryParameters: {
+      'userId': UserSessionDataModel.userId.toString(),
+      // 'date': params.birthDay != null ?params.birthDay!.toIso8601String() : null
+    }, type: VisitUserProfileScreen.routeName);
+    print( VisitUserProfileScreenParams(id: UserSessionDataModel.userId));
+    print(UserSessionDataModel.fullName);
+    print(UserSessionDataModel.cityId);
+    Share.share(arMessage+uri.toString());
+    // FlutterShare.share(
+    //   title: arMessage,
+    //   linkUrl: uri.toString(),
+    // );
+  }
 
   changeProfileImage(int index) async {
     uploadType = 0;

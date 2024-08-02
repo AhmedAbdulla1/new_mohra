@@ -8,24 +8,33 @@ import 'package:provider/provider.dart';
 import 'package:starter_application/core/common/app_colors.dart';
 import 'package:starter_application/core/common/style/gaps.dart';
 import 'package:starter_application/core/common/utils.dart';
+import 'package:starter_application/core/common/validators.dart';
 import 'package:starter_application/core/constants/app/app_constants.dart';
 import 'package:starter_application/core/navigation/animations/animated_route.dart';
 import 'package:starter_application/core/ui/appbar/appbar.dart';
 import 'package:starter_application/core/ui/error_ui/error_viewer/snack_bar/show_snackbar_based_error_type.dart';
+import 'package:starter_application/core/ui/error_ui/errors_screens/error_widget.dart';
 import 'package:starter_application/core/ui/mansour/button/custom_mansour_button.dart';
 import 'package:starter_application/core/ui/widgets/custom_text_field.dart';
 import 'package:starter_application/core/ui/widgets/waiting_widget.dart';
 import 'package:starter_application/features/account/data/model/request/register_request.dart';
 import 'package:starter_application/features/account/presentation/state_m/bloc/account_cubit.dart';
 import 'package:starter_application/features/account/presentation/state_m/provider/register_screen_2_notifier.dart';
+import 'package:starter_application/generated/l10n.dart';
 import 'dart:ui' as ui;
+import 'package:intl_phone_field/countries.dart';
 import '../../../../main.dart';
 
 class RegisterScreen2 extends StatefulWidget {
   static const routeName = "/RegisterScreen2";
-  RegisterRequest? registerRequest;
 
-  RegisterScreen2({Key? key, this.registerRequest}) : super(key: key);
+  // RegisterRequest registerRequest;
+
+  RegisterScreen2({
+    Key? key,
+
+    // required this.registerRequest
+  }) : super(key: key);
 
   @override
   _RegisterScreen2State createState() => _RegisterScreen2State();
@@ -36,7 +45,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   @override
   void initState() {
-    sn.registerRequest = widget.registerRequest ?? RegisterRequest();
+    // sn.registerRequest = widget.registerRequest;
     super.initState();
   }
 
@@ -311,13 +320,10 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   Widget _builDescription() {
     return Text(
-      (isArabic ? "طيب يا " : "Welcome ") +
-          // sn.registerRequest.firstName +
-          // getCakeOrBasboosh() +
-          '\n' +
+      (isArabic ? "مرحبا " : "Welcome ") +
           (isArabic
               ? " ممكن تعبي معلوماتك هنا "
-              : "Please Fill your Information here"),
+              : " , Please Fill your Information here"),
       style: TextStyle(
         color: Colors.black,
         fontSize: 45.sp,
@@ -343,7 +349,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       ),
       validator: (value) {
         sn.validateEmail(value);
-        return null;
       },
       onFieldSubmitted: (term) {
         fieldFocusChange(context, sn.myFocusNodeEmail, sn.myFocusNodePhone);
@@ -383,7 +388,9 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
               ),
             ),
           ),
-          Gaps.hGap64,
+          SizedBox(
+            width: 40.w,
+          ),
           Expanded(flex: 6, child: _buildEmailField()),
         ],
       ),
@@ -392,71 +399,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   _buildPhoneField() {
     return Container(
-      width: 0.92.sw,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          border: Border.all(
-              color: AppColors.mansourLightGreyColor_5,
-              style: BorderStyle.solid)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsetsDirectional .only(
-              start: AppConstants.screenPadding.left /2 ,
-            ),
-            child: Row(
-              children: [
-                SizedBox(
-                  height: 60.h,
-                  width: 60.h,
-                  child: Image.asset(
-                    AppConstants.IMAGE_FLAG,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(start:8.0,),
-                  child: Text('+966', style: TextStyle(fontSize: 40.sp)),
-                ),
-              ],
-            ),
-          ),
-          // Gaps.hGap10,
-          Expanded(
-              child: CustomTextField(
-                primaryFieldColor: AppColors.regularFontColor,
-                textKey: sn.phoneKey,
-                controller: sn.phoneController,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.phone,
-                focusNode: sn.myFocusNodePhone,
-                hintText: (isArabic ? "مثال" : "Example") + ' : ' + '5xxxxxxxx',
-                horizontalMargin: 80.w,
-                errorMaxLines: 4,
-                prefixIconConstraints: BoxConstraints(
-                  minWidth: 0,
-                  minHeight: 0,
-                  maxHeight: 80.h,
-                  maxWidth: 100.h,
-                ),
-                validator: (value) {
-                  sn.validatePhoneNumber(value,10);
-                  return null;
-                },
-                onFieldSubmitted: (term) {
-                  fieldFocusChange(context, sn.myFocusNodePhone,
-                      sn.myFocusNodePassword);
-                },
-                onChanged: (value) {
-                  sn.phoneKey.currentState!.validate();
-                },
-              )),
-        ],
-      ),
-    );
-
-    Container(
       height: 150.h,
       width: double.infinity,
       alignment: Alignment.center,
@@ -468,6 +410,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       child: Transform.translate(
         offset: const Offset(0, 10),
         child: IntlPhoneField(
+          style: const TextStyle(fontSize: 16),
           disableLengthCheck: false,
           flagsButtonMargin: EdgeInsets.zero,
           dropdownTextStyle: const TextStyle(),
@@ -498,7 +441,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
           initialCountryCode: 'SA',
           validator: (phone) {
             sn.validatePhoneNumber(phone?.number, sn.country.maxLength);
-            return null;
           },
           onSubmitted: (term) {
             fieldFocusChange(
@@ -543,7 +485,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                 ),
               ),
             ),
-            Gaps.hGap64,
+            SizedBox(width: 45.w),
             Expanded(flex: 6, child: _buildPasswordField()),
             IconButton(
               onPressed: () {
@@ -583,7 +525,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       ),
       validator: (value) {
         sn.validatePassword(value);
-        return null;
       },
       onFieldSubmitted: (term) {
         fieldFocusChange(
@@ -623,7 +564,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                 ),
               ),
             ),
-            Gaps.hGap64,
+            SizedBox(width: 45.w),
             Expanded(flex: 6, child: _buildconfirmPasswordField()),
             IconButton(
               onPressed: () {
@@ -663,7 +604,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       ),
       validator: (value) {
         sn.validateConfirmPassword(value);
-        return null;
       },
       onFieldSubmitted: (term) {
         sn.myFocusNodeConfirmPassword.unfocus();

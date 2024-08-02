@@ -34,12 +34,15 @@ class DynamicLinkService {
   }) async {
     queryParameters[AppConstants.KEY_DYNAMIC_LINKS_TYPE] = type;
     Uri uri = Uri(queryParameters: queryParameters);
-
+    Uri link = Uri.parse(
+        '${AppConstants.KEY_DYNAMIC_LINKS_BASE_URL}${uri.toString()}');
+    print(link);
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: AppConstants.KEY_DYNAMIC_LINKS_PREFIX,
-      link: Uri.parse(
-          '${AppConstants.KEY_DYNAMIC_LINKS_BASE_URL}${uri.toString()}'),
+      // uriPrefix: 'https://mohraappprofile.page.link', // Replace with your Dynamic Links domain
+      // link: Uri.parse('https://mohraappprofile.page.link/$type?userId=$userId'),
 
+      uriPrefix: AppConstants.KEY_DYNAMIC_LINKS_PREFIX,
+      link: link,
       androidParameters: const AndroidParameters(
         packageName: AppConstants.KEY_PACKAGE_NAME,
         minimumVersion: 1,
@@ -53,10 +56,9 @@ class DynamicLinkService {
     FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
     final ShortDynamicLink shortLink =
-    await dynamicLinks.buildShortLink(parameters);
+        await dynamicLinks.buildShortLink(parameters,);
     return shortLink.shortUrl;
   }
-
 
   bool handleLinkData(
       {required PendingDynamicLinkData data,
