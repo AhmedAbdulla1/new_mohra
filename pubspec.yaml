@@ -110,7 +110,7 @@ dependencies:
   image_picker: ^1.1.2
   injectable: ^2.4.2
   insta_image_viewer: ^1.0.4
-  intl: ^0.18.1
+#  intl: ^0.18.1
   intl_phone_field: ^3.2.0
   intl_utils: ^2.8.5
   just_audio: ^0.9.39
@@ -452,7 +452,7 @@ dev_dependencies:
   # Used in freezed package
   json_serializable:
   # For more health code
-  linter:
+ #  linter:
   # Change native code splash
   flutter_native_splash:
   # Change App Package Name 

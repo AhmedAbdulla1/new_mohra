@@ -49,7 +49,7 @@ class AppConstants {
   ///dynamic links
   // todo change this link
   // static const KEY_DYNAMIC_LINKS_PREFIX = 'https://mohrra.page.link/';
-  static const KEY_DYNAMIC_LINKS_PREFIX = 'https://mohhra.page.link/';
+  static const KEY_DYNAMIC_LINKS_PREFIX = 'https://mohhra.page.link';
 
    // static const KEY_DYNAMIC_LINKS_BASE_URL = 'https://mohraappprofile.page.link/';
 

@@ -313,11 +313,11 @@ class _MessageListItemWidgetState extends State<MessageListItemWidget> {
                     ),
                   ],
                 ),
-                Gaps.vGap12,
-                const SizedBox(
-                  height: 1,
-                  child: Divider(),
-                ),
+                // Gaps.vGap12,
+                // const SizedBox(
+                //   height: 1,
+                //   child: Divider(),
+                // ),
               ],
             ),
           ),

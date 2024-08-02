@@ -77,8 +77,8 @@ class GlobalMessagesNotifier extends ScreenNotifier {
 
   Future<void> getRtmToken() async {
     //todo importance
-    // await messagesCubit
-    //     .getRtmToken(GetRtmTokenParams(uid: '${UserSessionDataModel.userId}'));
+    await messagesCubit
+        .getRtmToken(GetRtmTokenParams(uid: '${UserSessionDataModel.userId}'));
   }
 
   init({bool isNotification = false}) async {

@@ -88,23 +88,23 @@ class MessagesCubit extends Cubit<MessagesState> {
     });
   }
 
-  // getRtmToken(GetRtmTokenParams params) async {
-  //   emit(const MessagesState.messagesLoadingState());
-  //
-  //   final result = await getIt<GetTokenRtmUseCase>().call(params);
-  //   result.pick(onData: (data) {
-  //     Provider.of<GlobalMessagesNotifier>(AppConfig().appContext, listen: false)
-  //         .RTM_TOKEN = data.token;
-  //     emit(MessagesState.tokenRtmLoadedState(data));
-  //   }, onError: (error) {
-  //     emit(
-  //       MessagesState.messagesErrorState(error, () {
-  //         this.getRtmToken(params);
-  //       }),
-  //     );
-  //     this.getRtmToken(params);
-  //   });
-  // }
+  getRtmToken(GetRtmTokenParams params) async {
+    emit(const MessagesState.messagesLoadingState());
+
+    final result = await getIt<GetTokenRtmUseCase>().call(params);
+    result.pick(onData: (data) {
+      Provider.of<GlobalMessagesNotifier>(AppConfig().appContext, listen: false)
+          .RTM_TOKEN = data.token;
+      emit(MessagesState.tokenRtmLoadedState(data));
+    }, onError: (error) {
+      emit(
+        MessagesState.messagesErrorState(error, () {
+          this.getRtmToken(params);
+        }),
+      );
+      this.getRtmToken(params);
+    });
+  }
 
   getGroups(GetGroupsParams params) async {
     Provider.of<GlobalMessagesNotifier>(AppConfig().appContext, listen: false)
